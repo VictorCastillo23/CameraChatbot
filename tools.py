@@ -76,7 +76,7 @@ def explore_cameras(camera: str) -> str:
         else:
             return {"message": f"Cámara {camera}: {result}", "alert_mode": False}
 
-    return "⚠️ Cámara no encontrada. Usa A, B, C o D."
+    return "Cámara no encontrada. Usa A, B, C o D."
 
 """Simulacion de resumen de video"""
 @tool
@@ -88,7 +88,7 @@ def sumarize_video(video: str, length: int = 10) -> str:
         - video: Nombre del archivo de video.
         - length: Número de líneas en el resumen.
         """
-    return f"📜 Resumen del video '{video}':\n- [Generar aquí un análisis basado en IA]."
+    return f"Resumen del video '{video}':\n- [Generar aquí un análisis basado en IA]."
 
 """Simulación de reportes de video"""
 @tool
@@ -106,7 +106,7 @@ def incident_report(camera: str, description: str) -> str:
         json.dump(incident, f)
         f.write("\n")
 
-    return f"📄 Reporte generado para la cámara {camera}."
+    return f"Reporte generado para la cámara {camera}."
 
 tools_list = [
     video_processing_tool,

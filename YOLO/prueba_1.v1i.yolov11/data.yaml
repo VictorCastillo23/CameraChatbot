@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 3
+names: ['chair', 'computer', 'table']
+
+roboflow:
+  workspace: projects-tjj9v
+  project: prueba_1-t24ut
+  version: 1
+  license: Private
+  url: https://app.roboflow.com/projects-tjj9v/prueba_1-t24ut/1

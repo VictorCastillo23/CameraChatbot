@@ -1,0 +1,77 @@
+[
+    {
+        "timestamp": "2025-03-26T23:10:49.919414",
+        "user": "Cortar el vídeo 'Video_1.mp4' del segundo 10 al 20 a velocidad 1.",
+        "bot": "Error al procesar la solicitud: 'messages'"
+    },
+    {
+        "timestamp": "2025-03-26T23:10:51.536079",
+        "user": "¿Qué ves en la cámara A?",
+        "bot": "Error al procesar la solicitud: 'messages'"
+    },
+    {
+        "timestamp": "2025-03-26T23:10:53.053547",
+        "user": "Monitorea la cámara C.",
+        "bot": "Error al procesar la solicitud: 'messages'"
+    },
+    {
+        "timestamp": "2025-03-26T23:16:03.480891",
+        "user": "Cortar el vídeo 'Video_1.mp4' del segundo 10 al 20 a velocidad 1.",
+        "bot": "Error al procesar la solicitud: 'messages'"
+    },
+    {
+        "timestamp": "2025-03-26T23:16:05.015470",
+        "user": "¿Qué ves en la cámara A?",
+        "bot": "Error al procesar la solicitud: 'messages'"
+    },
+    {
+        "timestamp": "2025-03-26T23:16:06.205464",
+        "user": "Monitorea la cámara C.",
+        "bot": "Error al procesar la solicitud: 'messages'"
+    },
+    {
+        "timestamp": "2025-03-26T23:19:53.694620",
+        "user": "Cortar el vídeo 'Video_1.mp4' del segundo 10 al 20 a velocidad 1.",
+        "bot": "El video ha sido procesado con éxito. El segmento cortado se ha guardado como **Video_1_cut.mp4**. Si necesitas más ayuda, no dudes en decírmelo."
+    },
+    {
+        "timestamp": "2025-03-26T23:19:54.974749",
+        "user": "¿Qué ves en la cámara A?",
+        "bot": "📷 Cámara A: Todo está en calma."
+    },
+    {
+        "timestamp": "2025-03-26T23:19:56.857679",
+        "user": "Monitorea la cámara C.",
+        "bot": "📷 Cámara C: ALERTA: Sombra en la zona de carga. Se recomienda investigar la situación."
+    },
+    {
+        "timestamp": "2025-03-26T23:25:01.994677",
+        "user": "Cortar el vídeo 'Video_1.mp4' del segundo 10 al 20 a velocidad 1.",
+        "bot": "El video ha sido procesado con éxito. El segmento cortado se ha guardado como **Video_1_cut.mp4**. Si necesitas más ayuda, no dudes en decírmelo."
+    },
+    {
+        "timestamp": "2025-03-26T23:25:03.351241",
+        "user": "¿Qué ves en la cámara A?",
+        "bot": "📷 Cámara A: Una persona caminando por el pasillo."
+    },
+    {
+        "timestamp": "2025-03-26T23:25:05.092712",
+        "user": "Monitorea la cámara C.",
+        "bot": "📷 Cámara C: Una puerta entreabierta sin supervisión."
+    },
+    {
+        "timestamp": "2025-03-27T17:13:50.269886",
+        "user": "Cortar el vídeo 'Video_1.mp4' del segundo 10 al 20 a velocidad 1.",
+        "bot": "El vídeo 'Video_1.mp4' ha sido cortado del segundo 10 al 20 a velocidad normal (1). El archivo procesado se ha guardado como **Video_1_cut.mp4**."
+    },
+    {
+        "timestamp": "2025-03-27T17:13:52.068252",
+        "user": "¿Qué ves en la cámara A?",
+        "bot": "En la cámara A se ha detectado **movimiento sospechoso**. ¿Te gustaría que genere un reporte de incidente o que revise otra cámara?"
+    },
+    {
+        "timestamp": "2025-03-27T17:13:53.961138",
+        "user": "Monitorea la cámara C.",
+        "bot": "La cámara C no ha registrado actividad inusual."
+    }
+]

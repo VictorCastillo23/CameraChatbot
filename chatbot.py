@@ -6,6 +6,8 @@ from langgraph.graph import StateGraph, MessagesState, START, END
 from langgraph.prebuilt import ToolNode
 from langchain.agents import AgentExecutor, create_openai_tools_agent, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+import datetime
+import json
 
 from tools import tools_list
 #streamlit - catalogo de camaras (con rango de fechas)
@@ -13,35 +15,23 @@ from tools import tools_list
 #log - crear chat para evaluar y chat para crear prompts de prueba
 #Generar una "historia" a FUTURO
 
+#Validaciones en los prompts, en funciones de las tools
+
 from dotenv import load_dotenv
 import os
 
 store = {}
 
 def load_prompts(file_path="prompts.md"):
+    """Carga la última versión del archivo prompts.md"""
     try:
-        """Lee el archivo prompts.md y extrae los prompts por sección."""
         with open(file_path, "r", encoding="utf-8") as f:
             content = f.read()
-
-        sections = content.split("# ")  #Separar por etiquetas de secciones
-        prompts = {}
-
-        for section in sections:
-            lines = section.strip().split("\n")  # Dividir en líneas
-            if len(lines) > 1:
-                key = lines[0].strip().lower()  # Tomar la primera línea como clave (system, human)
-                value = "\n".join(lines[1:]).strip()  # El resto es el prompt
-                prompts[key] = value  #Guardar en el diccionario correctamente
-
-        #print("Estos son los prompts -> ", prompts)
-
-        return prompts
+        return {"system": content}
     except FileNotFoundError:
         print("No se encontró 'prompts.md'. Se usará un prompt por defecto.")
         return {
-            "system": "Eres un asistente de seguridad.",
-            "human": "{input}"
+            "system": "Eres un asistente de seguridad."
         }
 
 class Chatbot:
@@ -150,15 +140,28 @@ class Chatbot:
 
     """ENVÍA UN MENSAJE AL CHATBOT"""
     def invoke_chat(self, prompt: str):
+        """Registra la interacción con el log"""
         try:
             #print(f"Enviando al agente: {prompt}")
             response = self.agent_executor.invoke(input={'input': prompt})
-            #print(f"Respuesta recibida: {response}")
+            #print(f"Respuesta cruda del agente: {response}")
 
-            return response
+            # Obtener la respuesta del chatbot desde "output"
+            if isinstance(response, dict) and "output" in response:
+                bot_response = response["output"]
+
+                # Registrar en el log
+                self.log_interaction(prompt, bot_response)
+
+                return bot_response
+            else:
+                print("⚠ No se encontró 'output' en la respuesta del agente.")
+                return "Error: No se pudo procesar la respuesta del chatbot."
         except Exception as e:
-            print(f"Error en AgentExecutor: {e}")
-            return {"messages": [f"Error al procesar la solicitud: {str(e)}"]}
+            error_msg = f"Error al procesar la solicitud: {str(e)}"
+            self.log_interaction(prompt, error_msg)
+            return {"messages": [error_msg]}
+
 
     """GENERA Y GUARDA EL GRAFO"""
     def generate_graph(self):
@@ -166,6 +169,29 @@ class Chatbot:
         with open("graph.png", "wb") as f:
             f.write(graph_image)
         print("Grafo guardado como graph.png")
+
+    def log_interaction(self, user_prompt, bot_response):
+        """Registra cada interacción en un archivo log"""
+        log_entry = {
+            "timestamp": datetime.datetime.now().isoformat(),
+            "user": user_prompt,
+            "bot": bot_response,
+        }
+
+        log_file = "chat_log.json"
+
+        # Cargar el historial si ya existe
+        try:
+            with open(log_file, "r", encoding="utf-8") as file:
+                chat_history = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            chat_history = []
+
+        chat_history.append(log_entry)
+
+        # Guardar el historial actualizado
+        with open(log_file, "w", encoding="utf-8") as file:
+            json.dump(chat_history, file, indent=4, ensure_ascii=False)
 
 class MessagesState(TypedDict):
     messages: Annotated[list[AnyMessage], add_messages]

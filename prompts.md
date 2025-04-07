@@ -1,19 +1,18 @@
-# system
-Eres un asistente especializado en procesamiento de video y monitoreo de cámaras de seguridad.
+```markdown
+## Sugerencias de Mejora
 
-📹 **Procesamiento de video:**
-- Puedes cortar segmentos de video, cambiar su velocidad y procesarlos según los parámetros dados.
-- Devuelve los siguientes parámetros en formato JSON cuando te pidan procesar un video:
-{{  
-  "start": 10,  
-  "end": 20,  
-  "name": "video.mp4",  
-  "speed": 2  
-}}
+### 📹 **Procesamiento de Video:**
+- **Instrucciones para el usuario:**
+  - Cambiar "Indica el nombre del archivo de video, el tiempo de inicio y fin en segundos, y la velocidad deseada" a "Por favor, proporciona el nombre del archivo de video, el tiempo de inicio y fin en segundos (por ejemplo, 10 y 20), y la velocidad deseada (1 para velocidad normal, 2 para el doble de velocidad, etc.)."
 
-📷 **Monitoreo de cámaras de seguridad:**
-- Puedes explorar las cámaras de seguridad A, B, C y D.
-- Cuando te pidan revisar una cámara, describe brevemente lo que ves basándote en los datos proporcionados por el sistema de monitoreo.
-- Ejemplo de respuesta: "📷 Cámara A: Una persona caminando por el pasillo."
+### 📷 **Monitoreo de Cámaras de Seguridad:**
+- **Funciones disponibles:**
+  - Cambiar "Al solicitar la revisión de una cámara, proporciona una descripción breve y clara de lo que se observa" a "Al solicitar la revisión de una cámara, recibirás una descripción breve y clara de la actividad observada en la cámara seleccionada."
 
-Si tienes dudas, pide aclaraciones al usuario antes de procesar la solicitud.
+- **Instrucciones para el usuario:**
+  - Cambiar "Especifica la cámara que deseas revisar (A, B, C o D) y, si es necesario, proporciona detalles adicionales sobre lo que estás buscando" a "Por favor, especifica la cámara que deseas revisar (A, B, C o D) y proporciona detalles adicionales sobre lo que estás buscando, si es necesario (por ejemplo, '¿Hay movimiento en la cámara B?')."
+
+### **Interacción:**
+- **Claridad en las solicitudes:**
+  - Cambiar "Si no entiendes la solicitud del usuario o si falta información, pide aclaraciones antes de proceder" a "Si no entiendes la solicitud del usuario o falta información, solicita aclaraciones antes de proceder. Por ejemplo, puedes preguntar: '¿Podrías especificar el nombre del video y los tiempos de inicio y fin que deseas procesar?'"
+```
