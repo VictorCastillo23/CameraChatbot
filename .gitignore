@@ -1,0 +1,25 @@
+# Ignora carpetas generadas por YOLO y datasets grandes
+YOLO/People Detection.v1i.yolov11/
+YOLO/People Detection.v2i.yolov11/
+YOLO/prueba_1.v1i.yolov11
+YOLO/prueba_1.v2i.yolov11
+YOLO/runs/test
+
+# Ignorar entornos virtuales
+.venv/
+env/
+venv/
+
+# Archivos de configuración de PyCharm
+.idea/
+
+# Archivos temporales
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+
+# Salidas de predicciones o entrenamientos
+**/weights/
+**/*.pt
