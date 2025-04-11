@@ -165,10 +165,13 @@ class Chatbot:
 
     """GENERA Y GUARDA EL GRAFO"""
     def generate_graph(self):
-        graph_image = self.graph_agent.get_graph().draw_mermaid_png()
-        with open("graph.png", "wb") as f:
-            f.write(graph_image)
-        print("Grafo guardado como graph.png")
+        try:
+            graph_image = self.graph_agent.get_graph().draw_mermaid_png()
+            with open("graph.png", "wb") as f:
+                f.write(graph_image)
+            print("Grafo guardado como graph.png")
+        except Exception as e:
+            print(f"⚠️ Error al generar el grafo: {e}")
 
     def log_interaction(self, user_prompt, bot_response):
         """Registra cada interacción en un archivo log"""

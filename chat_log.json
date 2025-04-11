@@ -73,5 +73,10 @@
         "timestamp": "2025-03-27T17:13:53.961138",
         "user": "Monitorea la cámara C.",
         "bot": "La cámara C no ha registrado actividad inusual."
+    },
+    {
+        "timestamp": "2025-04-09T23:19:08.733691",
+        "user": "Cortar el vídeo 'Video_1.mp4' del segundo 10 al 20 a velocidad 1.",
+        "bot": "El vídeo 'Video_1.mp4' ha sido cortado del segundo 10 al 20 a velocidad normal (1). El archivo procesado se ha guardado como **Video_1_cut.mp4**."
     }
 ]
