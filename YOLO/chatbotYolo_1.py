@@ -37,6 +37,6 @@ class Chatbot_YOLO_img():
 # Ejemplo de uso
 if __name__ == "__main__":
     chatbot = Chatbot_YOLO_img()
-    image_path = "C:/Users/panmo/PycharmProjects/PythonProject/YOLO/runs/resultados_yolo/image_5.jpg"
+    image_path = "C:/Users/panmo/PycharmProjects/PythonProject/YOLO/runs/resultados_yolo/image_6.jpg"
     result = chatbot.describe_image(image_path)
     print(result)
