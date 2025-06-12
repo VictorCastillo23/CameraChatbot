@@ -71,6 +71,7 @@ from ultralytics import YOLO
 import json
 import os
 
+#Probar otras versiones de YOLO
 #Función para aplicar el modelo YOLO_V8 y hacer un JSON con las imágenes
 def detectar_y_guardar_json_multiple(carpeta_imagenes_path, modelo_path='yolov8n.pt', carpeta_salida='runs/resultados_json'):
     # Cargar modelo
@@ -100,10 +101,14 @@ def detectar_y_guardar_json_multiple(carpeta_imagenes_path, modelo_path='yolov8n
 
         # Obtener detecciones y preparar el JSON
         detecciones = []
+        boxes_solas = []
+
         for box in results[0].boxes:
             clase = results[0].names[int(box.cls)]
             conf = float(box.conf)
             x1, y1, x2, y2 = map(float, box.xyxy[0])
+
+            boxes_solas.append((x1, y1, x2, y2))  # Guardar para colisiones
 
             detecciones.append({
                 "class": clase,
@@ -116,8 +121,22 @@ def detectar_y_guardar_json_multiple(carpeta_imagenes_path, modelo_path='yolov8n
                 }
             })
 
+        #Detectar colisiones entre pares
+        colisiones = []
+        for i in range(len(boxes_solas)):
+            for j in range(i + 1, len(boxes_solas)):
+                iou = calcular_iou(boxes_solas[i], boxes_solas[j])
+                if iou > 0.1:
+                    colisiones.append({
+                        "beetwen": [i, j],
+                        "iou": round(iou, 3)
+                    })
+
         # Agregar detecciones al diccionario global
-        todas_detecciones[nombre_imagen] = detecciones
+        todas_detecciones[nombre_imagen] = {
+            "detections": detecciones,
+            "collisions": colisiones,
+        }
         print(f'Detecciones procesadas para: {nombre_imagen}')
 
     # Guardar todas las detecciones en un único JSON
@@ -127,6 +146,33 @@ def detectar_y_guardar_json_multiple(carpeta_imagenes_path, modelo_path='yolov8n
 
     print(f'Todas las detecciones guardadas en: {json_path}')
 
+#Función para caclcular colisiones
+def calcular_iou(box1, box2):
+    x1, y1, x2, y2 = box1
+    x1_p, y1_p, x2_p, y2_p = box2
+
+    # Coordenadas intersección
+    xi1 = max(x1, x1_p)
+    yi1 = max(y1, y1_p)
+    xi2 = min(x2, x2_p)
+    yi2 = min(y2, y2_p)
+
+    inter_width = max(0, xi2 - xi1)
+    inter_height = max(0, yi2 - yi1)
+    inter_area = inter_width * inter_height
+
+    if inter_area == 0:
+        return 0.0
+
+    # Áreas individuales
+    area1 = (x2 - x1) * (y2 - y1)
+    area2 = (x2_p - x1_p) * (y2_p - y1_p)
+    union_area = area1 + area2 - inter_area
+
+    iou = inter_area / union_area
+    return iou
+
 # CLASE MAIN
 if __name__ == '__main__':
-    detectar_y_guardar_json_multiple('pruebas/')
+    #detectar_y_guardar_json_multiple('pruebas/')
+    detectar_y_guardar_json_multiple('C:/Users/panmo/PycharmProjects/PythonProject/libraryV2/keyframes_yolo')

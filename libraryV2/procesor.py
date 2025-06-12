@@ -3,6 +3,7 @@ import numpy as np  # Importa NumPy para operaciones numéricas
 from preprocer import preprocess_video_stream  # Importa la función de preprocesamiento de video
 from functools import reduce  # Importa reduce para operaciones funcionales
 import time
+import os
 
 # Clase base para definir diferentes estrategias de puntuación de frames
 class FrameScoringStrategy:
@@ -94,7 +95,7 @@ def indices_above_threshold(values, threshold, min_distance=None):
 
 # Función principal para procesamiento, acepta una estrategia de puntuación
 
-def extract_keyframes(input_video, scoring_strategy, scale_percent=50, speed=5, threshold=0.5,coments = False):
+def extract_keyframes(input_video, scoring_strategy, scale_percent=50, speed=5, threshold=0.3,coments = False):
     # Medir tiempo del preprocesamiento
     start = time.time()
     frames = preprocess_video_stream(
@@ -119,7 +120,7 @@ def extract_keyframes(input_video, scoring_strategy, scale_percent=50, speed=5, 
     start = time.time()
     normalized_scores = normalize_list(scores)
     if coments:
-        print(f"[Tiempo] Normalización: {time.time() - start:.3f} segundos")
+        print(f"Scores normalizados: {normalized_scores[:30]}")  # primeros 30 scores
 
     # Medir tiempo de selección de keyframes
     start = time.time()
@@ -130,3 +131,35 @@ def extract_keyframes(input_video, scoring_strategy, scale_percent=50, speed=5, 
 
     return normalized_scores, keyframes
 
+def save_keyframes_as_images(input_video, keyframes_indices, output_dir="keyframes_images", scale_percent=20, speed=1):
+    import os
+    os.makedirs(output_dir, exist_ok=True)
+    cap = cv2.VideoCapture(input_video)
+    index = 0
+    saved = 0
+    keyframe_set = set(keyframes_indices)
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        #print(f"[DEBUG] Leyendo frame {index}")
+
+        if index % speed == 0:
+            current_frame_index = index // speed
+            #print(f"[DEBUG] Frame filtrado (cada {speed}): {current_frame_index}")
+
+            if current_frame_index in keyframe_set:
+                #print(f"[DEBUG] Guardando frame {current_frame_index}")
+                resized = cv2.resize(frame, (
+                    int(frame.shape[1] * scale_percent / 100),
+                    int(frame.shape[0] * scale_percent / 100)
+                ))
+                path = os.path.join(output_dir, f"frame_{current_frame_index:05}.jpg")
+                cv2.imwrite(path, resized)
+                saved += 1
+
+        index += 1
+
+    cap.release()

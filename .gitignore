@@ -8,6 +8,7 @@ YOLO/runs/test
 # Ignorar entornos virtuales
 .venv/
 env/
+.env
 venv/
 
 # Archivos de configuración de PyCharm

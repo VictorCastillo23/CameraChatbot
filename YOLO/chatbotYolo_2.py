@@ -121,11 +121,53 @@ class Chatbot_YOLO_JSON():
 
         return summaries
 
+    def analizar_conclusiones_por_imagen(self, json_path: str) -> dict:
+        with open(json_path, "r") as file:
+            all_data = json.load(file)
+
+        resultados = {}
+
+        for image_name, data in all_data.items():
+            detections = data.get("detections", [])
+            collisions = data.get("collisions", [])
+
+            prompt = (
+                f"Analiza los datos de la imagen '{image_name}'. "
+                "Primero, resume cuántos objetos hay por clase. Luego, analiza si hay colisiones y qué clases están involucradas. "
+                "Finalmente, redacta una conclusión breve sobre lo que está pasando en la imagen. "
+                "Entrega el resultado en el siguiente formato JSON (sin bloques de código):\n\n"
+                "{\n"
+                "  \"resumen\": {\"person\": 3, \"car\": 1},\n"
+                "  \"colisiones\": [\n"
+                "     {\"entre\": [0, 1], \"iou\": 0.3, \"clases_involucradas\": [\"person\", \"person\"]}\n"
+                "  ],\n"
+                "  \"conclusion\": \"Parece que hay un grupo de personas cerca unas de otras.\"\n"
+                "}\n\n"
+                "Este es el contenido:\n"
+                f"Detecciones: {json.dumps(detections, indent=2)}\n"
+                f"Colisiones: {json.dumps(collisions, indent=2)}"
+            )
+
+            msg = HumanMessage(content=prompt)
+            response = self.llm.invoke([msg])
+
+            try:
+                resultados[image_name] = json.loads(response.content)
+            except json.JSONDecodeError:
+                resultados[image_name] = {
+                    "error": "No se pudo interpretar la respuesta como JSON.",
+                    "raw_response": response.content
+                }
+
+        return resultados
+
 #CLASE MAIN
 if __name__ == "__main__":
     chatbot = Chatbot_YOLO_JSON()
     json_path = "C:/Users/panmo/PycharmProjects/PythonProject/YOLO/runs/resultados_json/todas_las_detecciones.json"
-    resumen = chatbot.summarize_detections(json_path)
+    #resumen = chatbot.summarize_detections(json_path)
+
+    resumen = chatbot.analizar_conclusiones_por_imagen(json_path)
 
     for imagen, data in resumen.items():
-        print(f"\n📸 Resumen para {imagen}:\n{json.dumps(data, indent=2)}\n{'-' * 50}")
+        print(f"\nConclusión para {imagen}:\n{json.dumps(data, indent=2)}\n{'-' * 50}")
