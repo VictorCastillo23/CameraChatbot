@@ -35,7 +35,7 @@ def preprocess_video_stream(input_path, scale_percent=10, speed=5, initial_secon
     width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
     # Calcula las nuevas dimensiones escaladas
-    new_width, new_height = get_scaled_dimensions(width, height, scale_percent)
+    # new_width, new_height = get_scaled_dimensions(width, height, scale_percent)
 
     # Convierte el segundo inicial a número de frame
     initial_frame = int(fps * initial_second)
@@ -68,7 +68,7 @@ def preprocess_video_stream(input_path, scale_percent=10, speed=5, initial_secon
         # Verifica si este frame debe ser procesado según `speed`
         if should_process(current_frame):
             # Aplica el preprocesamiento al frame y lo entrega
-            yield preprocess_frame(frame, new_width, new_height, blur_kernel)
+            yield preprocess_frame(frame, 96, 54, blur_kernel)
 
         # Avanza al siguiente frame
         current_frame += 1
