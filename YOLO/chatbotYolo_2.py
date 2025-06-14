@@ -133,17 +133,12 @@ class Chatbot_YOLO_JSON():
 
             prompt = (
                 f"Analiza los datos de la imagen '{image_name}'. "
-                "Primero, resume cuántos objetos hay por clase. Luego, analiza si hay colisiones y qué clases están involucradas. "
-                "Finalmente, redacta una conclusión breve sobre lo que está pasando en la imagen. "
-                "Entrega el resultado en el siguiente formato JSON (sin bloques de código):\n\n"
-                "{\n"
-                "  \"resumen\": {\"person\": 3, \"car\": 1},\n"
-                "  \"colisiones\": [\n"
-                "     {\"entre\": [0, 1], \"iou\": 0.3, \"clases_involucradas\": [\"person\", \"person\"]}\n"
-                "  ],\n"
-                "  \"conclusion\": \"Parece que hay un grupo de personas cerca unas de otras.\"\n"
-                "}\n\n"
-                "Este es el contenido:\n"
+                "Primero, describe cuántos objetos hay por clase. "
+                "Luego, si hay colisiones, analiza qué clases están involucradas y qué podrían indicar. "
+                "Finalmente, interpreta de forma narrativa lo que está ocurriendo en la imagen, "
+                "como si explicaras la escena a una persona, usando sentido común y lenguaje natural. "
+                "Sé analítico y evita limitarte a repetir los conteos o decir que hay colisiones, "
+                "explica qué podrían significar en la escena.\n\n"
                 f"Detecciones: {json.dumps(detections, indent=2)}\n"
                 f"Colisiones: {json.dumps(collisions, indent=2)}"
             )
@@ -152,7 +147,7 @@ class Chatbot_YOLO_JSON():
             response = self.llm.invoke([msg])
 
             try:
-                resultados[image_name] = json.loads(response.content)
+                resultados[image_name] = {"texto": response.content.strip()}
             except json.JSONDecodeError:
                 resultados[image_name] = {
                     "error": "No se pudo interpretar la respuesta como JSON.",
