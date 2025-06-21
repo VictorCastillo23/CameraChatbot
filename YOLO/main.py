@@ -73,15 +73,12 @@ import os
 
 #Probar otras versiones de YOLO
 #Función para aplicar el modelo YOLO_V8 y hacer un JSON con las imágenes
-def detectar_y_guardar_json_multiple(carpeta_imagenes_path, modelo_path='yolov8n.pt', carpeta_salida='runs/resultados_json'):
-    # Cargar modelo
-    model = YOLO(modelo_path)
-
+def detectar_y_guardar_json_multiple(model, carpeta_imagenes_path, carpeta_salida):
     # Crear carpeta si no existe
     os.makedirs(carpeta_salida, exist_ok=True)
 
     # Diccionario para guardar todas las detecciones
-    todas_detecciones = {}
+    todas_detecciones_carpeta = {}
 
     # Recorrer imágenes
     for nombre_imagen in os.listdir(carpeta_imagenes_path):
@@ -94,8 +91,8 @@ def detectar_y_guardar_json_multiple(carpeta_imagenes_path, modelo_path='yolov8n
         results = model.predict(
             source=ruta_imagen,
             save=True,
-            project='runs',
-            name='resultados_json',
+            project=carpeta_salida,
+            name='.',
             exist_ok=True
         )
 
@@ -133,18 +130,13 @@ def detectar_y_guardar_json_multiple(carpeta_imagenes_path, modelo_path='yolov8n
                     })
 
         # Agregar detecciones al diccionario global
-        todas_detecciones[nombre_imagen] = {
+        todas_detecciones_carpeta[nombre_imagen] = {
             "detections": detecciones,
             "collisions": colisiones,
         }
-        print(f'Detecciones procesadas para: {nombre_imagen}')
+        print(f'Detecciones procesadas para: {nombre_imagen} en carpeta {os.path.basename(carpeta_salida)}')
 
-    # Guardar todas las detecciones en un único JSON
-    json_path = os.path.join(carpeta_salida, 'todas_las_detecciones.json')
-    with open(json_path, 'w') as f:
-        json.dump(todas_detecciones, f, indent=4)
-
-    print(f'Todas las detecciones guardadas en: {json_path}')
+    return todas_detecciones_carpeta
 
 #Función para caclcular colisiones
 def calcular_iou(box1, box2):
@@ -169,10 +161,39 @@ def calcular_iou(box1, box2):
     area2 = (x2_p - x1_p) * (y2_p - y1_p)
     union_area = area1 + area2 - inter_area
 
-    iou = inter_area / union_area
-    return iou
+    #IoU
+    return inter_area / union_area
 
 # CLASE MAIN
 if __name__ == '__main__':
-    #detectar_y_guardar_json_multiple('pruebas/')
-    detectar_y_guardar_json_multiple('C:/Users/panmo/PycharmProjects/PythonProject/libraryV2/keyframes_yolo')
+    ruta_base = 'C:/Users/panmo/PycharmProjects/PythonProject/videos/keyframes_output'
+
+    # Carga el modelo una sola vez
+    modelo_path = 'yolov8n.pt'
+    model = YOLO(modelo_path)
+
+    # Diccionario global con todas las detecciones
+    todas_las_detecciones_global = {}
+
+    for carpeta in os.listdir(ruta_base):
+        ruta_completa = os.path.join(ruta_base, carpeta)
+
+        if os.path.isdir(ruta_completa) and carpeta.startswith('keyframes_'):
+            print(f'\n🟢 Procesando carpeta: {carpeta}')
+            carpeta_salida = os.path.join('runs', 'resultados_json', carpeta)
+            print(f'\n😈 Carpeta Salida: {carpeta_salida}')
+            detecciones_carpeta = detectar_y_guardar_json_multiple(
+                model=model,
+                carpeta_imagenes_path=ruta_completa,
+                carpeta_salida=carpeta_salida
+            )
+            # Guardamos bajo la clave de la carpeta para separar por video
+            todas_las_detecciones_global[carpeta] = detecciones_carpeta
+
+    # Guardar un JSON global con todas las detecciones agrupadas por carpeta (video)
+    json_global_path = os.path.join('runs', 'resultados_json', 'todas_las_detecciones_global.json')
+    os.makedirs(os.path.dirname(json_global_path), exist_ok=True)
+    with open(json_global_path, 'w') as f:
+        json.dump(todas_las_detecciones_global, f, indent=4)
+
+    print(f'\n✅ Todas las detecciones globales guardadas en: {json_global_path}')

@@ -4,6 +4,7 @@ YOLO/People Detection.v2i.yolov11/
 YOLO/prueba_1.v1i.yolov11
 YOLO/prueba_1.v2i.yolov11
 YOLO/runs/test
+videos/input
 
 # Ignorar entornos virtuales
 .venv/

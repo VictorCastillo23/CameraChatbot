@@ -1,0 +1,102 @@
+{
+    "frame_00017.jpg": {
+        "detections": [
+            {
+                "class": "person",
+                "confidence": 0.9300880432128906,
+                "box": {
+                    "x1": 100.5,
+                    "y1": 37.8,
+                    "x2": 190.2,
+                    "y2": 214.5
+                }
+            }
+        ],
+        "collisions": []
+    },
+    "frame_00051.jpg": {
+        "detections": [
+            {
+                "class": "person",
+                "confidence": 0.30580297112464905,
+                "box": {
+                    "x1": 9.8,
+                    "y1": 181.2,
+                    "x2": 78.8,
+                    "y2": 215.9
+                }
+            }
+        ],
+        "collisions": []
+    },
+    "frame_00121.jpg": {
+        "detections": [
+            {
+                "class": "person",
+                "confidence": 0.8711726665496826,
+                "box": {
+                    "x1": 34.8,
+                    "y1": 138.4,
+                    "x2": 125.1,
+                    "y2": 215.8
+                }
+            }
+        ],
+        "collisions": []
+    },
+    "frame_00152.jpg": {
+        "detections": [
+            {
+                "class": "person",
+                "confidence": 0.8242570161819458,
+                "box": {
+                    "x1": 27.3,
+                    "y1": 140.1,
+                    "x2": 129.6,
+                    "y2": 215.8
+                }
+            }
+        ],
+        "collisions": []
+    },
+    "frame_00173.jpg": {
+        "detections": [
+            {
+                "class": "person",
+                "confidence": 0.8036566972732544,
+                "box": {
+                    "x1": 49.6,
+                    "y1": 142.7,
+                    "x2": 139.4,
+                    "y2": 215.3
+                }
+            }
+        ],
+        "collisions": []
+    },
+    "frame_00184.jpg": {
+        "detections": [
+            {
+                "class": "person",
+                "confidence": 0.7310436964035034,
+                "box": {
+                    "x1": 43.5,
+                    "y1": 140.2,
+                    "x2": 137.3,
+                    "y2": 216.0
+                }
+            },
+            {
+                "class": "microwave",
+                "confidence": 0.3248036205768585,
+                "box": {
+                    "x1": 141.2,
+                    "y1": 174.2,
+                    "x2": 214.8,
+                    "y2": 214.5
+                }
+            }
+        ],
+        "collisions": []
+    }
+}

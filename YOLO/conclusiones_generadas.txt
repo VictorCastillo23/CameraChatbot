@@ -1,0 +1,800 @@
+Conclusión para keyframes_VID_20250610_205107291~2/frame_00028.jpg:
+{
+  "general_description": "En la imagen 'frame_00028.jpg', se han detectado dos clases de objetos: personas.",
+  "objects_list": "- Personas: 2",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a dos personas en un centro comercial, posiblemente disfrutando de un d\u00eda de compras. La ausencia de colisiones indica que se mueven con libertad, lo que contribuye a una atm\u00f3sfera relajada y agradable en el lugar."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~2/frame_00050.jpg:
+{
+  "general_description": "En la imagen 'frame_00050.jpg', se han detectado dos clases de objetos: personas.",
+  "objects_list": "- Personas: 2",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un flujo de movimiento ordenado entre las personas presentes.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a dos personas en un centro comercial, posiblemente interactuando entre s\u00ed o simplemente caminando. La ausencia de colisiones indica que el ambiente es tranquilo y que los visitantes se mueven con comodidad por el espacio."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~2/frame_00075.jpg:
+{
+  "general_description": "En la imagen 'frame_00075.jpg', se han detectado tres clases de objetos: personas.",
+  "objects_list": "- Personas: 3",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un flujo de movimiento ordenado entre las personas presentes.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a tres personas en un centro comercial, cada una ocupando su propio espacio. La ausencia de colisiones indica que est\u00e1n caminando de manera tranquila, posiblemente explorando las tiendas o dirigi\u00e9ndose a un \u00e1rea de descanso."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~2/frame_00110.jpg:
+{
+  "general_description": "En la imagen 'frame_00110.jpg', se han detectado tres clases de objetos: personas.",
+  "objects_list": "- Personas: 3",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un flujo de movimiento ordenado entre las personas presentes.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a tres personas en un centro comercial, cada una ocupando su propio espacio. La confianza en la detecci\u00f3n de las personas var\u00eda, lo que podr\u00eda indicar diferentes niveles de visibilidad o proximidad a la c\u00e1mara. La ausencia de colisiones sugiere que las personas se mueven de manera fluida, posiblemente explorando las tiendas o interactuando entre s\u00ed en un ambiente de compras."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~2/frame_00128.jpg:
+{
+  "general_description": "En la imagen 'frame_00128.jpg', se han detectado tres clases de objetos: personas.",
+  "objects_list": "- Personas: 3",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un flujo de personas ordenado y sin conflictos.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a tres personas en un centro comercial, posiblemente interactuando entre s\u00ed o simplemente caminando. La confianza en la detecci\u00f3n de las personas var\u00eda, lo que indica que algunas son m\u00e1s visibles que otras. La ausencia de colisiones sugiere que el ambiente es tranquilo y que los visitantes se mueven sin problemas por el espacio."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~2/frame_00139.jpg:
+{
+  "general_description": "En la imagen 'frame_00139.jpg', se han detectado dos clases de objetos: personas.",
+  "objects_list": "- Personas: 2",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere que las personas est\u00e1n en movimiento libre y no interfieren entre s\u00ed.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a dos personas en un centro comercial, posiblemente caminando hacia una tienda o esperando a alguien. La ausencia de colisiones indica un ambiente tranquilo y ordenado, donde los visitantes pueden disfrutar de su experiencia de compra sin inconvenientes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~2/frame_00159.jpg:
+{
+  "general_description": "En la imagen 'frame_00159.jpg', se han detectado cuatro personas con diferentes niveles de confianza.",
+  "objects_list": "- Personas: 4",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos personas (\u00edndices 2 y 3) con un \u00edndice de superposici\u00f3n (IoU) de 0.48, lo que sugiere que est\u00e1n bastante cerca una de la otra, posiblemente interactuando o movi\u00e9ndose en la misma direcci\u00f3n.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen captura un momento en un centro comercial donde varias personas se encuentran en un \u00e1rea com\u00fan. La proximidad entre algunas de ellas sugiere que podr\u00edan estar conversando o simplemente compartiendo el espacio mientras realizan sus compras. La variedad en los niveles de confianza indica que algunas de las detecciones son m\u00e1s seguras que otras, lo que podr\u00eda reflejar la din\u00e1mica del movimiento en un entorno concurrido."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~2/frame_00164.jpg:
+{
+  "general_description": "En la imagen 'frame_00164.jpg', se han detectado cuatro clases de objetos: personas.",
+  "objects_list": "- Personas: 4",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos personas (\u00edndices 0 y 3) con un \u00edndice de intersecci\u00f3n sobre la uni\u00f3n (IoU) de 0.16, lo que indica una superposici\u00f3n baja entre sus \u00e1reas. Esto podr\u00eda significar que las personas est\u00e1n en proximidad, pero no necesariamente en una colisi\u00f3n f\u00edsica significativa.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta escena del centro comercial, cuatro personas se encuentran en un \u00e1rea relativamente cercana, lo que sugiere un ambiente activo y concurrido. La colisi\u00f3n leve entre dos de ellas podr\u00eda indicar que est\u00e1n interactuando o simplemente cruz\u00e1ndose en su camino, reflejando la din\u00e1mica habitual de un espacio comercial donde la gente se mueve y socializa."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~2/frame_00180.jpg:
+{
+  "general_description": "En la imagen 'frame_00180.jpg', se han detectado cuatro clases de objetos: personas.",
+  "objects_list": "- Personas: 4",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos personas, con un \u00edndice de intersecci\u00f3n sobre la uni\u00f3n (IoU) de 0.15, lo que sugiere un leve solapamiento entre ellas. Esto podr\u00eda indicar que las personas est\u00e1n caminando muy cerca unas de otras, lo que es com\u00fan en un entorno de centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen captura un momento en un bullicioso centro comercial, donde varias personas se mueven por el espacio. La cercan\u00eda entre algunas de ellas sugiere que est\u00e1n interactuando o simplemente compartiendo el mismo camino, lo que refleja la din\u00e1mica social t\u00edpica de estos lugares. La variedad en la confianza de detecci\u00f3n tambi\u00e9n indica que algunas personas son m\u00e1s prominentes en la escena que otras."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~3/frame_00030.jpg:
+{
+  "general_description": "En la imagen 'frame_00030.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~3/frame_00067.jpg:
+{
+  "general_description": "En la imagen 'frame_00067.jpg', se han detectado dos clases de objetos: personas.",
+  "objects_list": "- Personas: 2",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos personas con un \u00edndice de superposici\u00f3n (IoU) de 0.637, lo que indica que est\u00e1n bastante cerca una de la otra, posiblemente interactuando o caminando en la misma direcci\u00f3n.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta escena del centro comercial, dos personas parecen estar en un momento de interacci\u00f3n, quiz\u00e1s conversando o simplemente cruz\u00e1ndose en su camino. La proximidad entre ellas sugiere un ambiente social activo, t\u00edpico de un lugar concurrido como un centro comercial."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~3/frame_00129.jpg:
+{
+  "general_description": "En la imagen 'frame_00129.jpg', se han detectado tres clases de objetos: personas y dos bolsos de mano.",
+  "objects_list": "- Personas: 1\n- Bolsos de mano: 2",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe han registrado colisiones entre la persona y los dos bolsos de mano. La intersecci\u00f3n sobre la uni\u00f3n (IoU) entre la persona y el primer bolso es de 0.211, y entre la persona y el segundo bolso es de 0.147. La colisi\u00f3n entre los dos bolsos tiene un IoU de 0.302, lo que sugiere que est\u00e1n relativamente cerca uno del otro, posiblemente en el suelo o sostenidos por la persona.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta escena de un centro comercial, una persona parece estar en movimiento, posiblemente buscando algo en su bolso o prepar\u00e1ndose para salir. Los dos bolsos de mano, que est\u00e1n cerca de ella, podr\u00edan indicar que est\u00e1 haciendo compras o que ha dejado sus pertenencias en un lugar cercano. La proximidad de los bolsos sugiere un ambiente de actividad y consumo, t\u00edpico de un centro comercial."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~3/frame_00160.jpg:
+{
+  "general_description": "En la imagen 'frame_00160.jpg', se han detectado tres clases de objetos: personas y dos bolsos de mano.",
+  "objects_list": "- Personas: 1\n- Bolsos de mano: 2",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe han registrado colisiones entre la persona y los dos bolsos de mano. La colisi\u00f3n entre la persona y el primer bolso tiene un IoU de 0.172, lo que indica una superposici\u00f3n baja. La colisi\u00f3n entre la persona y el segundo bolso tiene un IoU de 0.222, tambi\u00e9n con superposici\u00f3n baja. Sin embargo, el bolso 1 y el bolso 2 tienen una colisi\u00f3n m\u00e1s significativa con un IoU de 0.502, sugiriendo que est\u00e1n m\u00e1s cerca uno del otro.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta escena del centro comercial, una persona parece estar en movimiento, posiblemente buscando algo en su bolso o prepar\u00e1ndose para salir. Los dos bolsos de mano, que est\u00e1n relativamente cerca uno del otro, podr\u00edan pertenecer a la misma persona o a alguien que est\u00e1 a su lado. La interacci\u00f3n entre la persona y los bolsos sugiere un momento de actividad, donde la persona est\u00e1 involucrada en una tarea que requiere atenci\u00f3n, como revisar sus pertenencias."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_205107291~3/frame_00174.jpg:
+{
+  "general_description": "En la imagen 'frame_00174.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_210055776~2/frame_00071.jpg:
+{
+  "general_description": "En la imagen 'frame_00071.jpg', se han detectado cinco clases de objetos: personas.",
+  "objects_list": "- Personas: 5",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos personas (\u00edndices 3 y 4) con un \u00edndice de superposici\u00f3n (IoU) de 0.53, lo que sugiere que est\u00e1n bastante cerca una de la otra, posiblemente interactuando o movi\u00e9ndose en la misma direcci\u00f3n.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa escena muestra a varias personas en un centro comercial, posiblemente en un momento de actividad intensa. La colisi\u00f3n detectada sugiere que dos de ellas podr\u00edan estar en una conversaci\u00f3n o simplemente cruz\u00e1ndose en un pasillo, lo que es com\u00fan en un entorno tan concurrido."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_210055776~2/frame_00151.jpg:
+{
+  "general_description": "En la imagen 'frame_00151.jpg', se han detectado dos clases de objetos: personas.",
+  "objects_list": "- Personas: 2",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a dos personas en un centro comercial, posiblemente disfrutando de un d\u00eda de compras. La ausencia de colisiones indica que se mueven con comodidad, lo que sugiere un ambiente relajado y sin aglomeraciones."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_210055776~3/frame_00120.jpg:
+{
+  "general_description": "En la imagen 'frame_00120.jpg', se han detectado tres clases de objetos: personas, botellas y una bicicleta.",
+  "objects_list": "- Personas: 5\n- Botellas: 2\n- Bicicleta: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe han registrado colisiones entre dos pares de personas. La primera colisi\u00f3n (entre la persona 1 y la persona 3) tiene un \u00edndice de intersecci\u00f3n sobre la uni\u00f3n (IoU) de 0.107, lo que sugiere un leve solapamiento. La segunda colisi\u00f3n (entre la persona 3 y la persona 7) tiene un IoU de 0.395, indicando un solapamiento m\u00e1s significativo. Esto podr\u00eda significar que las personas est\u00e1n en movimiento cercano, posiblemente interactuando o simplemente caminando en la misma direcci\u00f3n.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa escena muestra un momento activo en un centro comercial, donde varias personas se mueven por el espacio. La presencia de botellas sugiere que algunos de los visitantes podr\u00edan estar consumiendo bebidas mientras exploran las tiendas. La bicicleta, aunque menos com\u00fan en un entorno de centro comercial, podr\u00eda indicar que alguien ha llegado en bicicleta o que se est\u00e1 utilizando como un medio de transporte temporal. Las colisiones entre las personas reflejan la din\u00e1mica de un lugar concurrido, donde la interacci\u00f3n y el movimiento son constantes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_210055776~3/frame_00176.jpg:
+{
+  "general_description": "En la imagen 'frame_00176.jpg', se han detectado tres clases de objetos: personas.",
+  "objects_list": "- Personas: 3",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos personas con un \u00edndice de intersecci\u00f3n sobre la uni\u00f3n (IoU) de 0.685, lo que indica una superposici\u00f3n significativa entre ellas. Esto podr\u00eda sugerir que las personas est\u00e1n muy cerca unas de otras, posiblemente interactuando o en un espacio reducido.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen captura un momento en un centro comercial donde tres personas se encuentran en un \u00e1rea cercana. La proximidad entre ellas sugiere que podr\u00edan estar conversando o esperando en una fila, reflejando la din\u00e1mica social t\u00edpica de un entorno comercial."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_210055776~4/frame_00124.jpg:
+{
+  "general_description": "En la imagen 'frame_00124.jpg', se han detectado dos clases de objetos: personas y sillas.",
+  "objects_list": "- Personas: 5\n- Sillas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe han registrado colisiones entre personas, espec\u00edficamente entre la persona 0 y la persona 5, as\u00ed como entre la persona 2 y la persona 5. Esto podr\u00eda indicar un \u00e1rea de alta congesti\u00f3n donde las personas est\u00e1n interactuando o movi\u00e9ndose cerca unas de otras, lo que es com\u00fan en un entorno de centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa escena muestra un momento t\u00edpico en un centro comercial, donde varias personas se mueven por el \u00e1rea, posiblemente buscando tiendas o esperando a otros. La presencia de una silla sugiere que hay un lugar para descansar, lo que puede ser necesario en un entorno tan concurrido. Las colisiones detectadas entre algunas personas indican que el flujo de tr\u00e1fico es denso, lo que podr\u00eda llevar a interacciones sociales o incluso a momentos de espera."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250610_210055776~4/frame_00168.jpg:
+{
+  "general_description": "En la imagen 'frame_00168.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Botellas: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere un ambiente tranquilo y sin interacciones peligrosas.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, donde no hay actividad visible, lo que podr\u00eda indicar un horario de baja afluencia de visitantes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00012.jpg:
+{
+  "general_description": "En la imagen 'frame_00012.jpg', se han detectado dos clases de objetos: personas y botellas.",
+  "objects_list": "- Personas: 1\n- Botellas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona que parece estar disfrutando de su tiempo en el centro comercial, posiblemente explorando las tiendas. A su lado, hay una botella, que podr\u00eda ser un indicativo de que la persona ha estado hidrat\u00e1ndose mientras realiza sus compras. La ausencia de colisiones sugiere que el flujo de personas es adecuado y que no hay situaciones de riesgo en este momento."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00021.jpg:
+{
+  "general_description": "En la imagen 'frame_00021.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00034.jpg:
+{
+  "general_description": "En la imagen 'frame_00034.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00052.jpg:
+{
+  "general_description": "En la imagen 'frame_00052.jpg', se han detectado dos clases de objetos: personas y botellas.",
+  "objects_list": "- Personas: 1\n- Botellas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando o comprando, mientras que una botella se encuentra en las cercan\u00edas, lo que podr\u00eda indicar que alguien ha estado consumiendo una bebida. La ausencia de colisiones sugiere que el flujo de personas es fluido y que no hay interacciones problem\u00e1ticas en este momento."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00075.jpg:
+{
+  "general_description": "En la imagen 'frame_00075.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00076.jpg:
+{
+  "general_description": "En la imagen 'frame_00076.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00089.jpg:
+{
+  "general_description": "En la imagen 'frame_00089.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00115.jpg:
+{
+  "general_description": "En la imagen 'frame_00115.jpg', se han detectado dos clases de objetos: personas y botellas.",
+  "objects_list": "- Personas: 1\n- Botellas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona que parece estar disfrutando de su tiempo en el centro comercial, posiblemente explorando las tiendas. La presencia de una botella sugiere que podr\u00eda estar tomando un descanso o hidrat\u00e1ndose mientras se mueve por el lugar."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00138.jpg:
+{
+  "general_description": "En la imagen 'frame_00138.jpg', se han detectado dos clases de objetos: personas y botellas.",
+  "objects_list": "- Personas: 1\n- Botellas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando o esperando en un \u00e1rea de descanso. La presencia de una botella sugiere que podr\u00eda estar disfrutando de una bebida mientras se toma un respiro entre compras."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00152.jpg:
+{
+  "general_description": "En la imagen 'frame_00152.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00157.jpg:
+{
+  "general_description": "En la imagen 'frame_00157.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00172.jpg:
+{
+  "general_description": "En la imagen 'frame_00172.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Objetos: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere un ambiente tranquilo y sin interacciones peligrosas.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, posiblemente durante un horario de baja afluencia, donde no hay actividad visible que indique movimiento o interacci\u00f3n entre personas."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00178.jpg:
+{
+  "general_description": "En la imagen 'frame_00178.jpg', se ha detectado una clase de objeto: botellas.",
+  "objects_list": "- Botellas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra una botella solitaria en un \u00e1rea del centro comercial, lo que podr\u00eda indicar que un cliente la ha dejado accidentalmente o que ha sido colocada all\u00ed por un empleado. La ausencia de otras personas sugiere un momento de calma, posiblemente fuera de las horas pico de compras."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~2/frame_00181.jpg:
+{
+  "general_description": "En la imagen 'frame_00181.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Botellas: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere un ambiente tranquilo y sin interacciones peligrosas.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, donde no hay actividad visible, lo que podr\u00eda indicar un horario de baja afluencia de visitantes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~3/frame_00093.jpg:
+{
+  "general_description": "En la imagen 'frame_00093.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Objetos: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere que la escena est\u00e1 vac\u00eda o que la c\u00e1mara no ha capturado actividad en este momento.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, posiblemente durante un horario de baja afluencia, donde no hay personas ni objetos visibles en el campo de visi\u00f3n de la c\u00e1mara."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~3/frame_00152.jpg:
+{
+  "general_description": "En la imagen 'frame_00152.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Botellas: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere que la escena est\u00e1 vac\u00eda o que la c\u00e1mara no ha capturado actividad en este momento.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, posiblemente durante un horario de baja afluencia, donde no hay actividad visible en el \u00e1rea monitoreada."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~4/frame_00086.jpg:
+{
+  "general_description": "En la imagen 'frame_00086.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el espacio es seguro y que la persona se mueve con libertad, disfrutando de su experiencia de compra."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~4/frame_00144.jpg:
+{
+  "general_description": "En la imagen 'frame_00144.jpg', se han detectado dos clases de objetos: personas y botellas.",
+  "objects_list": "- Personas: 1\n- Botellas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, una persona se encuentra en un pasillo del centro comercial, posiblemente explorando las tiendas. La presencia de una botella sugiere que podr\u00eda haber estado consumiendo una bebida mientras paseaba. La ausencia de colisiones indica que el flujo de personas es adecuado, permitiendo una experiencia de compra placentera."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~5/frame_00108.jpg:
+{
+  "general_description": "En la imagen 'frame_00108.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~5/frame_00139.jpg:
+{
+  "general_description": "En la imagen 'frame_00139.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~6/frame_00017.jpg:
+{
+  "general_description": "En la imagen 'frame_00017.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~6/frame_00051.jpg:
+{
+  "general_description": "En la imagen 'frame_00051.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~6/frame_00121.jpg:
+{
+  "general_description": "En la imagen 'frame_00121.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~6/frame_00152.jpg:
+{
+  "general_description": "En la imagen 'frame_00152.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~6/frame_00173.jpg:
+{
+  "general_description": "En la imagen 'frame_00173.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona caminando por el centro comercial, posiblemente explorando las tiendas o dirigi\u00e9ndose a un \u00e1rea de descanso. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una experiencia de compra agradable."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164125600~6/frame_00184.jpg:
+{
+  "general_description": "En la imagen 'frame_00184.jpg', se han detectado dos clases de objetos: personas y microondas.",
+  "objects_list": "- Personas: 1\n- Microondas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona cerca de un microondas, posiblemente en una zona de descanso o \u00e1rea de comida del centro comercial. La presencia del microondas sugiere que el lugar est\u00e1 dise\u00f1ado para que los visitantes puedan calentar alimentos, lo que a\u00f1ade un toque de comodidad y funcionalidad al espacio. La escena refleja un momento cotidiano en un centro comercial, donde los visitantes buscan relajarse y disfrutar de su tiempo."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164929985~2/frame_00065.jpg:
+{
+  "general_description": "En la imagen 'frame_00065.jpg', se han detectado tres clases de objetos: personas.",
+  "objects_list": "- Personas: 3",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente fluido y sin conflictos entre los individuos presentes.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a tres personas en un centro comercial, cada una ocupando su propio espacio. La ausencia de colisiones indica que est\u00e1n movi\u00e9ndose de manera ordenada, posiblemente explorando las tiendas o dirigi\u00e9ndose a un punto de encuentro. La diversidad en la confianza de detecci\u00f3n sugiere que algunas personas est\u00e1n m\u00e1s claramente visibles que otras, lo que podr\u00eda reflejar diferentes niveles de actividad o atenci\u00f3n en la escena."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164929985~2/frame_00144.jpg:
+{
+  "general_description": "En la imagen 'frame_00144.jpg', se han detectado tres clases de objetos: personas.",
+  "objects_list": "- Personas: 3",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un flujo de movimiento ordenado entre las personas presentes.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a tres personas en un centro comercial, cada una en diferentes posiciones. La confianza alta de la detecci\u00f3n de la primera persona indica que est\u00e1 claramente visible, mientras que las otras dos tienen una menor visibilidad. Esto podr\u00eda reflejar un momento de tranquilidad en el centro comercial, donde los visitantes se mueven sin prisa, disfrutando de su tiempo de compras."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164929985~3/frame_00062.jpg:
+{
+  "general_description": "En la imagen 'frame_00062.jpg', se han detectado tres clases de objetos: personas.",
+  "objects_list": "- Personas: 3",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente fluido y sin conflictos entre los individuos presentes.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a tres personas en un centro comercial, cada una en diferentes posiciones. La primera persona, con alta confianza, parece estar en el centro de la escena, mientras que las otras dos est\u00e1n m\u00e1s alejadas. Esto podr\u00eda indicar que el \u00e1rea est\u00e1 moderadamente concurrida, pero no hay interacciones conflictivas entre los individuos."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164929985~3/frame_00132.jpg:
+{
+  "general_description": "En la imagen 'frame_00132.jpg', se han detectado tres clases de objetos: personas.",
+  "objects_list": "- Personas: 3",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un flujo de movimiento ordenado entre las personas presentes.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen captura un momento en un centro comercial donde tres personas se encuentran en diferentes posiciones. La confianza alta de la detecci\u00f3n de la primera persona indica que podr\u00eda ser un cliente que se detiene a observar una vitrina, mientras que las otras dos personas parecen estar en movimiento, posiblemente dirigi\u00e9ndose a diferentes tiendas. La ausencia de colisiones sugiere que el ambiente es tranquilo y que las personas est\u00e1n navegando sin prisa por el espacio."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164929985~3/frame_00179.jpg:
+{
+  "general_description": "En la imagen 'frame_00179.jpg', se han detectado cuatro clases de objetos: personas.",
+  "objects_list": "- Personas: 4",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos personas (ID 2 y 3) con un \u00edndice de intersecci\u00f3n sobre la uni\u00f3n (IoU) de 0.58, lo que indica una superposici\u00f3n moderada entre ellas. Esto podr\u00eda significar que est\u00e1n caminando muy cerca una de la otra, posiblemente en un pasillo del centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta escena del centro comercial, observamos a varias personas movi\u00e9ndose por el espacio. La proximidad de dos de ellas sugiere que podr\u00edan estar conversando o simplemente caminando juntas, lo que es com\u00fan en un entorno de compras. La imagen captura un momento cotidiano en el que la interacci\u00f3n social y la actividad comercial se entrelazan."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164929985~4/frame_00139.jpg:
+{
+  "general_description": "En la imagen 'frame_00139.jpg', se han detectado tres clases de objetos: personas.",
+  "objects_list": "- Personas: 3",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un flujo de movimiento ordenado entre las personas presentes.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a tres personas en un centro comercial, cada una en diferentes posiciones. La primera persona, con alta confianza, parece estar en una zona m\u00e1s central, mientras que las otras dos est\u00e1n m\u00e1s cerca de los bordes de la imagen. Esto podr\u00eda indicar que est\u00e1n explorando diferentes \u00e1reas del centro comercial, posiblemente buscando tiendas o servicios. La ausencia de colisiones sugiere que el ambiente es tranquilo y que las personas se mueven sin prisa, disfrutando de su tiempo de compras."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164929985~5/frame_00049.jpg:
+{
+  "general_description": "En la imagen 'frame_00049.jpg', se han detectado tres clases de objetos: personas.",
+  "objects_list": "- Personas: 3",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente fluido y sin conflictos entre los individuos presentes.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a tres personas en un centro comercial, cada una en diferentes posiciones. La primera persona, con alta confianza, parece estar en una zona m\u00e1s central, mientras que las otras dos est\u00e1n m\u00e1s alejadas. Esto podr\u00eda indicar que est\u00e1n explorando diferentes \u00e1reas del centro comercial, disfrutando de su tiempo de compras o socializando. La ausencia de colisiones sugiere que el espacio es lo suficientemente amplio para que las personas se muevan sin inconvenientes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_164929985~5/frame_00149.jpg:
+{
+  "general_description": "En la imagen 'frame_00149.jpg', se han detectado tres clases de objetos: personas.",
+  "objects_list": "- Personas: 3",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un flujo de movimiento ordenado entre las personas presentes.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a tres personas en un centro comercial, cada una en diferentes posiciones. La confianza alta de la detecci\u00f3n de la primera persona indica que est\u00e1 claramente visible, mientras que las otras dos tienen una menor visibilidad. Esto podr\u00eda reflejar un momento de tranquilidad en el centro comercial, donde los visitantes se mueven sin prisa, disfrutando de su tiempo de compras."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~2/frame_00017.jpg:
+{
+  "general_description": "En la imagen 'frame_00017.jpg', se han detectado dos clases de objetos: personas y botellas.",
+  "objects_list": "- Personas: 1\n- Botellas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, una persona se encuentra en el centro comercial, posiblemente explorando o comprando. A su lado, hay una botella, que podr\u00eda ser un producto en exhibici\u00f3n o un objeto que la persona ha dejado temporalmente. La ausencia de colisiones indica que la persona se mueve con libertad, disfrutando de su experiencia de compra."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~2/frame_00041.jpg:
+{
+  "general_description": "En la imagen 'frame_00041.jpg', se han detectado dos clases de objetos: personas y maletas.",
+  "objects_list": "- Personas: 1\n- Maletas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona que parece estar caminando por el centro comercial, posiblemente en busca de una tienda o esperando a alguien. A su lado, hay una maleta, lo que podr\u00eda indicar que la persona est\u00e1 de viaje o ha llegado recientemente al centro comercial. La ausencia de colisiones sugiere que el flujo de personas es fluido y que el espacio est\u00e1 bien organizado, permitiendo una experiencia de compra c\u00f3moda."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~2/frame_00072.jpg:
+{
+  "general_description": "En la imagen 'frame_00072.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el espacio es seguro y que la persona se mueve con libertad, disfrutando de su experiencia de compra."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~2/frame_00105.jpg:
+{
+  "general_description": "En la imagen 'frame_00105.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~2/frame_00118.jpg:
+{
+  "general_description": "En la imagen 'frame_00118.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~2/frame_00150.jpg:
+{
+  "general_description": "En la imagen 'frame_00150.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Objetos: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere un ambiente tranquilo y sin interacciones peligrosas.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, posiblemente durante un horario de baja afluencia, donde no hay actividad visible que indique movimiento o interacci\u00f3n entre personas."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~2/frame_00168.jpg:
+{
+  "general_description": "En la imagen 'frame_00168.jpg', se ha detectado una clase de objeto: un libro.",
+  "objects_list": "- Libros: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un entorno tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un libro que parece haber sido dejado en una superficie dentro del centro comercial. Esto podr\u00eda indicar que un cliente estuvo revisando el libro antes de decidir no comprarlo, lo que refleja el comportamiento de los consumidores en un espacio de compras donde la curiosidad y la exploraci\u00f3n son comunes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~2/frame_00179.jpg:
+{
+  "general_description": "En la imagen 'frame_00179.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Objetos: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere una escena tranquila y sin interacciones peligrosas.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, donde no hay actividad visible, lo que podr\u00eda indicar un horario de baja afluencia de p\u00fablico."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~3/frame_00026.jpg:
+{
+  "general_description": "En la imagen 'frame_00026.jpg', se han detectado dos clases de objetos: personas y libros.",
+  "objects_list": "- Personas: 1\n- Libros: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona que parece estar explorando una secci\u00f3n de libros en el centro comercial. La presencia del libro indica que podr\u00eda estar buscando informaci\u00f3n o entretenimiento, lo que a\u00f1ade un toque de curiosidad a la escena. La ausencia de colisiones sugiere que el espacio es amplio y c\u00f3modo, permitiendo a los visitantes moverse libremente."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~3/frame_00083.jpg:
+{
+  "general_description": "En la imagen 'frame_00083.jpg', se ha detectado una clase de objeto: un libro.",
+  "objects_list": "- Libros: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un libro que parece haber sido dejado en una mesa o estante, lo que podr\u00eda indicar que un cliente estaba interesado en \u00e9l pero decidi\u00f3 no comprarlo. Esto podr\u00eda reflejar el comportamiento de los compradores en un centro comercial, donde la curiosidad y la exploraci\u00f3n son comunes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~3/frame_00161.jpg:
+{
+  "general_description": "En la imagen 'frame_00161.jpg', se han detectado dos clases de objetos: personas y botellas.",
+  "objects_list": "- Personas: 1\n- Botellas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando o comprando, mientras que una botella se encuentra en el entorno, lo que podr\u00eda indicar que alguien ha estado consumiendo una bebida en el lugar. La ausencia de colisiones sugiere que la persona se mueve libremente, disfrutando de su experiencia de compra."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~4/frame_00057.jpg:
+{
+  "general_description": "En la imagen 'frame_00057.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~4/frame_00106.jpg:
+{
+  "general_description": "En la imagen 'frame_00106.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~4/frame_00147.jpg:
+{
+  "general_description": "En la imagen 'frame_00147.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~5/frame_00075.jpg:
+{
+  "general_description": "En la imagen 'frame_00075.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el espacio es seguro y que la persona se mueve con libertad, disfrutando de su experiencia de compra."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~5/frame_00101.jpg:
+{
+  "general_description": "En la imagen 'frame_00101.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~5/frame_00142.jpg:
+{
+  "general_description": "En la imagen 'frame_00142.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Botellas: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere un ambiente tranquilo y sin interacciones peligrosas.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, donde no hay actividad visible, lo que podr\u00eda indicar un horario de baja afluencia de clientes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~5/frame_00166.jpg:
+{
+  "general_description": "En la imagen 'frame_00166.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Botellas: 0\n- Otros: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere un ambiente tranquilo y sin interacciones peligrosas.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, donde no hay actividad visible, lo que podr\u00eda indicar un horario de baja afluencia de visitantes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~6/frame_00120.jpg:
+{
+  "general_description": "En la imagen 'frame_00120.jpg', se han detectado dos clases de objetos: personas y maletas.",
+  "objects_list": "- Personas: 1\n- Maletas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona que parece estar caminando por el centro comercial, posiblemente en busca de una tienda o esperando a alguien. La maleta que se encuentra en la escena podr\u00eda indicar que la persona ha llegado de un viaje o est\u00e1 en tr\u00e1nsito, lo que a\u00f1ade un elemento de movimiento y actividad al entorno del centro comercial."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_191323468~6/frame_00175.jpg:
+{
+  "general_description": "En la imagen 'frame_00175.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Objetos: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere que la escena est\u00e1 vac\u00eda o que la c\u00e1mara no ha capturado actividad en este momento.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, posiblemente durante un horario de baja afluencia, donde no hay personas ni actividad visible."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~2/frame_00046.jpg:
+{
+  "general_description": "En la imagen 'frame_00046.jpg', se han detectado dos clases de objetos: personas y libros.",
+  "objects_list": "- Personas: 1\n- Libros: 4",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona en un entorno de centro comercial rodeada de varios libros. La presencia de libros puede indicar una secci\u00f3n de lectura o un \u00e1rea dedicada a la venta de literatura, lo que sugiere que el centro comercial no solo se enfoca en la moda y la tecnolog\u00eda, sino tambi\u00e9n en la cultura y el conocimiento. La persona parece estar interesada en los libros, lo que podr\u00eda reflejar una b\u00fasqueda de informaci\u00f3n o entretenimiento en un espacio que fomenta la curiosidad."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~2/frame_00148.jpg:
+{
+  "general_description": "En la imagen 'frame_00148.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~3/frame_00138.jpg:
+{
+  "general_description": "En la imagen 'frame_00138.jpg', se han detectado dos clases de objetos: personas y libros.",
+  "objects_list": "- Personas: 1\n- Libros: 6",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos libros, con un \u00edndice de intersecci\u00f3n sobre la uni\u00f3n (IoU) de 0.123, lo que sugiere que los libros est\u00e1n relativamente cerca uno del otro, pero no se superponen significativamente. Esto podr\u00eda indicar que est\u00e1n apilados o colocados uno al lado del otro en una estanter\u00eda.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta escena de un centro comercial, observamos a una persona que parece estar interesada en una secci\u00f3n donde se exhiben varios libros. La presencia de m\u00faltiples libros sugiere que podr\u00eda ser una librer\u00eda o una secci\u00f3n dedicada a la lectura, donde los clientes pueden explorar diferentes t\u00edtulos. La colisi\u00f3n entre los libros indica que algunos de ellos est\u00e1n organizados de manera que podr\u00edan ser f\u00e1cilmente accesibles para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~3/frame_00167.jpg:
+{
+  "general_description": "En la imagen 'frame_00167.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona caminando por el centro comercial, posiblemente explorando las tiendas o dirigi\u00e9ndose a un \u00e1rea de descanso. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los visitantes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~4/frame_00123.jpg:
+{
+  "general_description": "En la imagen 'frame_00123.jpg', se han detectado m\u00faltiples libros en un entorno de centro comercial.",
+  "objects_list": "- Libros: 8",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos libros, con un \u00edndice de intersecci\u00f3n sobre la uni\u00f3n (IoU) de 0.106, lo que indica que hay una superposici\u00f3n m\u00ednima entre ellos. Esto podr\u00eda significar que los libros est\u00e1n apilados o colocados muy cerca uno del otro, lo que es com\u00fan en \u00e1reas de exhibici\u00f3n de productos.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa escena muestra un \u00e1rea de exhibici\u00f3n en un centro comercial donde varios libros est\u00e1n dispuestos. La disposici\u00f3n sugiere que podr\u00eda ser una secci\u00f3n dedicada a la lectura o a la venta de libros, atrayendo a los clientes que buscan material de lectura. La colisi\u00f3n entre algunos libros indica que podr\u00edan estar organizados de manera un poco desordenada, lo que podr\u00eda invitar a los compradores a reorganizarlos o a explorar m\u00e1s a fondo."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~4/frame_00151.jpg:
+{
+  "general_description": "En la imagen 'frame_00151.jpg', se han detectado una clase de objetos: libros.",
+  "objects_list": "- Libros: 8",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un entorno ordenado y sin interacciones problem\u00e1ticas entre los objetos.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra una colecci\u00f3n de libros dispuestos en un \u00e1rea del centro comercial, posiblemente en una secci\u00f3n dedicada a la lectura o la educaci\u00f3n. La presencia de m\u00faltiples libros indica un inter\u00e9s por la literatura o el aprendizaje, sugiriendo que este espacio podr\u00eda estar dise\u00f1ado para atraer a estudiantes o a personas que buscan un momento de tranquilidad en medio del bullicio del centro comercial."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~5/frame_00072.jpg:
+{
+  "general_description": "En la imagen 'frame_00072.jpg', se han detectado m\u00faltiples libros en un entorno de centro comercial.",
+  "objects_list": "- Libros: 8",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos libros, con un \u00edndice de intersecci\u00f3n sobre la uni\u00f3n (IoU) de 0.108, lo que indica que hay un solapamiento m\u00ednimo entre ellos. Esto podr\u00eda sugerir que los libros est\u00e1n apilados o colocados muy cerca unos de otros, lo que es com\u00fan en \u00e1reas de exhibici\u00f3n de productos.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa escena muestra un \u00e1rea de exhibici\u00f3n en un centro comercial donde varios libros est\u00e1n dispuestos. La disposici\u00f3n sugiere que podr\u00eda ser una secci\u00f3n dedicada a la lectura o a la venta de libros, atrayendo a los clientes que buscan material de lectura. La colisi\u00f3n entre algunos libros indica que podr\u00edan estar organizados de manera un poco desordenada, lo que podr\u00eda invitar a los compradores a reorganizarlos o a explorar m\u00e1s a fondo."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~5/frame_00116.jpg:
+{
+  "general_description": "En la imagen 'frame_00116.jpg', se han detectado tres clases de objetos: personas y libros, adem\u00e1s de un microondas.",
+  "objects_list": "- Personas: 1\n- Libros: 7\n- Microondas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe han registrado colisiones entre un libro y otro libro, lo que sugiere que estos objetos est\u00e1n muy cerca uno del otro, posiblemente en una estanter\u00eda o mesa. La baja puntuaci\u00f3n de IoU indica que no est\u00e1n superpuestos, pero s\u00ed en proximidad.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa escena muestra a una persona en un centro comercial, rodeada de varios libros que parecen estar expuestos para la venta. La presencia del microondas sugiere que podr\u00eda haber una secci\u00f3n de productos para el hogar cercana. La disposici\u00f3n de los libros podr\u00eda indicar un \u00e1rea de lectura o un peque\u00f1o caf\u00e9, donde los clientes pueden disfrutar de un momento de tranquilidad entre compras."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~5/frame_00163.jpg:
+{
+  "general_description": "En la imagen 'frame_00163.jpg', se han detectado dos clases de objetos: personas y libros.",
+  "objects_list": "- Personas: 1\n- Libros: 7",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos libros (ID 1 y 4) con un \u00edndice de intersecci\u00f3n sobre la uni\u00f3n (IoU) de 0.104, lo que indica una superposici\u00f3n m\u00ednima. Esto sugiere que los libros est\u00e1n muy cerca uno del otro, pero no necesariamente en una posici\u00f3n que impida su visualizaci\u00f3n o manipulaci\u00f3n.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta escena del centro comercial, una persona parece estar interesada en una secci\u00f3n donde se exhiben varios libros. La proximidad de los libros sugiere que podr\u00edan estar en un estante o mesa de exhibici\u00f3n, lo que invita a los compradores a explorar. La presencia de una sola persona indica que el \u00e1rea podr\u00eda estar menos concurrida en este momento, permitiendo una experiencia de compra m\u00e1s tranquila."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~6/frame_00067.jpg:
+{
+  "general_description": "En la imagen 'frame_00067.jpg', se han detectado dos clases de objetos: personas y libros.",
+  "objects_list": "- Personas: 1\n- Libros: 4",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona en un entorno de compras, rodeada de varios libros. La presencia de libros puede indicar una secci\u00f3n de lectura o un \u00e1rea dedicada a la venta de literatura, lo que sugiere que el centro comercial no solo se enfoca en la moda y la tecnolog\u00eda, sino tambi\u00e9n en la cultura y el conocimiento. La persona parece estar interesada en los libros, lo que podr\u00eda reflejar una b\u00fasqueda de informaci\u00f3n o entretenimiento."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~6/frame_00158.jpg:
+{
+  "general_description": "En la imagen 'frame_00158.jpg', se han detectado cuatro clases de objetos: personas y libros, adem\u00e1s de un televisor.",
+  "objects_list": "- Personas: 1\n- Libros: 4\n- Televisores: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un \u00e1rea del centro comercial rodeada de varios libros, posiblemente en una secci\u00f3n de librer\u00eda. La presencia del televisor sugiere que hay un \u00e1rea de entretenimiento o tecnolog\u00eda cercana, creando un ambiente propicio para la compra y el ocio."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~7/frame_00083.jpg:
+{
+  "general_description": "En la imagen 'frame_00083.jpg', se han detectado dos clases de objetos: personas y libros.",
+  "objects_list": "- Personas: 1\n- Libros: 5",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos libros (\u00edndices 0 y 3) con un \u00edndice de superposici\u00f3n (IoU) de 0.107, lo que indica una intersecci\u00f3n m\u00ednima entre sus \u00e1reas. Esto sugiere que los libros est\u00e1n muy cerca uno del otro, pero no necesariamente en una posici\u00f3n que impida su manipulaci\u00f3n.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa escena muestra a una persona en un centro comercial rodeada de varios libros. La proximidad de los libros sugiere que podr\u00edan estar en una estanter\u00eda o en una mesa de exhibici\u00f3n, lo que invita a la persona a explorar o leer. La colisi\u00f3n entre los libros podr\u00eda indicar que est\u00e1n apilados de manera desordenada, lo que podr\u00eda ser un punto de inter\u00e9s para los compradores que buscan una buena lectura."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~7/frame_00142.jpg:
+{
+  "general_description": "En la imagen 'frame_00142.jpg', se han detectado m\u00faltiples libros en un entorno de centro comercial.",
+  "objects_list": "- Libros: 8",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente ordenado y sin obstrucciones.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra una serie de libros dispuestos en un \u00e1rea del centro comercial, posiblemente en una secci\u00f3n dedicada a la lectura o la educaci\u00f3n. La presencia de varios libros indica un inter\u00e9s por la literatura o el aprendizaje, lo que podr\u00eda atraer a un p\u00fablico diverso, desde estudiantes hasta adultos que buscan entretenimiento o conocimiento."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~8/frame_00034.jpg:
+{
+  "general_description": "En la imagen 'frame_00034.jpg', se han detectado m\u00faltiples libros en un entorno de centro comercial.",
+  "objects_list": "- Libros: 7",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos libros (\u00edndices 0 y 3) con un \u00edndice de intersecci\u00f3n sobre la uni\u00f3n (IoU) de 0.101, lo que sugiere que estos dos libros est\u00e1n muy cerca uno del otro, pero no se superponen significativamente. Esto podr\u00eda indicar que est\u00e1n colocados en una estanter\u00eda o mesa, posiblemente en una secci\u00f3n de libros del centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa escena muestra una colecci\u00f3n de libros en un centro comercial, lo que sugiere que hay un \u00e1rea dedicada a la lectura o a la venta de literatura. La proximidad de los libros indica que podr\u00edan estar organizados para atraer a los clientes, invit\u00e1ndolos a explorar y descubrir nuevas lecturas. La colisi\u00f3n leve entre dos de ellos podr\u00eda ser un indicativo de un desorden menor, quiz\u00e1s causado por un cliente que revis\u00f3 los libros y no los volvi\u00f3 a colocar en su lugar."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~8/frame_00085.jpg:
+{
+  "general_description": "En la imagen 'frame_00085.jpg', se han detectado m\u00faltiples libros en un entorno de centro comercial.",
+  "objects_list": "- Libros: 8",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe han registrado colisiones entre algunos libros, lo que sugiere que podr\u00edan estar apilados o agrupados de manera desorganizada, posiblemente en una secci\u00f3n de libros o en un \u00e1rea de exhibici\u00f3n.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa escena muestra un \u00e1rea de exhibici\u00f3n en un centro comercial donde varios libros est\u00e1n dispuestos, algunos de ellos en contacto entre s\u00ed. Esto podr\u00eda indicar un espacio dedicado a la lectura o a la venta de libros, donde los clientes pueden explorar diferentes t\u00edtulos. La disposici\u00f3n de los libros sugiere que el lugar podr\u00eda estar en proceso de organizaci\u00f3n o que ha sido recientemente visitado por compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192137805~8/frame_00154.jpg:
+{
+  "general_description": "En la imagen 'frame_00154.jpg', se han detectado tres clases de objetos: libros, personas y un televisor.",
+  "objects_list": "- Libros: 6\n- Personas: 2\n- Televisores: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nSe ha registrado una colisi\u00f3n entre dos personas, con un \u00edndice de intersecci\u00f3n sobre la uni\u00f3n (IoU) de 0.646, lo que sugiere que est\u00e1n bastante cerca una de la otra, posiblemente interactuando o en un espacio reducido.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa escena muestra a dos personas en un centro comercial, rodeadas de varios libros. La proximidad entre ellas podr\u00eda indicar que est\u00e1n conversando o revisando los libros juntos, mientras que un televisor se encuentra en el fondo, sugiriendo que el \u00e1rea podr\u00eda estar dedicada a la venta de productos electr\u00f3nicos y literatura."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192903914~2/frame_00088.jpg:
+{
+  "general_description": "En la imagen 'frame_00088.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192903914~2/frame_00152.jpg:
+{
+  "general_description": "En la imagen 'frame_00152.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192903914~3/frame_00096.jpg:
+{
+  "general_description": "En la imagen 'frame_00096.jpg', se han detectado dos clases de objetos: personas y refrigeradores.",
+  "objects_list": "- Personas: 1\n- Refrigeradores: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nEn esta imagen, observamos a una persona que parece estar explorando la zona de refrigeradores en un centro comercial. La baja confianza en la detecci\u00f3n del refrigerador podr\u00eda indicar que no es el foco principal de la atenci\u00f3n de la persona, quien podr\u00eda estar buscando algo espec\u00edfico o simplemente paseando por la tienda."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192903914~3/frame_00147.jpg:
+{
+  "general_description": "En la imagen 'frame_00147.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Botellas: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere un ambiente tranquilo y sin interacciones peligrosas.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, donde no hay actividad visible, lo que podr\u00eda indicar un horario de baja afluencia de p\u00fablico."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192903914~4/frame_00012.jpg:
+{
+  "general_description": "En la imagen 'frame_00012.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen captura a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192903914~4/frame_00035.jpg:
+{
+  "general_description": "En la imagen 'frame_00035.jpg', se ha detectado una clase de objeto: personas.",
+  "objects_list": "- Personas: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando las tiendas o esperando a alguien. La ausencia de colisiones indica que el flujo de personas es fluido, lo que contribuye a una atm\u00f3sfera relajada y agradable para los compradores."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192903914~4/frame_00073.jpg:
+{
+  "general_description": "En la imagen 'frame_00073.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Botellas: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere un ambiente tranquilo y sin interacciones peligrosas.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, donde no hay actividad visible, lo que podr\u00eda indicar un horario de baja afluencia de visitantes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192903914~4/frame_00098.jpg:
+{
+  "general_description": "En la imagen 'frame_00098.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Objetos: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere que la escena est\u00e1 vac\u00eda o que la c\u00e1mara no ha capturado actividad en este momento.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, posiblemente durante un horario de baja afluencia, donde no hay actividad visible en el \u00e1rea monitoreada."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192903914~4/frame_00124.jpg:
+{
+  "general_description": "En la imagen 'frame_00124.jpg', no se han detectado objetos ni colisiones.",
+  "objects_list": "- Personas: 0\n- Botellas: 0",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones, lo que sugiere un ambiente tranquilo y sin interacciones peligrosas.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra un momento de calma en el centro comercial, donde no hay actividad visible, lo que podr\u00eda indicar un horario de baja afluencia de visitantes."
+}
+--------------------------------------------------
+Conclusión para keyframes_VID_20250611_192903914~4/frame_00165.jpg:
+{
+  "general_description": "En la imagen 'frame_00165.jpg', se han detectado dos clases de objetos: personas y libros.",
+  "objects_list": "- Personas: 1\n- Libros: 1",
+  "collision_analysis": "An\u00e1lisis de Colisiones\nNo se han registrado colisiones en la escena, lo que sugiere un ambiente tranquilo y ordenado en el centro comercial.",
+  "narrative": "Interpretaci\u00f3n Narrativa de la Escena\nLa imagen muestra a una persona en un centro comercial, posiblemente explorando una secci\u00f3n de libros. La presencia del libro indica que podr\u00eda estar considerando una compra, lo que sugiere un ambiente de compras activo y la b\u00fasqueda de conocimiento o entretenimiento."
+}
+--------------------------------------------------

@@ -65,6 +65,10 @@ def Show_comparison(normalized_scores, keyframes_dict, video_name, strategy_name
         plt.tight_layout()
         plt.show()
 
+    if not keyframes_dict:
+        print(f"[ADVERTENCIA] No se detectaron keyframes para el video {video_name} con la estrategia {strategy_name}.")
+        return
+
 # Función para visualizar los resultados de keyframes
 def visualize_keyframes(input_video, strategy, scale_percent=20, speed=5, ):
     # Extraer puntuaciones y keyframes usando una estrategia dada
@@ -73,19 +77,62 @@ def visualize_keyframes(input_video, strategy, scale_percent=20, speed=5, ):
     )
 
 if __name__ == '__main__':
-    # Lista de videos a procesar
+    # Estrategia
     strategies = [ForegroundScore()]
-    #    HistogramDifferenceScore(), SpatialDifferenceScore(), FrequencyDifferenceScore()]
-    names_videos = ['oficina3','oficina4','oficina5','oficina6','video_persona']
-    """'oficina2','caricatura-conejo','cortometraje-nina-parque','cortometraje-robo','movimiento-perro',"""
+    #Lista de videos a procesar
+    names_videos = [
+        'VID_20250610_205107291~2',
+        'VID_20250610_205107291~3',
+        'VID_20250610_210055776~2',
+        'VID_20250610_210055776~3',
+        'VID_20250610_210055776~4',
+        'VID_20250611_164125600~2',
+        'VID_20250611_164125600~3',
+        'VID_20250611_164125600~4',
+        'VID_20250611_164125600~5',
+        'VID_20250611_164125600~6',
+        'VID_20250611_164929985~2',
+        'VID_20250611_164929985~3',
+        'VID_20250611_164929985~4',
+        'VID_20250611_164929985~5',
+        'VID_20250611_191323468~2',
+        'VID_20250611_191323468~3',
+        'VID_20250611_191323468~4',
+        'VID_20250611_191323468~5',
+        'VID_20250611_191323468~6',
+        'VID_20250611_192137805~2',
+        'VID_20250611_192137805~3',
+        'VID_20250611_192137805~4',
+        'VID_20250611_192137805~5',
+        'VID_20250611_192137805~6',
+        'VID_20250611_192137805~7',
+        'VID_20250611_192137805~8',
+        'VID_20250611_192903914~2',
+        'VID_20250611_192903914~3',
+        'VID_20250611_192903914~4',
+    ]
 
     for strategy in strategies:
         for name in names_videos:
-            video_files = f"../videos/input/{name}.mp4"
+            video_files = f"C:/Users/panmo/PycharmProjects/PythonProject/videos/input/{name}.mp4"
             print(f"[Video]  {name}")
             # Aplicar visualización a cada video usando map
             normalized_scores, keyframes =  visualize_keyframes(video_files, strategy)
             print('\n')
             print(keyframes,'\n')
             Show_comparison(normalized_scores, keyframes, video_name = os.path.basename(video_files), strategy_name=strategy.__class__.__name__)
+
+            # Guardar imágenes de los keyframes detectados
+            indices_a_guardar = list(keyframes.values())[0] if keyframes else []
+            save_keyframes_as_images(
+                video_files,
+                indices_a_guardar,
+                output_dir=f"../videos/keyframes_output/keyframes_{name}",
+                scale_percent=20,
+                speed=5
+            )
+
         print('\n',('-'*40),'\n')
+
+    #indices_a_guardar = list(keyframes.values())[0] if keyframes else []
+    #save_keyframes_as_images(video_files, indices_a_guardar, output_dir=f"keyframes_{name}", scale_percent=20, speed=5)

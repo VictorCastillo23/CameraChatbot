@@ -1,0 +1,32 @@
+{
+    "frame_00108.jpg": {
+        "detections": [
+            {
+                "class": "person",
+                "confidence": 0.9237502217292786,
+                "box": {
+                    "x1": 281.3,
+                    "y1": 41.2,
+                    "x2": 364.8,
+                    "y2": 214.1
+                }
+            }
+        ],
+        "collisions": []
+    },
+    "frame_00139.jpg": {
+        "detections": [
+            {
+                "class": "person",
+                "confidence": 0.9191932082176208,
+                "box": {
+                    "x1": 268.8,
+                    "y1": 45.1,
+                    "x2": 365.8,
+                    "y2": 214.5
+                }
+            }
+        ],
+        "collisions": []
+    }
+}

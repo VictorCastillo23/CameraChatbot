@@ -91,6 +91,7 @@ import matplotlib.pyplot as plt
 
 from sklearn.metrics import root_mean_squared_error
 import warnings
+#from numpy.polynomial.polyutils import RankWarning
 
 def get_polynomial_keyframes(signal, degree=10, threshold=0.1):
     x_full = np.arange(len(signal))
@@ -103,7 +104,7 @@ def get_polynomial_keyframes(signal, degree=10, threshold=0.1):
     y_fit = y_full[start_index:]
 
     with warnings.catch_warnings():
-        warnings.simplefilter('ignore', np.RankWarning)
+        warnings.simplefilter('ignore', np.polynomial.polyutils.RankWarning)
         coeffs = np.polyfit(x_fit, y_fit, deg=degree)
 
     poly = np.poly1d(coeffs)
