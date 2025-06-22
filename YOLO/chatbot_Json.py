@@ -166,6 +166,14 @@ class Chatbot_YOLO_JSON():
                 end = time.time()
                 print(f"Imagen {carpeta}/{image_name} procesada en {end - start:.2f} segundos.")
 
+                end = time.time()
+                duracion = end - start
+
+                if carpeta not in tiempos_por_video:
+                    tiempos_por_video[carpeta] = 0
+
+                tiempos_por_video[carpeta] += duracion
+
         for carpeta, narrativas in narrativas_por_carpeta.items():
             resumen_prompt = (
                     f"Has recibido una serie de narrativas que corresponden a imágenes extraídas de un video de vigilancia "
@@ -184,20 +192,29 @@ class Chatbot_YOLO_JSON():
             self.guardar_narrativa_general(carpeta, narrativa_general)
 
         print(f"\n✅ (JSON) Tiempo total: {time.time() - start_global:.2f} segundos.")
-        end = time.time()
-        duracion = end - start
-        tiempos_por_video[carpeta] = duracion
 
         # Graficar tiempos por video
         videos = list(tiempos_por_video.keys())
         tiempos = list(tiempos_por_video.values())
         plt.figure(figsize=(10, 6))
-        plt.bar(videos, tiempos, color='skyblue')
+        bars = plt.bar(videos, tiempos, color='skyblue')
 
         plt.title("Tiempo de procesamiento por video (JSON)")
         plt.xlabel("Video (carpeta)")
         plt.ylabel("Tiempo (segundos)")
-        plt.xticks(rotation=45, ha='right')
+        plt.xticks(rotation=90, ha='right')
+
+        for bar, tiempo in zip(bars, tiempos):
+            altura = bar.get_height()
+            plt.text(
+                bar.get_x() + bar.get_width() / 2,
+                altura + 0.5,
+                f"{tiempo:.2f}s",
+                ha='center',
+                va='bottom',
+                rotation=90
+            )
+
         plt.tight_layout()
         plt.savefig("tiempos_por_video_WITH_JSON.png")
         plt.show()

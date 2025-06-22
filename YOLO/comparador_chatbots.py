@@ -61,7 +61,7 @@ class ComparadorChatbots:
         plt.ylabel("Tiempo (segundos)")
         plt.savefig("tiempos_global.png")
         for i, v in enumerate(valores):
-            plt.text(i, v + 1, f"{v:.2f}s", ha='center')
+            plt.text(i, v + 0.5, f"{v:.2f}s", ha='center', va='bottom')
         plt.tight_layout()
         plt.show()
 
