@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from collections import defaultdict
 import time
 import matplotlib.pyplot as plt
+import psutil
 
 load_dotenv()
 
@@ -94,16 +95,22 @@ class Chatbot_YOLO_JSON():
 
         resultados = {}
         tiempos_por_video = {}
+        memoria_por_video = {}
 
         for carpeta, imagenes in all_data.items():
-            for image_name, data in imagenes.items():
-                start = time.time()
+            memoria_maxima = 0  # Para almacenar el pico de memoria durante el procesamiento del video
+            # Medir memoria antes
+            process = psutil.Process(os.getpid())
 
+            start_video = time.time()
+
+            for image_name, data in imagenes.items():
                 detections = data.get("detections", [])
                 collisions = data.get("collisions", [])
 
                 prompt = (
-                    f"Analiza los datos de la imagen '{image_name}' en la carpeta '{carpeta}'. "
+                    f"Vas a recibir un archivo en formato JSON con datos extraidos por un algoritmo detector de objectos."
+                    "Analiza los datos de la imagen '{image_name}' en la carpeta '{carpeta}'. "
                     "CONTEXTO: CÁMARA DE UN CENTRO COMERCIAL\n"
                     "Devuélveme SOLO un JSON con las siguientes claves:\n"
                     "- general_description: descripción general breve de las clases detectadas.\n"
@@ -163,16 +170,18 @@ class Chatbot_YOLO_JSON():
                         response_text
                     )
 
-                end = time.time()
-                print(f"Imagen {carpeta}/{image_name} procesada en {end - start:.2f} segundos.")
+                # Medir memoria después y calcular pico
+                memoria_actual = process.memory_info().rss / (1024 ** 2)  # en MB
+                if memoria_actual > memoria_maxima:
+                    memoria_maxima = memoria_actual
 
-                end = time.time()
-                duracion = end - start
+                print(f"Imagen {carpeta}/{image_name} procesada.")
 
-                if carpeta not in tiempos_por_video:
-                    tiempos_por_video[carpeta] = 0
+            end_video = time.time()
+            tiempos_por_video[carpeta] = end_video - start_video  # Aquí termina
+            memoria_por_video[carpeta] = memoria_maxima
 
-                tiempos_por_video[carpeta] += duracion
+            memoria_por_video[carpeta] = memoria_maxima  # Guardar el mayor uso para este video
 
         for carpeta, narrativas in narrativas_por_carpeta.items():
             resumen_prompt = (
@@ -218,6 +227,40 @@ class Chatbot_YOLO_JSON():
         plt.tight_layout()
         plt.savefig("tiempos_por_video_WITH_JSON.png")
         plt.show()
+
+        # Gráfica de uso de memoria por video
+        videos_memoria = list(memoria_por_video.keys())
+        usos_memoria = list(memoria_por_video.values())
+
+        plt.figure(figsize=(10, 8))  # más alto para dar espacio
+        bars_memoria = plt.bar(videos_memoria, usos_memoria, color='lightcoral')
+
+        plt.title("Pico de memoria por video (JSON)")
+        plt.xlabel("Video (carpeta)")
+        plt.ylabel("Memoria (MB)")
+        plt.xticks(rotation=90, ha='right')
+
+        # Etiquetas dentro de cada barra (verticales y negras)
+        for bar, mem in zip(bars_memoria, usos_memoria):
+            altura = bar.get_height()
+            plt.text(
+                bar.get_x() + bar.get_width() / 2,
+                altura - 5,  # dentro de la barra
+                f"{mem:.2f} MB",
+                ha='center',
+                va='top',
+                rotation=90,
+                color='black',
+                fontsize=9,
+                fontweight='bold'
+            )
+
+        plt.tight_layout()
+        plt.savefig("memoria_por_video_WITH_JSON.png")
+        plt.show()
+
+        # Promedio de uso de memoria (sólo al final)
+        self.promedio_memoria_mb = sum(memoria_por_video.values()) / len(memoria_por_video) if memoria_por_video else 0
 
         return resultados
 

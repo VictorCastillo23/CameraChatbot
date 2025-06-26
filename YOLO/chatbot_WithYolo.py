@@ -9,6 +9,7 @@ from collections import defaultdict
 import glob
 import time
 import matplotlib.pyplot as plt
+import psutil
 
 load_dotenv()
 
@@ -92,20 +93,23 @@ class Chatbot_WITH_YOLO():
 
         resultados = {}
         tiempos_por_video = {}
+        memoria_por_video = {}
 
         # Recorrer todas las subcarpetas dentro del directorio keyframes_output
         for carpeta_path in glob.glob(os.path.join(keyframes_root, "*")):
-            start = time.time()
-
             carpeta = os.path.basename(carpeta_path)
             imagenes = glob.glob(os.path.join(carpeta_path, "*.jpg"))
+            memoria_maxima = 0
+            process = psutil.Process(os.getpid())
+            start_video = time.time()  # ⏱️ Inicio por carpeta
 
             for imagen_path in imagenes:
                 image_name = os.path.basename(imagen_path)
 
                 # Prompt sin detecciones, solo basado en la imagen y el contexto
                 prompt = (
-                    f"Analiza la imagen '{image_name}' en la carpeta '{carpeta}', proveniente de un video de vigilancia "
+                    f"Vas a recibir una imagen border boxes para detección de objetos, correspondiente a un fotograma clave de un vídeo."
+                    "Analiza la imagen '{image_name}' en la carpeta '{carpeta}', proveniente de un video de vigilancia "
                     "de un centro comercial. Describe lo que podría estar ocurriendo en la escena.\n\n"
                     "Devuélveme SOLO un JSON con las siguientes claves:\n"
                     "- general_description: descripción general de lo que se observa en la imagen.\n"
@@ -155,16 +159,14 @@ class Chatbot_WITH_YOLO():
                         response_text
                     )
 
-                end = time.time()
-                print(f"Imagen {carpeta}/{image_name} procesada en {end - start:.2f} segundos.")
+                print(f"Imagen {carpeta}/{image_name} procesada.")
 
-                end = time.time()
-                duracion = end - start
+                memoria_actual = process.memory_info().rss / (1024 ** 2)
+                memoria_maxima = max(memoria_maxima, memoria_actual)
 
-                if carpeta not in tiempos_por_video:
-                    tiempos_por_video[carpeta] = 0
-
-                tiempos_por_video[carpeta] += duracion
+            end_video = time.time()  # ⏱️ Fin por carpeta
+            tiempos_por_video[carpeta] = end_video - start_video
+            memoria_por_video[carpeta] = memoria_maxima
 
         # Generar narrativa global por carpeta/video
         for carpeta, narrativas in narrativas_por_carpeta.items():
@@ -211,6 +213,40 @@ class Chatbot_WITH_YOLO():
         plt.savefig("tiempos_por_video_WITH_YOLO.png")
         plt.show()
 
+        # Gráfica de uso de memoria por video
+        videos_memoria = list(memoria_por_video.keys())
+        usos_memoria = list(memoria_por_video.values())
+
+        plt.figure(figsize=(10, 6))
+        bars_memoria = plt.bar(videos_memoria, usos_memoria, color='salmon')
+
+        plt.title("Uso de memoria por video (WITH YOLO)")
+        plt.xlabel("Video (carpeta)")
+        plt.ylabel("Memoria pico (MB)")
+        plt.xticks(rotation=90, ha='center')
+
+        # Etiquetas dentro de cada barra (verticales y negras)
+        for bar, mem in zip(bars_memoria, usos_memoria):
+            altura = bar.get_height()
+            plt.text(
+                bar.get_x() + bar.get_width() / 2,
+                altura - 5,  # dentro de la barra
+                f"{mem:.2f} MB",
+                ha='center',
+                va='top',
+                rotation=90,
+                color='black',
+                fontsize=9,
+                fontweight='bold'
+            )
+
+        plt.tight_layout()
+        plt.savefig("memoria_por_video_WITH_YOLO.png")
+        plt.show()
+
+        # Promedio de uso de memoria (sólo al final)
+        self.promedio_memoria_mb = sum(memoria_por_video.values()) / len(memoria_por_video) if memoria_por_video else 0
+
         return resultados
 
     def execute_chatbot_withYolo(self):
@@ -224,7 +260,7 @@ class Chatbot_WITH_YOLO():
 
         chatbot = Chatbot_WITH_YOLO(mysql_config=mysql_config)
 
-        keyframes_root = r"C:/Users/panmo/PycharmProjects/PythonProject/YOLO/runs/resultados_json"
+        keyframes_root = r"C:/Users/panmo/PycharmProjects/PythonProject/YOLO/runs/resultados_json/keyframes_output"
 
         resultados = chatbot.analizar_conclusiones_y_guardar(keyframes_root)
 
