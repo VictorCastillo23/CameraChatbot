@@ -102,6 +102,8 @@ class Chatbot_WITHOUT_YOLO():
             memoria_maxima = 0
             process = psutil.Process(os.getpid())
             start_video = time.time()  # ⏱️ Inicio por carpeta
+            total_respuestas = 0
+            respuestas_validas = 0
 
             for imagen_path in imagenes:
                 image_name = os.path.basename(imagen_path)
@@ -110,7 +112,7 @@ class Chatbot_WITHOUT_YOLO():
                 prompt = (
                     f"Vas a recibir una imagen correspondiente a un fotograma clave de un vídeo."
                     "Analiza la imagen '{image_name}' en la carpeta '{carpeta}', proveniente de un video de vigilancia "
-                    "de un centro comercial. Describe lo que podría estar ocurriendo en la escena.\n\n"
+                    "de un centro comercial en el área de tecnologías. Describe lo que podría estar ocurriendo en la escena.\n\n"
                     "Devuélveme SOLO un JSON con las siguientes claves:\n"
                     "- general_description: descripción general de lo que se observa en la imagen.\n"
                     "- objects_list: si es posible, una lista de objetos visibles (aunque no haya datos específicos).\n"
@@ -122,9 +124,11 @@ class Chatbot_WITHOUT_YOLO():
                 msg = HumanMessage(content=prompt)
                 response = self.llm.invoke([msg])
                 response_text = response.content.strip()
+                total_respuestas += 1
 
                 try:
                     parsed = json.loads(response_text)
+                    respuestas_validas += 1
                     general_desc = parsed.get("general_description", "")
                     objects_list = parsed.get("objects_list", "")
                     if isinstance(objects_list, list):
@@ -193,9 +197,9 @@ class Chatbot_WITHOUT_YOLO():
         plt.figure(figsize=(10, 6))
         bars = plt.bar(videos, tiempos, color='skyblue')
 
-        plt.title("Tiempo de procesamiento por video (WITHOUT YOLO)")
-        plt.xlabel("Video (carpeta)")
-        plt.ylabel("Tiempo (segundos)")
+        plt.title("Processing time per video (WITHOUT YOLO)")
+        plt.xlabel("Video (folder)")
+        plt.ylabel("Time (seconds)")
         plt.xticks(rotation=90, ha='right')
 
         for bar, tiempo in zip(bars, tiempos):
@@ -220,9 +224,9 @@ class Chatbot_WITHOUT_YOLO():
         plt.figure(figsize=(10, 6))
         bars_memoria = plt.bar(videos_memoria, usos_memoria, color='salmon')
 
-        plt.title("Uso de memoria por video (WITHOUT YOLO)")
-        plt.xlabel("Video (carpeta)")
-        plt.ylabel("Memoria pico (MB)")
+        plt.title("Memory usage per video (WITHOUT YOLO)")
+        plt.xlabel("Video (folder)")
+        plt.ylabel("Peak memory (MB)")
         plt.xticks(rotation=90, ha='center')
 
         # Etiquetas dentro de cada barra (verticales y negras)
@@ -242,6 +246,28 @@ class Chatbot_WITHOUT_YOLO():
 
         plt.tight_layout()
         plt.savefig("memoria_por_video_WITHOUT_YOLO.png")
+        plt.show()
+
+        precision_global = (respuestas_validas / total_respuestas) * 100 if total_respuestas > 0 else 0
+        print(
+            f"\n🎯 Precisión de JSON parseado correctamente: {precision_global:.2f}% ({respuestas_validas}/{total_respuestas})")
+
+        precision_por_video = {video: precision_global for video in videos_memoria}
+
+        plt.figure(figsize=(10, 6))
+        scatter = plt.scatter(
+            [tiempos_por_video[v] for v in videos_memoria],
+            [memoria_por_video[v] for v in videos_memoria],
+            c=[precision_por_video[v] for v in videos_memoria],
+            cmap='viridis', s=100, alpha=0.7
+        )
+        plt.colorbar(scatter, label='Accuracy (%)')
+        plt.title("Trade-off between Latency, Memory and Accuracy (WITHOUT YOLO)")
+        plt.xlabel("Time (s)")
+        plt.ylabel("Memory (MB)")
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig("compensacion_latencia_memoria_precision_WITHOUT_YOLO.png")
         plt.show()
 
         # Promedio de uso de memoria (sólo al final)
