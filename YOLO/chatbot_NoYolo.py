@@ -25,7 +25,7 @@ class Chatbot_WITHOUT_YOLO():
         return os.getenv('OPENAI_API_KEY')
 
     def initialize_llm(self):
-        return ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        return ChatOpenAI(model="gpt-4o", temperature=0)
 
     def init_db(self):
         conn = mysql.connector.connect(**self.mysql_config)
@@ -90,103 +90,99 @@ class Chatbot_WITHOUT_YOLO():
         start_global = time.time()
 
         narrativas_por_carpeta = defaultdict(list)
-
         resultados = {}
         tiempos_por_video = {}
         memoria_por_video = {}
 
-        # Recorrer todas las subcarpetas dentro del directorio keyframes_output
-        for carpeta_path in glob.glob(os.path.join(keyframes_root, "*")):
-            carpeta = os.path.basename(carpeta_path)
-            imagenes = glob.glob(os.path.join(carpeta_path, "*.jpg"))
-            memoria_maxima = 0
+        # Recorrer todas las imágenes en todos los subdirectorios de manera recursiva
+        imagenes = glob.glob(os.path.join(keyframes_root, "**", "*.jpg"), recursive=True)
+
+        respuestas_validas = 0
+        total_respuestas = 0
+
+        for imagen_path in imagenes:
+            carpeta_relativa = os.path.relpath(os.path.dirname(imagen_path), keyframes_root)
+            image_name = os.path.basename(imagen_path)
+
+            start_video = time.time()
             process = psutil.Process(os.getpid())
-            start_video = time.time()  # ⏱️ Inicio por carpeta
-            total_respuestas = 0
-            respuestas_validas = 0
 
-            for imagen_path in imagenes:
-                image_name = os.path.basename(imagen_path)
+            prompt = (
+                f"You will receive an image corresponding to a keyframe from a video. "
+                f"Analyze the image '{image_name}' in the folder '{carpeta_relativa}', coming from a SECURITY CAMERA IN A CAR. "
+                "Describe what is happening in the scene.\n\n"
+                "Return ONLY a JSON with the following keys:\n"
+                "- general_description: a general description of what is observed in the image.\n"
+                "- objects_list: if possible, a list of visible objects (even if not specific).\n"
+                "- collision_analysis: if there is movement or visible interaction, interpret possible collisions or relationships.\n"
+                "- narrative: a free and creative narrative of the scene, as if telling a story.\n\n"
+                "Please respond ONLY with plain JSON, without ```json or any other formatting."
+            )
 
-                # Prompt sin detecciones, solo basado en la imagen y el contexto
-                prompt = (
-                    f"Vas a recibir una imagen correspondiente a un fotograma clave de un vídeo."
-                    "Analiza la imagen '{image_name}' en la carpeta '{carpeta}', proveniente de un video de vigilancia "
-                    "de un centro comercial en el área de tecnologías. Describe lo que podría estar ocurriendo en la escena.\n\n"
-                    "Devuélveme SOLO un JSON con las siguientes claves:\n"
-                    "- general_description: descripción general de lo que se observa en la imagen.\n"
-                    "- objects_list: si es posible, una lista de objetos visibles (aunque no haya datos específicos).\n"
-                    "- collision_analysis: si hay movimiento o interacción visible, interpreta posibles colisiones o relaciones.\n"
-                    "- narrative: una narrativa libre y creativa de la escena, como si contaras una historia.\n\n"
-                    "Por favor, responde SOLO con el JSON plano, sin marcarlo con ```json ni ningún otro formato."
+            msg = HumanMessage(content=prompt)
+            response = self.llm.invoke([msg])
+            response_text = response.content.strip()
+            total_respuestas += 1
+
+            try:
+                parsed = json.loads(response_text)
+                respuestas_validas += 1
+                general_desc = parsed.get("general_description", "")
+                objects_list = parsed.get("objects_list", "")
+                if isinstance(objects_list, list):
+                    objects_list = "\n".join(f"- {obj}" for obj in objects_list)
+                collision_analysis = parsed.get("collision_analysis", "")
+                narrative = parsed.get("narrative", "")
+
+                if narrative:
+                    narrativas_por_carpeta[carpeta_relativa].append(narrative)
+
+                resultados[f"{carpeta_relativa}/{image_name}"] = parsed
+
+                self.guardar_story_bd(
+                    carpeta_relativa,
+                    image_name,
+                    general_desc,
+                    objects_list,
+                    collision_analysis,
+                    narrative
+                )
+            except json.JSONDecodeError:
+                resultados[f"{carpeta_relativa}/{image_name}"] = {
+                    "error": "No se pudo interpretar la respuesta como JSON.",
+                    "raw_response": response_text
+                }
+                self.guardar_story_bd(
+                    carpeta_relativa,
+                    image_name,
+                    "",
+                    "",
+                    "",
+                    response_text
                 )
 
-                msg = HumanMessage(content=prompt)
-                response = self.llm.invoke([msg])
-                response_text = response.content.strip()
-                total_respuestas += 1
+            print(f"Imagen {carpeta_relativa}/{image_name} procesada.")
 
-                try:
-                    parsed = json.loads(response_text)
-                    respuestas_validas += 1
-                    general_desc = parsed.get("general_description", "")
-                    objects_list = parsed.get("objects_list", "")
-                    if isinstance(objects_list, list):
-                        objects_list = "\n".join(f"- {obj}" for obj in objects_list)
-                    collision_analysis = parsed.get("collision_analysis", "")
-                    narrative = parsed.get("narrative", "")
-
-                    if narrative:
-                        narrativas_por_carpeta[carpeta].append(narrative)
-
-                    resultados[f"{carpeta}/{image_name}"] = parsed
-
-                    self.guardar_story_bd(
-                        carpeta,
-                        image_name,
-                        general_desc,
-                        objects_list,
-                        collision_analysis,
-                        narrative
-                    )
-                except json.JSONDecodeError:
-                    resultados[f"{carpeta}/{image_name}"] = {
-                        "error": "No se pudo interpretar la respuesta como JSON.",
-                        "raw_response": response_text
-                    }
-                    self.guardar_story_bd(
-                        carpeta,
-                        image_name,
-                        "",
-                        "",
-                        "",
-                        response_text
-                    )
-
-                print(f"Imagen {carpeta}/{image_name} procesada.")
-
-                memoria_actual = process.memory_info().rss / (1024 ** 2)
-                memoria_maxima = max(memoria_maxima, memoria_actual)
-
-            end_video = time.time()  # ⏱️ Fin por carpeta
-            tiempos_por_video[carpeta] = end_video - start_video
-            memoria_por_video[carpeta] = memoria_maxima
+            # Guardar memoria y tiempo por carpeta relativa
+            memoria_actual = process.memory_info().rss / (1024 ** 2)
+            memoria_por_video[carpeta_relativa] = memoria_actual
+            tiempos_por_video[carpeta_relativa] = time.time() - start_video
 
         # Generar narrativa global por carpeta/video
         for carpeta, narrativas in narrativas_por_carpeta.items():
             resumen_prompt = (
-                    f"Has recibido una serie de narrativas que corresponden a imágenes extraídas de un video de vigilancia "
-                    f"en un centro comercial. A partir de estas narrativas, genera una narrativa general coherente del video.\n\n"
-                    f"Lista de narrativas por imagen:\n\n"
+                    f"You have received a series of narratives corresponding to images extracted from a SECURITY CAMERA IN A CAR "
+                    f"in a shopping mall. Based on these narratives, generate a coherent overall narrative of the video.\n\n"
+                    f"List of narratives per image:\n\n"
                     + "\n\n".join(f"- {n}" for n in narrativas)
-                    + "\n\nDevuelve SOLO una narrativa general en texto plano, sin formato JSON."
+                    + "\n\nReturn ONLY one overall narrative in plain text, without JSON format."
             )
+
             msg = HumanMessage(content=resumen_prompt)
             response = self.llm.invoke([msg])
             narrativa_general = response.content.strip()
 
             print(f"\nNarrativa general para el video (carpeta: {carpeta}):\n{narrativa_general}\n")
-
             self.guardar_narrativa_general(carpeta, narrativa_general)
 
         print(f"\n(NO YOLO) ✅ Tiempo total: {time.time() - start_global:.2f} segundos.")
@@ -194,12 +190,15 @@ class Chatbot_WITHOUT_YOLO():
         # Graficar tiempos por video
         videos = list(tiempos_por_video.keys())
         tiempos = list(tiempos_por_video.values())
-        plt.figure(figsize=(10, 6))
-        bars = plt.bar(videos, tiempos, color='skyblue')
+        # Crear etiquetas numeradas para los videos
+        videos_numerados = [f"Video {i + 1}" for i in range(len(videos))]
 
-        plt.title("Processing time per video (WITHOUT YOLO)")
-        plt.xlabel("Video (folder)")
-        plt.ylabel("Time (seconds)")
+        plt.figure(figsize=(10, 6))
+        bars = plt.bar(videos_numerados, tiempos, color='skyblue')
+
+        plt.title("Processing time per video (WITHOUT YOLO)", fontsize=18)
+        plt.xlabel("Video (folder)", fontsize=14)
+        plt.ylabel("Time (seconds)", fontsize=14)
         plt.xticks(rotation=90, ha='right')
 
         for bar, tiempo in zip(bars, tiempos):
@@ -220,13 +219,15 @@ class Chatbot_WITHOUT_YOLO():
         # Gráfica de uso de memoria por video
         videos_memoria = list(memoria_por_video.keys())
         usos_memoria = list(memoria_por_video.values())
+        # Crear etiquetas numeradas para los videos
+        videos_numerados = [f"Video {i + 1}" for i in range(len(videos_memoria))]
 
         plt.figure(figsize=(10, 6))
-        bars_memoria = plt.bar(videos_memoria, usos_memoria, color='salmon')
+        bars_memoria = plt.bar(videos_numerados, usos_memoria, color='lightcoral')
 
-        plt.title("Memory usage per video (WITHOUT YOLO)")
-        plt.xlabel("Video (folder)")
-        plt.ylabel("Peak memory (MB)")
+        plt.title("Memory usage per video (WITHOUT YOLO)", fontsize=18)
+        plt.xlabel("Video (folder)", fontsize=14)
+        plt.ylabel("Peak memory (MB)", fontsize=14)
         plt.xticks(rotation=90, ha='center')
 
         # Etiquetas dentro de cada barra (verticales y negras)
@@ -261,10 +262,12 @@ class Chatbot_WITHOUT_YOLO():
             c=[precision_por_video[v] for v in videos_memoria],
             cmap='viridis', s=100, alpha=0.7
         )
-        plt.colorbar(scatter, label='Accuracy (%)')
-        plt.title("Trade-off between Latency, Memory and Accuracy (WITHOUT YOLO)")
-        plt.xlabel("Time (s)")
-        plt.ylabel("Memory (MB)")
+        cbar = plt.colorbar(scatter)
+        cbar.set_label('Accuracy (%)', fontsize=14)  # aumenta solo el label de la barra
+        cbar.ax.tick_params(labelsize=10)  # tamaño de etiquetas en la barra
+        plt.title("Trade-off between Latency, Memory and Accuracy (WITHOUT YOLO)", fontsize=18)
+        plt.xlabel("Time (s)", fontsize=14)
+        plt.ylabel("Memory (MB)", fontsize=14)
         plt.grid(True)
         plt.tight_layout()
         plt.savefig("compensacion_latencia_memoria_precision_WITHOUT_YOLO.png")

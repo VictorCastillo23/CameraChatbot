@@ -1,2125 +1,336 @@
 {
-    "keyframes_VID_20250610_205107291~2": {
-        "frame_00028.jpg": {
+    "scenario_1\\behavior_1\\22": {
+        "frame_113.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_143.jpg": {
             "detections": [
                 {
-                    "class": "person",
-                    "confidence": 0.831548810005188,
+                    "class": "traffic light",
+                    "confidence": 0.40864336490631104,
                     "box": {
-                        "x1": 201.1,
-                        "y1": 104.1,
-                        "x2": 226.4,
-                        "y2": 162.0
+                        "x1": 483.8,
+                        "y1": 100.1,
+                        "x2": 491.9,
+                        "y2": 113.4
                     }
                 },
                 {
-                    "class": "person",
-                    "confidence": 0.6864950060844421,
+                    "class": "car",
+                    "confidence": 0.29021430015563965,
                     "box": {
-                        "x1": 171.2,
-                        "y1": 101.0,
-                        "x2": 189.1,
-                        "y2": 155.0
+                        "x1": 256.7,
+                        "y1": 149.1,
+                        "x2": 511.5,
+                        "y2": 255.5
                     }
                 }
             ],
             "collisions": []
         },
-        "frame_00050.jpg": {
+        "frame_187.jpg": {
             "detections": [
                 {
                     "class": "person",
-                    "confidence": 0.8455923795700073,
+                    "confidence": 0.48663267493247986,
                     "box": {
-                        "x1": 245.8,
-                        "y1": 99.6,
-                        "x2": 267.3,
-                        "y2": 166.2
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.7809621691703796,
-                    "box": {
-                        "x1": 208.3,
-                        "y1": 98.9,
-                        "x2": 229.4,
-                        "y2": 161.4
+                        "x1": 0.2,
+                        "y1": 208.4,
+                        "x2": 42.6,
+                        "y2": 255.7
                     }
                 }
             ],
             "collisions": []
         },
-        "frame_00075.jpg": {
+        "frame_222.jpg": {
             "detections": [
                 {
-                    "class": "person",
-                    "confidence": 0.8410744071006775,
-                    "box": {
-                        "x1": 179.7,
-                        "y1": 101.7,
-                        "x2": 207.0,
-                        "y2": 155.5
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.838071346282959,
-                    "box": {
-                        "x1": 243.6,
-                        "y1": 100.7,
-                        "x2": 267.3,
-                        "y2": 166.2
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.7224554419517517,
-                    "box": {
-                        "x1": 218.6,
-                        "y1": 98.5,
-                        "x2": 238.2,
-                        "y2": 163.1
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00110.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8434546589851379,
-                    "box": {
-                        "x1": 244.0,
-                        "y1": 100.6,
-                        "x2": 267.5,
-                        "y2": 166.2
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.7446446418762207,
-                    "box": {
-                        "x1": 215.2,
-                        "y1": 99.3,
-                        "x2": 237.5,
-                        "y2": 163.0
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.4361528158187866,
-                    "box": {
-                        "x1": 206.9,
-                        "y1": 119.2,
-                        "x2": 217.5,
-                        "y2": 147.4
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00128.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8374364972114563,
-                    "box": {
-                        "x1": 243.3,
-                        "y1": 100.0,
-                        "x2": 266.7,
-                        "y2": 166.0
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.7190975546836853,
-                    "box": {
-                        "x1": 215.0,
-                        "y1": 100.0,
-                        "x2": 236.6,
-                        "y2": 163.1
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.28547510504722595,
-                    "box": {
-                        "x1": 198.6,
-                        "y1": 100.5,
-                        "x2": 213.2,
-                        "y2": 142.6
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00139.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8543822169303894,
-                    "box": {
-                        "x1": 244.5,
-                        "y1": 101.0,
-                        "x2": 268.1,
-                        "y2": 165.5
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.7896930575370789,
-                    "box": {
-                        "x1": 215.4,
-                        "y1": 104.5,
-                        "x2": 236.0,
-                        "y2": 163.5
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00159.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8620967864990234,
-                    "box": {
-                        "x1": 246.3,
-                        "y1": 100.5,
-                        "x2": 267.7,
-                        "y2": 165.8
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.7707029581069946,
-                    "box": {
-                        "x1": 221.4,
-                        "y1": 102.0,
-                        "x2": 240.2,
-                        "y2": 163.1
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.6237687468528748,
-                    "box": {
-                        "x1": 203.5,
-                        "y1": 105.7,
-                        "x2": 218.0,
-                        "y2": 148.1
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.265095591545105,
-                    "box": {
-                        "x1": 209.7,
-                        "y1": 110.9,
-                        "x2": 218.7,
-                        "y2": 148.6
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        2,
-                        3
-                    ],
-                    "iou": 0.48
-                }
-            ]
-        },
-        "frame_00164.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.7865426540374756,
-                    "box": {
-                        "x1": 225.6,
-                        "y1": 100.6,
-                        "x2": 247.3,
-                        "y2": 162.2
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.7155214548110962,
-                    "box": {
-                        "x1": 200.0,
-                        "y1": 104.6,
-                        "x2": 215.6,
-                        "y2": 149.1
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.7088139057159424,
-                    "box": {
-                        "x1": 252.5,
-                        "y1": 103.3,
-                        "x2": 274.7,
-                        "y2": 163.5
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.4775945246219635,
-                    "box": {
-                        "x1": 221.8,
-                        "y1": 110.3,
-                        "x2": 231.9,
-                        "y2": 147.7
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        0,
-                        3
-                    ],
-                    "iou": 0.16
-                }
-            ]
-        },
-        "frame_00180.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.702021062374115,
-                    "box": {
-                        "x1": 201.0,
-                        "y1": 105.9,
-                        "x2": 216.2,
-                        "y2": 149.3
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.36005809903144836,
-                    "box": {
-                        "x1": 196.3,
-                        "y1": 123.8,
-                        "x2": 205.7,
-                        "y2": 150.8
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.35322096943855286,
-                    "box": {
-                        "x1": 220.7,
-                        "y1": 109.8,
-                        "x2": 229.2,
-                        "y2": 137.4
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.30101466178894043,
-                    "box": {
-                        "x1": 260.5,
-                        "y1": 130.5,
-                        "x2": 276.8,
-                        "y2": 160.6
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        0,
-                        1
-                    ],
-                    "iou": 0.15
-                }
-            ]
-        }
-    },
-    "keyframes_VID_20250610_205107291~3": {
-        "frame_00030.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9315414428710938,
-                    "box": {
-                        "x1": 70.6,
-                        "y1": 48.9,
-                        "x2": 151.9,
-                        "y2": 214.2
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00067.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.6817566156387329,
-                    "box": {
-                        "x1": 205.2,
-                        "y1": 102.2,
-                        "x2": 221.3,
-                        "y2": 149.0
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.2663841247558594,
-                    "box": {
-                        "x1": 207.9,
-                        "y1": 107.1,
-                        "x2": 219.4,
-                        "y2": 149.3
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        0,
-                        1
-                    ],
-                    "iou": 0.637
-                }
-            ]
-        },
-        "frame_00129.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.877083957195282,
-                    "box": {
-                        "x1": 141.1,
-                        "y1": 77.0,
-                        "x2": 200.2,
-                        "y2": 214.8
-                    }
-                },
-                {
-                    "class": "handbag",
-                    "confidence": 0.4632969796657562,
-                    "box": {
-                        "x1": 161.3,
-                        "y1": 100.8,
-                        "x2": 192.3,
-                        "y2": 156.2
-                    }
-                },
-                {
-                    "class": "handbag",
-                    "confidence": 0.44925615191459656,
-                    "box": {
-                        "x1": 149.1,
-                        "y1": 98.8,
-                        "x2": 179.2,
-                        "y2": 138.6
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        0,
-                        1
-                    ],
-                    "iou": 0.211
-                },
-                {
-                    "beetwen": [
-                        0,
-                        2
-                    ],
-                    "iou": 0.147
-                },
-                {
-                    "beetwen": [
-                        1,
-                        2
-                    ],
-                    "iou": 0.302
-                }
-            ]
-        },
-        "frame_00160.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8708759546279907,
-                    "box": {
-                        "x1": 191.4,
-                        "y1": 95.4,
-                        "x2": 226.2,
-                        "y2": 182.3
-                    }
-                },
-                {
-                    "class": "handbag",
-                    "confidence": 0.26686570048332214,
-                    "box": {
-                        "x1": 205.4,
-                        "y1": 111.0,
-                        "x2": 222.6,
-                        "y2": 141.1
-                    }
-                },
-                {
-                    "class": "handbag",
-                    "confidence": 0.2509937882423401,
-                    "box": {
-                        "x1": 198.6,
-                        "y1": 108.1,
-                        "x2": 218.5,
-                        "y2": 141.8
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        0,
-                        1
-                    ],
-                    "iou": 0.172
-                },
-                {
-                    "beetwen": [
-                        0,
-                        2
-                    ],
-                    "iou": 0.222
-                },
-                {
-                    "beetwen": [
-                        1,
-                        2
-                    ],
-                    "iou": 0.502
-                }
-            ]
-        },
-        "frame_00174.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.7741855978965759,
-                    "box": {
-                        "x1": 209.1,
-                        "y1": 99.3,
-                        "x2": 238.6,
-                        "y2": 170.3
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250610_210055776~2": {
-        "frame_00071.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8663785457611084,
-                    "box": {
-                        "x1": 157.4,
-                        "y1": 92.8,
-                        "x2": 183.2,
-                        "y2": 167.4
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.8570221066474915,
-                    "box": {
-                        "x1": 203.3,
-                        "y1": 98.5,
-                        "x2": 230.4,
-                        "y2": 171.3
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.8016573190689087,
-                    "box": {
-                        "x1": 248.2,
-                        "y1": 93.5,
-                        "x2": 271.9,
-                        "y2": 168.2
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.575201690196991,
-                    "box": {
-                        "x1": 185.4,
-                        "y1": 106.7,
-                        "x2": 203.9,
-                        "y2": 167.8
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.2894420921802521,
-                    "box": {
-                        "x1": 186.5,
-                        "y1": 118.7,
-                        "x2": 198.8,
-                        "y2": 167.7
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        3,
-                        4
-                    ],
-                    "iou": 0.53
-                }
-            ]
-        },
-        "frame_00151.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8614317178726196,
-                    "box": {
-                        "x1": 234.1,
-                        "y1": 94.7,
-                        "x2": 260.5,
-                        "y2": 166.1
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.7788710594177246,
-                    "box": {
-                        "x1": 214.8,
-                        "y1": 107.8,
-                        "x2": 229.4,
-                        "y2": 148.2
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250610_210055776~3": {
-        "frame_00120.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9015631675720215,
-                    "box": {
-                        "x1": 15.0,
-                        "y1": 52.9,
-                        "x2": 85.8,
-                        "y2": 214.7
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.892219066619873,
-                    "box": {
-                        "x1": 204.5,
-                        "y1": 101.5,
-                        "x2": 224.6,
-                        "y2": 165.5
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.8877032995223999,
-                    "box": {
-                        "x1": 116.7,
-                        "y1": 28.0,
-                        "x2": 201.1,
-                        "y2": 214.2
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.527497410774231,
-                    "box": {
-                        "x1": 195.9,
-                        "y1": 100.3,
-                        "x2": 208.0,
-                        "y2": 155.7
-                    }
-                },
-                {
-                    "class": "bottle",
-                    "confidence": 0.34127333760261536,
-                    "box": {
-                        "x1": 11.6,
-                        "y1": 169.9,
-                        "x2": 21.0,
-                        "y2": 193.9
-                    }
-                },
-                {
-                    "class": "bicycle",
-                    "confidence": 0.3204002380371094,
-                    "box": {
-                        "x1": 222.1,
-                        "y1": 130.8,
-                        "x2": 238.8,
-                        "y2": 161.6
-                    }
-                },
-                {
-                    "class": "bottle",
-                    "confidence": 0.31680402159690857,
-                    "box": {
-                        "x1": 1.7,
-                        "y1": 161.9,
-                        "x2": 11.8,
-                        "y2": 195.8
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.2600243389606476,
-                    "box": {
-                        "x1": 196.4,
-                        "y1": 100.4,
-                        "x2": 207.0,
-                        "y2": 125.3
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        1,
-                        3
-                    ],
-                    "iou": 0.107
-                },
-                {
-                    "beetwen": [
-                        3,
-                        7
-                    ],
-                    "iou": 0.395
-                }
-            ]
-        },
-        "frame_00176.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.7364264726638794,
-                    "box": {
-                        "x1": 203.9,
-                        "y1": 110.0,
-                        "x2": 215.6,
-                        "y2": 148.6
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.46866652369499207,
-                    "box": {
-                        "x1": 215.8,
-                        "y1": 110.0,
-                        "x2": 228.1,
-                        "y2": 147.2
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.29088836908340454,
-                    "box": {
-                        "x1": 216.1,
-                        "y1": 110.1,
-                        "x2": 227.8,
-                        "y2": 137.0
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        1,
-                        2
-                    ],
-                    "iou": 0.685
-                }
-            ]
-        }
-    },
-    "keyframes_VID_20250610_210055776~4": {
-        "frame_00124.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9231524467468262,
-                    "box": {
-                        "x1": 51.8,
-                        "y1": 8.4,
-                        "x2": 185.5,
-                        "y2": 213.7
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.747263491153717,
-                    "box": {
-                        "x1": 223.6,
-                        "y1": 106.2,
-                        "x2": 234.6,
-                        "y2": 143.9
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.618604302406311,
+                    "class": "cell phone",
+                    "confidence": 0.261182576417923,
                     "box": {
                         "x1": 0.0,
-                        "y1": 66.8,
-                        "x2": 67.9,
-                        "y2": 156.0
+                        "y1": 0.8,
+                        "x2": 36.7,
+                        "y2": 173.3
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_25.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.5136422514915466,
+                    "box": {
+                        "x1": 256.5,
+                        "y1": 129.3,
+                        "x2": 511.4,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_1\\23": {
+        "frame_110.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_148.jpg": {
+            "detections": [
+                {
+                    "class": "person",
+                    "confidence": 0.6080024242401123,
+                    "box": {
+                        "x1": 496.7,
+                        "y1": 156.5,
+                        "x2": 511.8,
+                        "y2": 220.2
+                    }
+                },
+                {
+                    "class": "car",
+                    "confidence": 0.3291301131248474,
+                    "box": {
+                        "x1": 256.7,
+                        "y1": 182.4,
+                        "x2": 511.7,
+                        "y2": 255.6
+                    }
+                },
+                {
+                    "class": "traffic light",
+                    "confidence": 0.2602732181549072,
+                    "box": {
+                        "x1": 265.0,
+                        "y1": 9.2,
+                        "x2": 280.8,
+                        "y2": 37.2
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_185.jpg": {
+            "detections": [
+                {
+                    "class": "person",
+                    "confidence": 0.4698214828968048,
+                    "box": {
+                        "x1": 493.4,
+                        "y1": 160.4,
+                        "x2": 511.9,
+                        "y2": 245.6
                     }
                 },
                 {
                     "class": "person",
-                    "confidence": 0.5893069505691528,
-                    "box": {
-                        "x1": 216.3,
-                        "y1": 110.9,
-                        "x2": 225.3,
-                        "y2": 143.3
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.36145904660224915,
-                    "box": {
-                        "x1": 209.1,
-                        "y1": 111.9,
-                        "x2": 217.5,
-                        "y2": 140.2
-                    }
-                },
-                {
-                    "class": "chair",
-                    "confidence": 0.2847784459590912,
+                    "confidence": 0.3599890172481537,
                     "box": {
                         "x1": 0.1,
-                        "y1": 129.3,
-                        "x2": 129.1,
-                        "y2": 213.6
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        0,
-                        5
-                    ],
-                    "iou": 0.205
-                },
-                {
-                    "beetwen": [
-                        2,
-                        5
-                    ],
-                    "iou": 0.12
-                }
-            ]
-        },
-        "frame_00168.jpg": {
-            "detections": [],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_164125600~2": {
-        "frame_00012.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9008951783180237,
-                    "box": {
-                        "x1": 116.5,
-                        "y1": 39.5,
-                        "x2": 196.8,
-                        "y2": 213.8
+                        "y1": 211.1,
+                        "x2": 43.0,
+                        "y2": 255.8
                     }
                 },
                 {
-                    "class": "bottle",
-                    "confidence": 0.3525415062904358,
+                    "class": "traffic light",
+                    "confidence": 0.3436296880245209,
                     "box": {
-                        "x1": 84.7,
-                        "y1": 93.0,
-                        "x2": 99.4,
-                        "y2": 128.3
+                        "x1": 146.9,
+                        "y1": 0.1,
+                        "x2": 255.5,
+                        "y2": 85.5
                     }
                 }
             ],
             "collisions": []
         },
-        "frame_00021.jpg": {
+        "frame_21.jpg": {
             "detections": [
                 {
-                    "class": "person",
-                    "confidence": 0.9136425256729126,
+                    "class": "car",
+                    "confidence": 0.6194037795066833,
                     "box": {
-                        "x1": 83.3,
-                        "y1": 38.2,
-                        "x2": 171.1,
-                        "y2": 213.5
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00034.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9160066843032837,
-                    "box": {
-                        "x1": 97.2,
-                        "y1": 39.5,
-                        "x2": 168.9,
-                        "y2": 214.0
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00052.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8923978209495544,
-                    "box": {
-                        "x1": 32.6,
-                        "y1": 38.7,
-                        "x2": 122.9,
-                        "y2": 214.3
+                        "x1": 256.6,
+                        "y1": 129.4,
+                        "x2": 511.0,
+                        "y2": 255.4
                     }
                 },
                 {
-                    "class": "bottle",
-                    "confidence": 0.27335411310195923,
+                    "class": "tie",
+                    "confidence": 0.2704034447669983,
                     "box": {
-                        "x1": 139.0,
-                        "y1": 92.0,
-                        "x2": 155.2,
-                        "y2": 127.8
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00075.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8659422993659973,
-                    "box": {
-                        "x1": 21.6,
-                        "y1": 40.1,
-                        "x2": 109.7,
-                        "y2": 213.8
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00076.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.891902506351471,
-                    "box": {
-                        "x1": 5.9,
-                        "y1": 40.4,
-                        "x2": 112.4,
-                        "y2": 213.9
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00089.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8657872080802917,
-                    "box": {
-                        "x1": 95.8,
-                        "y1": 36.1,
-                        "x2": 157.7,
-                        "y2": 213.5
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00115.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8887528777122498,
-                    "box": {
-                        "x1": 166.2,
-                        "y1": 38.4,
-                        "x2": 251.7,
-                        "y2": 213.4
-                    }
-                },
-                {
-                    "class": "bottle",
-                    "confidence": 0.2948247194290161,
-                    "box": {
-                        "x1": 83.5,
-                        "y1": 93.0,
-                        "x2": 97.5,
-                        "y2": 126.0
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00138.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9009403586387634,
-                    "box": {
-                        "x1": 232.7,
-                        "y1": 34.7,
-                        "x2": 319.7,
-                        "y2": 214.1
-                    }
-                },
-                {
-                    "class": "bottle",
-                    "confidence": 0.3015829920768738,
-                    "box": {
-                        "x1": 83.3,
-                        "y1": 92.9,
-                        "x2": 97.6,
-                        "y2": 126.6
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00152.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.919280469417572,
-                    "box": {
-                        "x1": 223.5,
-                        "y1": 34.0,
-                        "x2": 322.4,
-                        "y2": 213.9
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00157.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.897646427154541,
-                    "box": {
-                        "x1": 226.3,
-                        "y1": 35.2,
-                        "x2": 340.9,
-                        "y2": 214.0
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00172.jpg": {
-            "detections": [],
-            "collisions": []
-        },
-        "frame_00178.jpg": {
-            "detections": [
-                {
-                    "class": "bottle",
-                    "confidence": 0.3624894320964813,
-                    "box": {
-                        "x1": 119.0,
-                        "y1": 93.3,
-                        "x2": 134.5,
-                        "y2": 127.8
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00181.jpg": {
-            "detections": [],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_164125600~3": {
-        "frame_00093.jpg": {
-            "detections": [],
-            "collisions": []
-        },
-        "frame_00152.jpg": {
-            "detections": [],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_164125600~4": {
-        "frame_00086.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.86467444896698,
-                    "box": {
-                        "x1": 189.3,
-                        "y1": 30.1,
-                        "x2": 278.1,
-                        "y2": 214.2
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00144.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9364749193191528,
-                    "box": {
-                        "x1": 182.2,
-                        "y1": 40.2,
-                        "x2": 293.9,
-                        "y2": 214.0
-                    }
-                },
-                {
-                    "class": "bottle",
-                    "confidence": 0.29250583052635193,
-                    "box": {
-                        "x1": 119.6,
-                        "y1": 93.5,
-                        "x2": 134.3,
-                        "y2": 127.2
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_164125600~5": {
-        "frame_00108.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9237502217292786,
-                    "box": {
-                        "x1": 281.3,
-                        "y1": 41.2,
-                        "x2": 364.8,
-                        "y2": 214.1
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00139.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9191932082176208,
-                    "box": {
-                        "x1": 268.8,
-                        "y1": 45.1,
-                        "x2": 365.8,
-                        "y2": 214.5
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_164125600~6": {
-        "frame_00017.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9300880432128906,
-                    "box": {
-                        "x1": 100.5,
-                        "y1": 37.8,
-                        "x2": 190.2,
-                        "y2": 214.5
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00051.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.30580297112464905,
-                    "box": {
-                        "x1": 9.8,
-                        "y1": 181.2,
-                        "x2": 78.8,
-                        "y2": 215.9
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00121.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8711726665496826,
-                    "box": {
-                        "x1": 34.8,
-                        "y1": 138.4,
-                        "x2": 125.1,
-                        "y2": 215.8
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00152.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8242570161819458,
-                    "box": {
-                        "x1": 27.3,
-                        "y1": 140.1,
-                        "x2": 129.6,
-                        "y2": 215.8
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00173.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8036566972732544,
-                    "box": {
-                        "x1": 49.6,
-                        "y1": 142.7,
-                        "x2": 139.4,
-                        "y2": 215.3
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00184.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.7310436964035034,
-                    "box": {
-                        "x1": 43.5,
-                        "y1": 140.2,
-                        "x2": 137.3,
-                        "y2": 216.0
-                    }
-                },
-                {
-                    "class": "microwave",
-                    "confidence": 0.3248036205768585,
-                    "box": {
-                        "x1": 141.2,
-                        "y1": 174.2,
-                        "x2": 214.8,
-                        "y2": 214.5
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_164929985~2": {
-        "frame_00065.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9261584877967834,
-                    "box": {
-                        "x1": 297.3,
-                        "y1": 45.7,
-                        "x2": 383.7,
-                        "y2": 214.1
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.514211893081665,
-                    "box": {
-                        "x1": 312.4,
-                        "y1": 0.5,
-                        "x2": 354.2,
-                        "y2": 55.6
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.4499618411064148,
-                    "box": {
-                        "x1": 13.7,
-                        "y1": 0.5,
-                        "x2": 74.1,
-                        "y2": 62.1
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00144.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9329220056533813,
-                    "box": {
-                        "x1": 303.9,
-                        "y1": 39.9,
-                        "x2": 383.8,
-                        "y2": 214.0
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.4402461647987366,
-                    "box": {
-                        "x1": 312.4,
-                        "y1": 0.5,
-                        "x2": 353.9,
-                        "y2": 52.7
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.43090108036994934,
-                    "box": {
-                        "x1": 13.5,
-                        "y1": 0.7,
-                        "x2": 73.1,
-                        "y2": 61.9
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_164929985~3": {
-        "frame_00062.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9200965762138367,
-                    "box": {
-                        "x1": 127.7,
-                        "y1": 62.1,
-                        "x2": 219.1,
-                        "y2": 214.4
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.4802228808403015,
-                    "box": {
-                        "x1": 13.6,
+                        "x1": 60.9,
                         "y1": 0.6,
-                        "x2": 73.4,
-                        "y2": 62.1
+                        "x2": 153.2,
+                        "y2": 253.9
                     }
-                },
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_1\\24": {
+        "frame_106.jpg": {
+            "detections": [
                 {
-                    "class": "person",
-                    "confidence": 0.4297802746295929,
+                    "class": "car",
+                    "confidence": 0.4440114498138428,
                     "box": {
-                        "x1": 311.1,
-                        "y1": 0.5,
-                        "x2": 357.0,
-                        "y2": 57.1
+                        "x1": 256.2,
+                        "y1": 130.6,
+                        "x2": 511.4,
+                        "y2": 255.3
                     }
                 }
             ],
             "collisions": []
         },
-        "frame_00132.jpg": {
+        "frame_172.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_27.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_1\\25": {
+        "frame_106.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_169.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_25.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_1\\30": {
+        "frame_105.jpg": {
             "detections": [
                 {
-                    "class": "person",
-                    "confidence": 0.9207248687744141,
+                    "class": "car",
+                    "confidence": 0.3574328124523163,
                     "box": {
-                        "x1": 114.9,
-                        "y1": 44.4,
-                        "x2": 213.9,
-                        "y2": 214.5
+                        "x1": 256.5,
+                        "y1": 128.6,
+                        "x2": 512.0,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_11.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.4820998013019562,
+                    "box": {
+                        "x1": 256.6,
+                        "y1": 128.6,
+                        "x2": 511.8,
+                        "y2": 255.4
                     }
                 },
                 {
-                    "class": "person",
-                    "confidence": 0.520338773727417,
+                    "class": "tie",
+                    "confidence": 0.44899433851242065,
                     "box": {
-                        "x1": 14.1,
+                        "x1": 44.3,
+                        "y1": 0.0,
+                        "x2": 207.7,
+                        "y2": 254.7
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_149.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.3031238615512848,
+                    "box": {
+                        "x1": 256.3,
+                        "y1": 128.6,
+                        "x2": 511.5,
+                        "y2": 255.4
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_196.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_230.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.42935994267463684,
+                    "box": {
+                        "x1": 256.8,
+                        "y1": 130.9,
+                        "x2": 511.3,
+                        "y2": 255.7
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_263.jpg": {
+            "detections": [
+                {
+                    "class": "person",
+                    "confidence": 0.5039332509040833,
+                    "box": {
+                        "x1": 2.2,
                         "y1": 0.3,
-                        "x2": 72.1,
-                        "y2": 61.6
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.46668770909309387,
-                    "box": {
-                        "x1": 306.2,
-                        "y1": 0.2,
-                        "x2": 356.4,
-                        "y2": 57.1
+                        "x2": 254.1,
+                        "y2": 254.2
                     }
                 }
             ],
             "collisions": []
         },
-        "frame_00179.jpg": {
+        "frame_55.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_1\\31": {
+        "frame_10.jpg": {
             "detections": [
                 {
-                    "class": "person",
-                    "confidence": 0.8950714468955994,
+                    "class": "tie",
+                    "confidence": 0.5632369518280029,
                     "box": {
-                        "x1": 115.6,
-                        "y1": 42.4,
-                        "x2": 194.4,
-                        "y2": 214.5
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.4649231731891632,
-                    "box": {
-                        "x1": 311.0,
+                        "x1": 40.6,
                         "y1": 0.4,
-                        "x2": 357.0,
-                        "y2": 57.2
+                        "x2": 218.5,
+                        "y2": 253.8
                     }
                 },
                 {
                     "class": "person",
-                    "confidence": 0.44738683104515076,
+                    "confidence": 0.4698941111564636,
                     "box": {
-                        "x1": 13.6,
-                        "y1": 0.6,
-                        "x2": 70.7,
-                        "y2": 61.9
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.28814059495925903,
-                    "box": {
-                        "x1": 13.2,
-                        "y1": 1.8,
-                        "x2": 47.8,
-                        "y2": 61.5
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        2,
-                        3
-                    ],
-                    "iou": 0.58
-                }
-            ]
-        }
-    },
-    "keyframes_VID_20250611_164929985~4": {
-        "frame_00139.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9033913016319275,
-                    "box": {
-                        "x1": 262.6,
-                        "y1": 55.8,
-                        "x2": 352.5,
-                        "y2": 214.1
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.5337254405021667,
-                    "box": {
-                        "x1": 13.8,
-                        "y1": 0.7,
-                        "x2": 70.3,
-                        "y2": 62.1
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.38576704263687134,
-                    "box": {
-                        "x1": 311.4,
-                        "y1": 0.5,
-                        "x2": 357.0,
-                        "y2": 57.0
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_164929985~5": {
-        "frame_00049.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9079398512840271,
-                    "box": {
-                        "x1": 39.3,
-                        "y1": 26.4,
-                        "x2": 166.9,
-                        "y2": 213.9
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.5618252754211426,
-                    "box": {
-                        "x1": 14.0,
-                        "y1": 0.7,
-                        "x2": 74.4,
-                        "y2": 62.1
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.48712849617004395,
-                    "box": {
-                        "x1": 311.8,
-                        "y1": 0.5,
-                        "x2": 357.2,
-                        "y2": 57.1
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00149.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9302693605422974,
-                    "box": {
-                        "x1": 304.7,
-                        "y1": 34.2,
-                        "x2": 383.7,
-                        "y2": 213.9
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.43121588230133057,
-                    "box": {
-                        "x1": 311.8,
+                        "x1": 9.5,
                         "y1": 0.4,
-                        "x2": 353.0,
-                        "y2": 56.3
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.4223996698856354,
-                    "box": {
-                        "x1": 14.4,
-                        "y1": 0.5,
-                        "x2": 72.2,
-                        "y2": 61.4
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_191323468~2": {
-        "frame_00017.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9325313568115234,
-                    "box": {
-                        "x1": 42.9,
-                        "y1": 24.4,
-                        "x2": 176.1,
-                        "y2": 214.0
-                    }
-                },
-                {
-                    "class": "bottle",
-                    "confidence": 0.28519025444984436,
-                    "box": {
-                        "x1": 133.5,
-                        "y1": 171.1,
-                        "x2": 144.0,
-                        "y2": 206.7
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00041.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.938008189201355,
-                    "box": {
-                        "x1": 102.1,
-                        "y1": 22.2,
-                        "x2": 217.4,
-                        "y2": 214.3
-                    }
-                },
-                {
-                    "class": "suitcase",
-                    "confidence": 0.2631016671657562,
-                    "box": {
-                        "x1": 39.7,
-                        "y1": 82.7,
-                        "x2": 94.6,
-                        "y2": 118.6
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00072.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9246467351913452,
-                    "box": {
-                        "x1": 162.5,
-                        "y1": 29.7,
-                        "x2": 282.6,
-                        "y2": 214.0
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00105.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9147086143493652,
-                    "box": {
-                        "x1": 190.2,
-                        "y1": 1.5,
-                        "x2": 307.1,
-                        "y2": 213.9
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00118.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.937018632888794,
-                    "box": {
-                        "x1": 295.8,
-                        "y1": 2.0,
-                        "x2": 383.8,
-                        "y2": 213.8
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00150.jpg": {
-            "detections": [],
-            "collisions": []
-        },
-        "frame_00168.jpg": {
-            "detections": [
-                {
-                    "class": "book",
-                    "confidence": 0.2742907702922821,
-                    "box": {
-                        "x1": 338.1,
-                        "y1": 118.3,
-                        "x2": 378.0,
-                        "y2": 149.0
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00179.jpg": {
-            "detections": [],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_191323468~3": {
-        "frame_00026.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.7969165444374084,
-                    "box": {
-                        "x1": 121.6,
-                        "y1": 134.7,
-                        "x2": 313.3,
-                        "y2": 214.2
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.27535244822502136,
-                    "box": {
-                        "x1": 338.7,
-                        "y1": 118.7,
-                        "x2": 377.6,
-                        "y2": 149.2
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00083.jpg": {
-            "detections": [
-                {
-                    "class": "book",
-                    "confidence": 0.2520102560520172,
-                    "box": {
-                        "x1": 337.7,
-                        "y1": 118.3,
-                        "x2": 378.0,
-                        "y2": 149.1
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00161.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9324904680252075,
-                    "box": {
-                        "x1": 2.5,
-                        "y1": 0.6,
-                        "x2": 147.6,
-                        "y2": 213.8
-                    }
-                },
-                {
-                    "class": "bottle",
-                    "confidence": 0.29442670941352844,
-                    "box": {
-                        "x1": 167.1,
-                        "y1": 127.7,
-                        "x2": 180.4,
-                        "y2": 167.4
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_191323468~4": {
-        "frame_00057.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.949820339679718,
-                    "box": {
-                        "x1": 242.8,
-                        "y1": 27.1,
-                        "x2": 370.5,
-                        "y2": 214.0
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00106.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9459528923034668,
-                    "box": {
-                        "x1": 247.2,
-                        "y1": 21.5,
-                        "x2": 368.4,
-                        "y2": 213.4
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00147.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9181283116340637,
-                    "box": {
-                        "x1": 232.7,
-                        "y1": 25.1,
-                        "x2": 370.3,
-                        "y2": 213.3
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_191323468~5": {
-        "frame_00075.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.921911895275116,
-                    "box": {
-                        "x1": 89.2,
-                        "y1": 17.4,
-                        "x2": 186.7,
-                        "y2": 213.9
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00101.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9164814352989197,
-                    "box": {
-                        "x1": 160.8,
-                        "y1": 27.7,
-                        "x2": 254.6,
-                        "y2": 214.0
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00142.jpg": {
-            "detections": [],
-            "collisions": []
-        },
-        "frame_00166.jpg": {
-            "detections": [],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_191323468~6": {
-        "frame_00120.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9138038754463196,
-                    "box": {
-                        "x1": 110.6,
-                        "y1": 32.4,
-                        "x2": 220.5,
-                        "y2": 214.1
-                    }
-                },
-                {
-                    "class": "suitcase",
-                    "confidence": 0.26988929510116577,
-                    "box": {
-                        "x1": 39.9,
-                        "y1": 82.9,
-                        "x2": 95.9,
-                        "y2": 118.7
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00175.jpg": {
-            "detections": [],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_192137805~2": {
-        "frame_00046.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9091379642486572,
-                    "box": {
-                        "x1": 29.8,
-                        "y1": 93.2,
-                        "x2": 122.8,
-                        "y2": 214.2
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5089390873908997,
-                    "box": {
-                        "x1": 144.9,
-                        "y1": 109.8,
-                        "x2": 157.7,
-                        "y2": 161.0
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.3772527277469635,
-                    "box": {
-                        "x1": 134.3,
-                        "y1": 110.9,
-                        "x2": 146.1,
-                        "y2": 160.6
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.36831867694854736,
-                    "box": {
-                        "x1": 156.1,
-                        "y1": 109.4,
-                        "x2": 169.0,
-                        "y2": 160.2
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.358890175819397,
-                    "box": {
-                        "x1": 168.6,
-                        "y1": 108.9,
-                        "x2": 180.3,
-                        "y2": 161.6
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00148.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9091032147407532,
-                    "box": {
-                        "x1": 72.4,
-                        "y1": 90.3,
-                        "x2": 149.3,
-                        "y2": 214.8
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_192137805~3": {
-        "frame_00138.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.9231845736503601,
-                    "box": {
-                        "x1": 179.7,
-                        "y1": 93.1,
-                        "x2": 261.9,
-                        "y2": 214.8
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.6269051432609558,
-                    "box": {
-                        "x1": 144.9,
-                        "y1": 110.9,
-                        "x2": 158.3,
-                        "y2": 162.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5570346117019653,
-                    "box": {
-                        "x1": 123.4,
-                        "y1": 110.9,
-                        "x2": 136.3,
-                        "y2": 160.6
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5335680246353149,
-                    "box": {
-                        "x1": 155.2,
-                        "y1": 109.7,
-                        "x2": 169.6,
-                        "y2": 161.9
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.4661197066307068,
-                    "box": {
-                        "x1": 134.1,
-                        "y1": 111.3,
-                        "x2": 146.4,
-                        "y2": 161.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.43924814462661743,
-                    "box": {
-                        "x1": 97.8,
-                        "y1": 110.7,
-                        "x2": 110.5,
-                        "y2": 163.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.35452038049697876,
-                    "box": {
-                        "x1": 108.7,
-                        "y1": 110.8,
-                        "x2": 124.7,
-                        "y2": 157.9
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        1,
-                        3
-                    ],
-                    "iou": 0.123
-                }
-            ]
-        },
-        "frame_00167.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8714718818664551,
-                    "box": {
-                        "x1": 95.9,
-                        "y1": 112.6,
-                        "x2": 167.0,
-                        "y2": 214.4
-                    }
-                }
-            ],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_192137805~4": {
-        "frame_00123.jpg": {
-            "detections": [
-                {
-                    "class": "book",
-                    "confidence": 0.6169792413711548,
-                    "box": {
-                        "x1": 144.8,
-                        "y1": 110.7,
-                        "x2": 158.2,
-                        "y2": 162.4
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5790954828262329,
-                    "box": {
-                        "x1": 155.6,
-                        "y1": 110.6,
-                        "x2": 169.1,
-                        "y2": 160.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5554847717285156,
-                    "box": {
-                        "x1": 123.5,
-                        "y1": 111.5,
-                        "x2": 136.2,
-                        "y2": 161.0
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5221766233444214,
-                    "box": {
-                        "x1": 134.3,
-                        "y1": 111.4,
-                        "x2": 146.2,
-                        "y2": 161.7
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5167825222015381,
-                    "box": {
-                        "x1": 168.2,
-                        "y1": 110.1,
-                        "x2": 180.5,
-                        "y2": 161.7
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.4292311668395996,
-                    "box": {
-                        "x1": 97.7,
-                        "y1": 111.1,
-                        "x2": 110.4,
-                        "y2": 163.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.3517169654369354,
-                    "box": {
-                        "x1": 108.8,
-                        "y1": 111.4,
-                        "x2": 124.6,
-                        "y2": 159.0
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.298789918422699,
-                    "box": {
-                        "x1": 178.6,
-                        "y1": 106.5,
-                        "x2": 200.7,
-                        "y2": 162.9
+                        "x2": 254.4,
+                        "y2": 255.0
                     }
                 }
             ],
@@ -2129,177 +340,1383 @@
                         0,
                         1
                     ],
-                    "iou": 0.106
+                    "iou": 0.723
                 }
             ]
         },
-        "frame_00151.jpg": {
+        "frame_103.jpg": {
             "detections": [
                 {
-                    "class": "book",
-                    "confidence": 0.6126919388771057,
+                    "class": "car",
+                    "confidence": 0.2643687427043915,
                     "box": {
-                        "x1": 144.8,
-                        "y1": 110.7,
-                        "x2": 158.3,
-                        "y2": 162.1
+                        "x1": 256.3,
+                        "y1": 128.2,
+                        "x2": 511.7,
+                        "y2": 255.4
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_148.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_196.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_250.jpg": {
+            "detections": [
+                {
+                    "class": "person",
+                    "confidence": 0.5380047559738159,
+                    "box": {
+                        "x1": 9.0,
+                        "y1": 0.3,
+                        "x2": 255.2,
+                        "y2": 253.7
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_56.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_2\\33": {
+        "frame_10.jpg": {
+            "detections": [
+                {
+                    "class": "tie",
+                    "confidence": 0.552910327911377,
+                    "box": {
+                        "x1": 46.5,
+                        "y1": 0.0,
+                        "x2": 209.1,
+                        "y2": 254.6
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.5668551325798035,
+                    "class": "person",
+                    "confidence": 0.3920462131500244,
                     "box": {
-                        "x1": 156.5,
-                        "y1": 110.1,
-                        "x2": 168.6,
-                        "y2": 160.8
+                        "x1": 11.6,
+                        "y1": 0.4,
+                        "x2": 253.7,
+                        "y2": 254.8
+                    }
+                }
+            ],
+            "collisions": [
+                {
+                    "beetwen": [
+                        0,
+                        1
+                    ],
+                    "iou": 0.671
+                }
+            ]
+        },
+        "frame_104.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.3799796998500824,
+                    "box": {
+                        "x1": 256.3,
+                        "y1": 128.6,
+                        "x2": 511.9,
+                        "y2": 255.4
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_150.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_197.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_249.jpg": {
+            "detections": [
+                {
+                    "class": "person",
+                    "confidence": 0.5336403846740723,
+                    "box": {
+                        "x1": 5.8,
+                        "y1": 0.3,
+                        "x2": 255.5,
+                        "y2": 253.8
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_50.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_2\\35": {
+        "frame_126.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_161.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\20": {
+        "frame_110.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_172.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_26.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\22": {
+        "frame_117.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_150.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.3043178915977478,
+                    "box": {
+                        "x1": 256.8,
+                        "y1": 181.6,
+                        "x2": 511.6,
+                        "y2": 255.6
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.5285029411315918,
+                    "class": "traffic light",
+                    "confidence": 0.2547565698623657,
                     "box": {
-                        "x1": 123.6,
-                        "y1": 111.4,
-                        "x2": 136.4,
-                        "y2": 161.0
+                        "x1": 264.6,
+                        "y1": 9.7,
+                        "x2": 279.3,
+                        "y2": 37.5
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_182.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_213.jpg": {
+            "detections": [
+                {
+                    "class": "traffic light",
+                    "confidence": 0.740947961807251,
+                    "box": {
+                        "x1": 324.4,
+                        "y1": 0.1,
+                        "x2": 336.5,
+                        "y2": 28.4
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.5191629528999329,
+                    "class": "car",
+                    "confidence": 0.4985528290271759,
                     "box": {
-                        "x1": 168.1,
-                        "y1": 110.0,
-                        "x2": 180.4,
-                        "y2": 161.7
+                        "x1": 256.1,
+                        "y1": 182.4,
+                        "x2": 511.4,
+                        "y2": 255.8
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.49993425607681274,
+                    "class": "traffic light",
+                    "confidence": 0.4956110715866089,
                     "box": {
-                        "x1": 134.2,
-                        "y1": 111.3,
-                        "x2": 146.3,
-                        "y2": 161.6
+                        "x1": 406.2,
+                        "y1": 0.3,
+                        "x2": 418.3,
+                        "y2": 31.2
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.36978667974472046,
+                    "class": "traffic light",
+                    "confidence": 0.44113874435424805,
                     "box": {
-                        "x1": 97.7,
-                        "y1": 111.1,
-                        "x2": 110.5,
-                        "y2": 163.2
+                        "x1": 255.8,
+                        "y1": 0.0,
+                        "x2": 270.9,
+                        "y2": 28.4
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_23.jpg": {
+            "detections": [
+                {
+                    "class": "tie",
+                    "confidence": 0.5355674028396606,
+                    "box": {
+                        "x1": 67.8,
+                        "y1": 0.5,
+                        "x2": 151.9,
+                        "y2": 254.6
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.3353405296802521,
+                    "class": "car",
+                    "confidence": 0.523604691028595,
                     "box": {
-                        "x1": 178.5,
-                        "y1": 106.7,
-                        "x2": 200.1,
-                        "y2": 163.2
+                        "x1": 256.6,
+                        "y1": 129.4,
+                        "x2": 511.2,
+                        "y2": 255.5
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.33208298683166504,
+                    "class": "tie",
+                    "confidence": 0.2513757050037384,
                     "box": {
-                        "x1": 108.6,
-                        "y1": 111.3,
-                        "x2": 124.5,
-                        "y2": 158.7
+                        "x1": 0.7,
+                        "y1": 0.3,
+                        "x2": 89.0,
+                        "y2": 254.8
+                    }
+                }
+            ],
+            "collisions": [
+                {
+                    "beetwen": [
+                        0,
+                        2
+                    ],
+                    "iou": 0.14
+                }
+            ]
+        }
+    },
+    "scenario_1\\behavior_3\\23": {
+        "frame_111.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_151.jpg": {
+            "detections": [
+                {
+                    "class": "traffic light",
+                    "confidence": 0.2528302073478699,
+                    "box": {
+                        "x1": 256.0,
+                        "y1": 0.1,
+                        "x2": 268.4,
+                        "y2": 26.5
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_187.jpg": {
+            "detections": [
+                {
+                    "class": "person",
+                    "confidence": 0.4464215040206909,
+                    "box": {
+                        "x1": 0.1,
+                        "y1": 208.8,
+                        "x2": 43.4,
+                        "y2": 255.8
+                    }
+                },
+                {
+                    "class": "traffic light",
+                    "confidence": 0.42845800518989563,
+                    "box": {
+                        "x1": 147.8,
+                        "y1": 0.2,
+                        "x2": 255.6,
+                        "y2": 82.8
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_22.jpg": {
+            "detections": [
+                {
+                    "class": "tie",
+                    "confidence": 0.5489275455474854,
+                    "box": {
+                        "x1": 67.7,
+                        "y1": 0.5,
+                        "x2": 152.5,
+                        "y2": 254.2
+                    }
+                },
+                {
+                    "class": "car",
+                    "confidence": 0.5269680023193359,
+                    "box": {
+                        "x1": 256.6,
+                        "y1": 128.7,
+                        "x2": 511.3,
+                        "y2": 255.5
+                    }
+                },
+                {
+                    "class": "person",
+                    "confidence": 0.3069327771663666,
+                    "box": {
+                        "x1": 0.7,
+                        "y1": 0.7,
+                        "x2": 254.2,
+                        "y2": 254.1
+                    }
+                }
+            ],
+            "collisions": [
+                {
+                    "beetwen": [
+                        0,
+                        2
+                    ],
+                    "iou": 0.334
+                }
+            ]
+        },
+        "frame_222.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.4063953459262848,
+                    "box": {
+                        "x1": 257.6,
+                        "y1": 181.8,
+                        "x2": 511.0,
+                        "y2": 255.7
+                    }
+                },
+                {
+                    "class": "cell phone",
+                    "confidence": 0.3988081216812134,
+                    "box": {
+                        "x1": 0.0,
+                        "y1": 0.8,
+                        "x2": 37.3,
+                        "y2": 174.1
                     }
                 }
             ],
             "collisions": []
         }
     },
-    "keyframes_VID_20250611_192137805~5": {
-        "frame_00072.jpg": {
+    "scenario_1\\behavior_3\\24": {
+        "frame_127.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_164.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_31.jpg": {
             "detections": [
                 {
-                    "class": "book",
-                    "confidence": 0.6112232208251953,
+                    "class": "train",
+                    "confidence": 0.3903079032897949,
                     "box": {
-                        "x1": 144.9,
-                        "y1": 110.9,
-                        "x2": 158.4,
-                        "y2": 162.4
+                        "x1": 257.3,
+                        "y1": 48.9,
+                        "x2": 511.2,
+                        "y2": 255.4
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.5448127388954163,
+                    "class": "airplane",
+                    "confidence": 0.3536829948425293,
+                    "box": {
+                        "x1": 256.3,
+                        "y1": 48.7,
+                        "x2": 511.6,
+                        "y2": 255.2
+                    }
+                }
+            ],
+            "collisions": [
+                {
+                    "beetwen": [
+                        0,
+                        1
+                    ],
+                    "iou": 0.993
+                }
+            ]
+        }
+    },
+    "scenario_1\\behavior_3\\25": {
+        "frame_122.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_161.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_30.jpg": {
+            "detections": [
+                {
+                    "class": "airplane",
+                    "confidence": 0.3743748962879181,
+                    "box": {
+                        "x1": 256.4,
+                        "y1": 50.5,
+                        "x2": 511.6,
+                        "y2": 255.1
+                    }
+                },
+                {
+                    "class": "train",
+                    "confidence": 0.3049526512622833,
+                    "box": {
+                        "x1": 257.9,
+                        "y1": 50.8,
+                        "x2": 511.3,
+                        "y2": 255.4
+                    }
+                }
+            ],
+            "collisions": [
+                {
+                    "beetwen": [
+                        0,
+                        1
+                    ],
+                    "iou": 0.99
+                }
+            ]
+        }
+    },
+    "scenario_1\\behavior_3\\26": {
+        "frame_102.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.28029295802116394,
+                    "box": {
+                        "x1": 256.3,
+                        "y1": 128.4,
+                        "x2": 512.0,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_11.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.5115945935249329,
+                    "box": {
+                        "x1": 256.5,
+                        "y1": 128.8,
+                        "x2": 511.6,
+                        "y2": 255.5
+                    }
+                },
+                {
+                    "class": "tie",
+                    "confidence": 0.460468053817749,
+                    "box": {
+                        "x1": 46.8,
+                        "y1": 0.0,
+                        "x2": 211.0,
+                        "y2": 255.0
+                    }
+                },
+                {
+                    "class": "person",
+                    "confidence": 0.276757150888443,
+                    "box": {
+                        "x1": 40.0,
+                        "y1": 0.8,
+                        "x2": 253.5,
+                        "y2": 255.6
+                    }
+                }
+            ],
+            "collisions": [
+                {
+                    "beetwen": [
+                        1,
+                        2
+                    ],
+                    "iou": 0.765
+                }
+            ]
+        },
+        "frame_149.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_195.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_256.jpg": {
+            "detections": [
+                {
+                    "class": "person",
+                    "confidence": 0.39920419454574585,
+                    "box": {
+                        "x1": 4.1,
+                        "y1": 0.3,
+                        "x2": 253.8,
+                        "y2": 254.3
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_41.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.26808109879493713,
+                    "box": {
+                        "x1": 256.8,
+                        "y1": 128.9,
+                        "x2": 511.1,
+                        "y2": 255.7
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\27": {
+        "frame_10.jpg": {
+            "detections": [
+                {
+                    "class": "tie",
+                    "confidence": 0.5911978483200073,
+                    "box": {
+                        "x1": 47.5,
+                        "y1": 0.6,
+                        "x2": 209.1,
+                        "y2": 255.5
+                    }
+                },
+                {
+                    "class": "person",
+                    "confidence": 0.3884883224964142,
+                    "box": {
+                        "x1": 9.0,
+                        "y1": 0.4,
+                        "x2": 254.5,
+                        "y2": 254.9
+                    }
+                }
+            ],
+            "collisions": [
+                {
+                    "beetwen": [
+                        0,
+                        1
+                    ],
+                    "iou": 0.657
+                }
+            ]
+        },
+        "frame_104.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.2933480441570282,
+                    "box": {
+                        "x1": 256.3,
+                        "y1": 128.3,
+                        "x2": 511.9,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_197.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_42.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.3371778726577759,
+                    "box": {
+                        "x1": 256.9,
+                        "y1": 129.9,
+                        "x2": 511.3,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\28": {
+        "frame_138.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_177.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_208.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_28.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.7672364115715027,
+                    "box": {
+                        "x1": 256.4,
+                        "y1": 123.5,
+                        "x2": 511.6,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_92.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.2524341642856598,
+                    "box": {
+                        "x1": 257.4,
+                        "y1": 130.1,
+                        "x2": 511.6,
+                        "y2": 255.6
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\29": {
+        "frame_140.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_178.jpg": {
+            "detections": [
+                {
+                    "class": "umbrella",
+                    "confidence": 0.2779771387577057,
+                    "box": {
+                        "x1": 420.7,
+                        "y1": 0.3,
+                        "x2": 511.5,
+                        "y2": 140.1
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_210.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_28.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.713932991027832,
+                    "box": {
+                        "x1": 256.5,
+                        "y1": 122.9,
+                        "x2": 511.4,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_90.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\30": {
+        "frame_38.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.2583984434604645,
+                    "box": {
+                        "x1": 257.1,
+                        "y1": 98.4,
+                        "x2": 510.9,
+                        "y2": 255.2
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\32": {
+        "frame_176.jpg": {
+            "detections": [
+                {
+                    "class": "traffic light",
+                    "confidence": 0.4643998146057129,
+                    "box": {
+                        "x1": 499.5,
+                        "y1": 47.6,
+                        "x2": 511.5,
+                        "y2": 65.4
+                    }
+                },
+                {
+                    "class": "car",
+                    "confidence": 0.3561638593673706,
+                    "box": {
+                        "x1": 256.6,
+                        "y1": 127.1,
+                        "x2": 511.1,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_30.jpg": {
+            "detections": [
+                {
+                    "class": "train",
+                    "confidence": 0.5247486233711243,
+                    "box": {
+                        "x1": 257.0,
+                        "y1": 69.2,
+                        "x2": 511.3,
+                        "y2": 255.4
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\33": {
+        "frame_179.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_31.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\34": {
+        "frame_126.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_29.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.26855307817459106,
+                    "box": {
+                        "x1": 257.3,
+                        "y1": 118.1,
+                        "x2": 511.5,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_83.jpg": {
+            "detections": [
+                {
+                    "class": "traffic light",
+                    "confidence": 0.39295703172683716,
+                    "box": {
+                        "x1": 288.5,
+                        "y1": 30.7,
+                        "x2": 300.2,
+                        "y2": 53.7
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\36": {
+        "frame_107.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_138.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_171.jpg": {
+            "detections": [
+                {
+                    "class": "traffic light",
+                    "confidence": 0.595493733882904,
+                    "box": {
+                        "x1": 156.0,
+                        "y1": 0.2,
+                        "x2": 255.6,
+                        "y2": 70.4
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_233.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.26954710483551025,
+                    "box": {
+                        "x1": 256.7,
+                        "y1": 119.5,
+                        "x2": 511.3,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_32.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_71.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\37": {
+        "frame_136.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_175.jpg": {
+            "detections": [
+                {
+                    "class": "traffic light",
+                    "confidence": 0.41505858302116394,
                     "box": {
                         "x1": 155.7,
-                        "y1": 110.8,
-                        "x2": 169.2,
-                        "y2": 160.9
+                        "y1": 0.1,
+                        "x2": 255.6,
+                        "y2": 79.7
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.4889978766441345,
+                    "class": "person",
+                    "confidence": 0.2845134139060974,
                     "box": {
-                        "x1": 123.4,
-                        "y1": 111.6,
-                        "x2": 136.2,
-                        "y2": 161.3
+                        "x1": 0.1,
+                        "y1": 203.0,
+                        "x2": 32.9,
+                        "y2": 255.8
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_228.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_31.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_99.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.4328751564025879,
+                    "box": {
+                        "x1": 256.8,
+                        "y1": 115.8,
+                        "x2": 511.4,
+                        "y2": 255.4
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\38": {
+        "frame_142.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_190.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_30.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.39055779576301575,
+                    "box": {
+                        "x1": 256.9,
+                        "y1": 122.0,
+                        "x2": 511.0,
+                        "y2": 255.4
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_3\\39": {
+        "frame_143.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_194.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_30.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.3017697036266327,
+                    "box": {
+                        "x1": 257.0,
+                        "y1": 122.6,
+                        "x2": 511.0,
+                        "y2": 255.4
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_4\\22": {
+        "frame_167.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_204.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_31.jpg": {
+            "detections": [
+                {
+                    "class": "airplane",
+                    "confidence": 0.5387829542160034,
+                    "box": {
+                        "x1": 256.4,
+                        "y1": 50.0,
+                        "x2": 511.5,
+                        "y2": 255.1
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_4\\24": {
+        "frame_11.jpg": {
+            "detections": [
+                {
+                    "class": "tie",
+                    "confidence": 0.5470234155654907,
+                    "box": {
+                        "x1": 44.5,
+                        "y1": 0.3,
+                        "x2": 210.2,
+                        "y2": 254.4
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.4807502329349518,
+                    "class": "car",
+                    "confidence": 0.4107382893562317,
                     "box": {
-                        "x1": 168.3,
-                        "y1": 110.3,
-                        "x2": 180.4,
-                        "y2": 162.0
+                        "x1": 414.1,
+                        "y1": 130.6,
+                        "x2": 431.6,
+                        "y2": 142.7
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.4728603661060333,
+                    "class": "person",
+                    "confidence": 0.3833836019039154,
                     "box": {
-                        "x1": 134.2,
-                        "y1": 112.1,
-                        "x2": 146.6,
-                        "y2": 162.1
+                        "x1": 36.6,
+                        "y1": 0.8,
+                        "x2": 251.1,
+                        "y2": 255.6
+                    }
+                }
+            ],
+            "collisions": [
+                {
+                    "beetwen": [
+                        0,
+                        2
+                    ],
+                    "iou": 0.768
+                }
+            ]
+        },
+        "frame_117.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_161.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_210.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_272.jpg": {
+            "detections": [
+                {
+                    "class": "person",
+                    "confidence": 0.4492990970611572,
+                    "box": {
+                        "x1": 3.2,
+                        "y1": 0.3,
+                        "x2": 253.1,
+                        "y2": 254.2
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_43.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.8110964894294739,
+                    "box": {
+                        "x1": 399.2,
+                        "y1": 131.9,
+                        "x2": 511.7,
+                        "y2": 197.5
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_4\\25": {
+        "frame_10.jpg": {
+            "detections": [
+                {
+                    "class": "tie",
+                    "confidence": 0.6172141432762146,
+                    "box": {
+                        "x1": 47.2,
+                        "y1": 0.0,
+                        "x2": 216.7,
+                        "y2": 254.8
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.4343099594116211,
+                    "class": "car",
+                    "confidence": 0.362460196018219,
                     "box": {
-                        "x1": 97.7,
-                        "y1": 111.1,
-                        "x2": 111.0,
-                        "y2": 163.2
+                        "x1": 256.6,
+                        "y1": 128.9,
+                        "x2": 511.4,
+                        "y2": 255.7
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.37163984775543213,
+                    "class": "person",
+                    "confidence": 0.32043617963790894,
                     "box": {
-                        "x1": 108.6,
-                        "y1": 112.0,
-                        "x2": 124.4,
-                        "y2": 158.9
+                        "x1": 39.9,
+                        "y1": 0.7,
+                        "x2": 249.9,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": [
+                {
+                    "beetwen": [
+                        0,
+                        2
+                    ],
+                    "iou": 0.803
+                }
+            ]
+        },
+        "frame_117.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_164.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_212.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_45.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.8267279267311096,
+                    "box": {
+                        "x1": 413.3,
+                        "y1": 133.4,
+                        "x2": 510.2,
+                        "y2": 181.2
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.2931024730205536,
+                    "class": "tie",
+                    "confidence": 0.4883260726928711,
                     "box": {
-                        "x1": 178.9,
-                        "y1": 107.3,
-                        "x2": 198.1,
-                        "y2": 162.7
+                        "x1": 27.6,
+                        "y1": 0.0,
+                        "x2": 191.8,
+                        "y2": 255.0
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_86.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.3222009837627411,
+                    "box": {
+                        "x1": 256.3,
+                        "y1": 129.9,
+                        "x2": 511.4,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_4\\26": {
+        "frame_155.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_32.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_4\\27": {
+        "frame_27.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_4\\28": {
+        "frame_129.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_208.jpg": {
+            "detections": [
+                {
+                    "class": "traffic light",
+                    "confidence": 0.31706002354621887,
+                    "box": {
+                        "x1": 147.5,
+                        "y1": 0.2,
+                        "x2": 255.6,
+                        "y2": 88.2
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_21.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.44180047512054443,
+                    "box": {
+                        "x1": 256.6,
+                        "y1": 129.8,
+                        "x2": 511.1,
+                        "y2": 255.4
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_4\\29": {
+        "frame_121.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_158.jpg": {
+            "detections": [
+                {
+                    "class": "traffic light",
+                    "confidence": 0.6722165942192078,
+                    "box": {
+                        "x1": 276.7,
+                        "y1": 11.3,
+                        "x2": 290.2,
+                        "y2": 38.2
+                    }
+                },
+                {
+                    "class": "car",
+                    "confidence": 0.2871367931365967,
+                    "box": {
+                        "x1": 256.8,
+                        "y1": 181.2,
+                        "x2": 511.5,
+                        "y2": 255.6
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_195.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_22.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.5242143869400024,
+                    "box": {
+                        "x1": 256.4,
+                        "y1": 128.7,
+                        "x2": 511.1,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_4\\30": {
+        "frame_124.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.5128710269927979,
+                    "box": {
+                        "x1": 452.5,
+                        "y1": 150.6,
+                        "x2": 511.9,
+                        "y2": 196.6
+                    }
+                },
+                {
+                    "class": "car",
+                    "confidence": 0.4617050290107727,
+                    "box": {
+                        "x1": 256.2,
+                        "y1": 127.2,
+                        "x2": 511.8,
+                        "y2": 255.5
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_27.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_4\\31": {
+        "frame_25.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_71.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.8067662715911865,
+                    "box": {
+                        "x1": 417.6,
+                        "y1": 134.5,
+                        "x2": 511.9,
+                        "y2": 217.9
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_4\\36": {
+        "frame_142.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.6060450077056885,
+                    "box": {
+                        "x1": 458.7,
+                        "y1": 141.3,
+                        "x2": 511.9,
+                        "y2": 203.9
+                    }
+                },
+                {
+                    "class": "car",
+                    "confidence": 0.45224910974502563,
+                    "box": {
+                        "x1": 256.7,
+                        "y1": 128.4,
+                        "x2": 511.8,
+                        "y2": 255.5
+                    }
+                },
+                {
+                    "class": "traffic light",
+                    "confidence": 0.3055979311466217,
+                    "box": {
+                        "x1": 504.7,
+                        "y1": 83.6,
+                        "x2": 511.8,
+                        "y2": 121.1
                     }
                 }
             ],
@@ -2308,681 +1725,91 @@
                     "beetwen": [
                         0,
                         1
-                    ],
-                    "iou": 0.108
-                }
-            ]
-        },
-        "frame_00116.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8690090775489807,
-                    "box": {
-                        "x1": 235.8,
-                        "y1": 92.5,
-                        "x2": 308.9,
-                        "y2": 214.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5980662703514099,
-                    "box": {
-                        "x1": 144.9,
-                        "y1": 110.9,
-                        "x2": 158.1,
-                        "y2": 162.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.527847409248352,
-                    "box": {
-                        "x1": 123.3,
-                        "y1": 111.7,
-                        "x2": 135.9,
-                        "y2": 161.4
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5227340459823608,
-                    "box": {
-                        "x1": 155.6,
-                        "y1": 110.8,
-                        "x2": 169.2,
-                        "y2": 160.7
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5088201761245728,
-                    "box": {
-                        "x1": 134.0,
-                        "y1": 112.3,
-                        "x2": 146.5,
-                        "y2": 162.4
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.48308953642845154,
-                    "box": {
-                        "x1": 168.3,
-                        "y1": 110.5,
-                        "x2": 180.4,
-                        "y2": 161.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.4186595678329468,
-                    "box": {
-                        "x1": 97.9,
-                        "y1": 111.1,
-                        "x2": 110.9,
-                        "y2": 163.7
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.4048498868942261,
-                    "box": {
-                        "x1": 108.7,
-                        "y1": 111.9,
-                        "x2": 124.4,
-                        "y2": 160.0
-                    }
-                },
-                {
-                    "class": "microwave",
-                    "confidence": 0.25962916016578674,
-                    "box": {
-                        "x1": 228.5,
-                        "y1": 149.8,
-                        "x2": 265.8,
-                        "y2": 183.9
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        0,
-                        8
-                    ],
-                    "iou": 0.112
-                },
-                {
-                    "beetwen": [
-                        1,
-                        3
                     ],
                     "iou": 0.103
                 }
             ]
         },
-        "frame_00163.jpg": {
+        "frame_190.jpg": {
             "detections": [
                 {
-                    "class": "person",
-                    "confidence": 0.9106836915016174,
+                    "class": "kite",
+                    "confidence": 0.34847232699394226,
                     "box": {
-                        "x1": 257.5,
-                        "y1": 101.0,
-                        "x2": 342.6,
-                        "y2": 214.0
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.626135528087616,
-                    "box": {
-                        "x1": 145.0,
-                        "y1": 110.9,
-                        "x2": 158.3,
-                        "y2": 162.7
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5672651529312134,
-                    "box": {
-                        "x1": 123.4,
-                        "y1": 111.6,
-                        "x2": 135.9,
-                        "y2": 161.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5571380257606506,
-                    "box": {
-                        "x1": 134.2,
-                        "y1": 112.2,
-                        "x2": 146.7,
-                        "y2": 162.2
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5354255437850952,
-                    "box": {
-                        "x1": 155.7,
-                        "y1": 110.8,
-                        "x2": 169.6,
-                        "y2": 161.2
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5306644439697266,
-                    "box": {
-                        "x1": 168.3,
-                        "y1": 110.0,
-                        "x2": 180.4,
-                        "y2": 161.7
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.4619293808937073,
-                    "box": {
-                        "x1": 97.6,
-                        "y1": 111.2,
-                        "x2": 110.7,
-                        "y2": 164.0
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.39406636357307434,
-                    "box": {
-                        "x1": 108.8,
-                        "y1": 111.9,
-                        "x2": 124.3,
-                        "y2": 159.3
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        1,
-                        4
-                    ],
-                    "iou": 0.104
-                }
-            ]
-        }
-    },
-    "keyframes_VID_20250611_192137805~6": {
-        "frame_00067.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8896608948707581,
-                    "box": {
-                        "x1": 31.0,
-                        "y1": 98.1,
-                        "x2": 121.0,
-                        "y2": 214.6
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5319416522979736,
-                    "box": {
-                        "x1": 145.0,
-                        "y1": 111.8,
-                        "x2": 158.2,
-                        "y2": 163.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5053081512451172,
-                    "box": {
-                        "x1": 168.3,
-                        "y1": 110.2,
-                        "x2": 180.4,
-                        "y2": 162.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.4513903856277466,
-                    "box": {
-                        "x1": 156.1,
-                        "y1": 110.9,
-                        "x2": 169.0,
-                        "y2": 161.7
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.30093899369239807,
-                    "box": {
-                        "x1": 134.9,
-                        "y1": 112.9,
-                        "x2": 146.4,
-                        "y2": 161.6
+                        "x1": 437.7,
+                        "y1": 91.7,
+                        "x2": 443.8,
+                        "y2": 98.9
                     }
                 }
             ],
             "collisions": []
         },
-        "frame_00158.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8927680253982544,
-                    "box": {
-                        "x1": 143.1,
-                        "y1": 84.3,
-                        "x2": 219.2,
-                        "y2": 214.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.6478886008262634,
-                    "box": {
-                        "x1": 123.2,
-                        "y1": 111.3,
-                        "x2": 136.3,
-                        "y2": 161.8
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5287389755249023,
-                    "box": {
-                        "x1": 133.9,
-                        "y1": 112.1,
-                        "x2": 146.3,
-                        "y2": 163.2
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5196617245674133,
-                    "box": {
-                        "x1": 98.2,
-                        "y1": 112.2,
-                        "x2": 110.1,
-                        "y2": 164.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.4893855154514313,
-                    "box": {
-                        "x1": 109.1,
-                        "y1": 112.4,
-                        "x2": 124.5,
-                        "y2": 159.1
-                    }
-                },
-                {
-                    "class": "tv",
-                    "confidence": 0.3569907546043396,
-                    "box": {
-                        "x1": 231.8,
-                        "y1": 151.8,
-                        "x2": 263.3,
-                        "y2": 181.5
-                    }
-                }
-            ],
+        "frame_271.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_31.jpg": {
+            "detections": [],
             "collisions": []
         }
     },
-    "keyframes_VID_20250611_192137805~7": {
-        "frame_00083.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8722851276397705,
-                    "box": {
-                        "x1": 138.3,
-                        "y1": 103.9,
-                        "x2": 198.8,
-                        "y2": 214.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.6105011701583862,
-                    "box": {
-                        "x1": 123.3,
-                        "y1": 112.4,
-                        "x2": 135.6,
-                        "y2": 163.0
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5920110940933228,
-                    "box": {
-                        "x1": 97.7,
-                        "y1": 112.1,
-                        "x2": 110.5,
-                        "y2": 165.3
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5407848954200745,
-                    "box": {
-                        "x1": 144.8,
-                        "y1": 112.2,
-                        "x2": 158.6,
-                        "y2": 163.8
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5322571992874146,
-                    "box": {
-                        "x1": 134.2,
-                        "y1": 112.6,
-                        "x2": 146.5,
-                        "y2": 163.6
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.47280582785606384,
-                    "box": {
-                        "x1": 109.0,
-                        "y1": 113.0,
-                        "x2": 124.4,
-                        "y2": 158.4
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        0,
-                        3
-                    ],
-                    "iou": 0.107
-                }
-            ]
-        },
-        "frame_00142.jpg": {
-            "detections": [
-                {
-                    "class": "book",
-                    "confidence": 0.6427318453788757,
-                    "box": {
-                        "x1": 145.0,
-                        "y1": 111.7,
-                        "x2": 158.3,
-                        "y2": 163.5
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5543443560600281,
-                    "box": {
-                        "x1": 156.0,
-                        "y1": 111.4,
-                        "x2": 169.2,
-                        "y2": 163.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5259849429130554,
-                    "box": {
-                        "x1": 97.5,
-                        "y1": 112.3,
-                        "x2": 110.7,
-                        "y2": 166.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5150003433227539,
-                    "box": {
-                        "x1": 134.2,
-                        "y1": 113.1,
-                        "x2": 146.5,
-                        "y2": 163.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.512571394443512,
-                    "box": {
-                        "x1": 123.3,
-                        "y1": 112.9,
-                        "x2": 136.1,
-                        "y2": 163.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5035536289215088,
-                    "box": {
-                        "x1": 168.1,
-                        "y1": 111.0,
-                        "x2": 180.6,
-                        "y2": 163.9
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.31536075472831726,
-                    "box": {
-                        "x1": 178.7,
-                        "y1": 108.2,
-                        "x2": 204.0,
-                        "y2": 164.4
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.2882942855358124,
-                    "box": {
-                        "x1": 108.9,
-                        "y1": 113.3,
-                        "x2": 124.4,
-                        "y2": 160.4
-                    }
-                }
-            ],
+    "scenario_1\\behavior_4\\37": {
+        "frame_33.jpg": {
+            "detections": [],
             "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_192137805~8": {
-        "frame_00034.jpg": {
-            "detections": [
-                {
-                    "class": "book",
-                    "confidence": 0.6416096091270447,
-                    "box": {
-                        "x1": 144.9,
-                        "y1": 112.3,
-                        "x2": 158.2,
-                        "y2": 164.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.599128782749176,
-                    "box": {
-                        "x1": 133.8,
-                        "y1": 113.5,
-                        "x2": 146.2,
-                        "y2": 163.4
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5795634984970093,
-                    "box": {
-                        "x1": 97.7,
-                        "y1": 112.8,
-                        "x2": 110.3,
-                        "y2": 165.7
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5615584850311279,
-                    "box": {
-                        "x1": 155.7,
-                        "y1": 111.4,
-                        "x2": 169.3,
-                        "y2": 163.7
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5547836422920227,
-                    "box": {
-                        "x1": 123.3,
-                        "y1": 112.5,
-                        "x2": 136.0,
-                        "y2": 163.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.543286144733429,
-                    "box": {
-                        "x1": 168.2,
-                        "y1": 111.1,
-                        "x2": 180.4,
-                        "y2": 164.7
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.38831016421318054,
-                    "box": {
-                        "x1": 179.2,
-                        "y1": 108.0,
-                        "x2": 203.6,
-                        "y2": 164.7
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.34267210960388184,
-                    "box": {
-                        "x1": 109.0,
-                        "y1": 113.3,
-                        "x2": 124.5,
-                        "y2": 161.5
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        0,
-                        3
-                    ],
-                    "iou": 0.101
-                }
-            ]
         },
-        "frame_00085.jpg": {
+        "frame_77.jpg": {
             "detections": [
                 {
-                    "class": "book",
-                    "confidence": 0.6829307079315186,
+                    "class": "car",
+                    "confidence": 0.2562912106513977,
                     "box": {
-                        "x1": 144.8,
-                        "y1": 112.4,
-                        "x2": 158.3,
-                        "y2": 164.2
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.6084194779396057,
-                    "box": {
-                        "x1": 155.8,
-                        "y1": 111.7,
-                        "x2": 169.1,
-                        "y2": 163.8
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5941986441612244,
-                    "box": {
-                        "x1": 133.9,
-                        "y1": 113.4,
-                        "x2": 146.1,
-                        "y2": 163.4
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5790067315101624,
-                    "box": {
-                        "x1": 123.4,
-                        "y1": 112.8,
-                        "x2": 136.2,
-                        "y2": 163.2
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5710369348526001,
-                    "box": {
-                        "x1": 97.5,
-                        "y1": 113.0,
-                        "x2": 110.1,
-                        "y2": 166.6
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5540212988853455,
-                    "box": {
-                        "x1": 168.2,
-                        "y1": 111.2,
-                        "x2": 180.5,
-                        "y2": 164.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.46990832686424255,
-                    "box": {
-                        "x1": 178.9,
+                        "x1": 410.7,
                         "y1": 107.9,
-                        "x2": 204.2,
-                        "y2": 164.6
+                        "x2": 511.8,
+                        "y2": 237.9
+                    }
+                }
+            ],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_4\\39": {
+        "frame_204.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_241.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_30.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_5\\32": {
+        "frame_10.jpg": {
+            "detections": [
+                {
+                    "class": "tie",
+                    "confidence": 0.4675544798374176,
+                    "box": {
+                        "x1": 46.1,
+                        "y1": 0.1,
+                        "x2": 227.2,
+                        "y2": 254.7
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.3103024661540985,
+                    "class": "person",
+                    "confidence": 0.27193933725357056,
                     "box": {
-                        "x1": 108.9,
-                        "y1": 113.6,
-                        "x2": 124.6,
-                        "y2": 161.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.27214157581329346,
-                    "box": {
-                        "x1": 24.2,
-                        "y1": 134.8,
-                        "x2": 98.7,
-                        "y2": 144.1
+                        "x1": 37.9,
+                        "y1": 0.7,
+                        "x2": 252.6,
+                        "y2": 255.5
                     }
                 }
             ],
@@ -2992,257 +1819,162 @@
                         0,
                         1
                     ],
-                    "iou": 0.102
-                },
-                {
-                    "beetwen": [
-                        2,
-                        3
-                    ],
-                    "iou": 0.102
+                    "iou": 0.839
                 }
             ]
         },
-        "frame_00154.jpg": {
+        "frame_128.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_193.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_228.jpg": {
             "detections": [
                 {
-                    "class": "book",
-                    "confidence": 0.7214182615280151,
+                    "class": "car",
+                    "confidence": 0.2816614806652069,
                     "box": {
-                        "x1": 144.8,
-                        "y1": 112.6,
-                        "x2": 158.4,
-                        "y2": 164.1
+                        "x1": 256.9,
+                        "y1": 131.7,
+                        "x2": 511.3,
+                        "y2": 255.7
                     }
                 },
                 {
-                    "class": "person",
-                    "confidence": 0.6597533226013184,
+                    "class": "tie",
+                    "confidence": 0.26963818073272705,
                     "box": {
-                        "x1": 175.1,
-                        "y1": 96.3,
-                        "x2": 241.9,
-                        "y2": 215.9
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.6489511132240295,
-                    "box": {
-                        "x1": 123.5,
-                        "y1": 113.2,
-                        "x2": 136.3,
-                        "y2": 164.1
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.6058559417724609,
-                    "box": {
-                        "x1": 134.2,
-                        "y1": 114.2,
-                        "x2": 146.1,
-                        "y2": 163.8
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5510448813438416,
-                    "box": {
-                        "x1": 156.0,
-                        "y1": 111.8,
-                        "x2": 168.6,
-                        "y2": 163.6
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.5305888056755066,
-                    "box": {
-                        "x1": 97.4,
-                        "y1": 113.4,
-                        "x2": 110.4,
-                        "y2": 166.0
-                    }
-                },
-                {
-                    "class": "person",
-                    "confidence": 0.41927799582481384,
-                    "box": {
-                        "x1": 174.6,
-                        "y1": 96.3,
-                        "x2": 277.8,
-                        "y2": 216.0
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.3911590874195099,
-                    "box": {
-                        "x1": 108.7,
-                        "y1": 114.0,
-                        "x2": 124.5,
-                        "y2": 160.4
-                    }
-                },
-                {
-                    "class": "tv",
-                    "confidence": 0.29185593128204346,
-                    "box": {
-                        "x1": 234.9,
-                        "y1": 152.3,
-                        "x2": 262.5,
-                        "y2": 182.6
-                    }
-                },
-                {
-                    "class": "book",
-                    "confidence": 0.2615944743156433,
-                    "box": {
-                        "x1": 168.0,
-                        "y1": 110.8,
-                        "x2": 180.5,
-                        "y2": 164.2
-                    }
-                }
-            ],
-            "collisions": [
-                {
-                    "beetwen": [
-                        1,
-                        6
-                    ],
-                    "iou": 0.646
-                }
-            ]
-        }
-    },
-    "keyframes_VID_20250611_192903914~2": {
-        "frame_00088.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.8722399473190308,
-                    "box": {
-                        "x1": 115.6,
-                        "y1": 95.7,
-                        "x2": 179.6,
-                        "y2": 214.3
+                        "x1": 19.8,
+                        "y1": 0.2,
+                        "x2": 176.1,
+                        "y2": 249.9
                     }
                 }
             ],
             "collisions": []
         },
-        "frame_00152.jpg": {
+        "frame_44.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_93.jpg": {
+            "detections": [],
+            "collisions": []
+        }
+    },
+    "scenario_1\\behavior_5\\38": {
+        "frame_112.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_157.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_187.jpg": {
             "detections": [
                 {
-                    "class": "person",
-                    "confidence": 0.9051382541656494,
+                    "class": "traffic light",
+                    "confidence": 0.2680068016052246,
                     "box": {
-                        "x1": 46.6,
-                        "y1": 97.4,
-                        "x2": 114.8,
-                        "y2": 214.5
+                        "x1": 148.0,
+                        "y1": 0.2,
+                        "x2": 255.6,
+                        "y2": 87.9
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_21.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.44241276383399963,
+                    "box": {
+                        "x1": 256.6,
+                        "y1": 128.6,
+                        "x2": 511.1,
+                        "y2": 255.4
                     }
                 }
             ],
             "collisions": []
         }
     },
-    "keyframes_VID_20250611_192903914~3": {
-        "frame_00096.jpg": {
+    "scenario_1\\behavior_5\\39": {
+        "frame_111.jpg": {
+            "detections": [],
+            "collisions": []
+        },
+        "frame_158.jpg": {
             "detections": [
                 {
-                    "class": "person",
-                    "confidence": 0.9192466139793396,
+                    "class": "traffic light",
+                    "confidence": 0.2596215605735779,
                     "box": {
-                        "x1": 188.4,
-                        "y1": 92.7,
-                        "x2": 266.3,
-                        "y2": 214.8
-                    }
-                },
-                {
-                    "class": "refrigerator",
-                    "confidence": 0.2802049517631531,
-                    "box": {
-                        "x1": 345.7,
-                        "y1": 39.5,
-                        "x2": 383.7,
-                        "y2": 213.5
+                        "x1": 485.8,
+                        "y1": 53.7,
+                        "x2": 495.1,
+                        "y2": 69.9
                     }
                 }
             ],
             "collisions": []
         },
-        "frame_00147.jpg": {
-            "detections": [],
-            "collisions": []
-        }
-    },
-    "keyframes_VID_20250611_192903914~4": {
-        "frame_00012.jpg": {
+        "frame_188.jpg": {
             "detections": [
                 {
-                    "class": "person",
-                    "confidence": 0.9449502825737,
+                    "class": "traffic light",
+                    "confidence": 0.3518795967102051,
                     "box": {
-                        "x1": 27.0,
-                        "y1": 73.1,
-                        "x2": 147.7,
-                        "y2": 214.5
+                        "x1": 147.2,
+                        "y1": 0.1,
+                        "x2": 255.6,
+                        "y2": 87.6
                     }
                 }
             ],
             "collisions": []
         },
-        "frame_00035.jpg": {
+        "frame_221.jpg": {
             "detections": [
                 {
-                    "class": "person",
-                    "confidence": 0.9595023989677429,
-                    "box": {
-                        "x1": 0.1,
-                        "y1": 1.7,
-                        "x2": 189.9,
-                        "y2": 213.4
-                    }
-                }
-            ],
-            "collisions": []
-        },
-        "frame_00073.jpg": {
-            "detections": [],
-            "collisions": []
-        },
-        "frame_00098.jpg": {
-            "detections": [],
-            "collisions": []
-        },
-        "frame_00124.jpg": {
-            "detections": [],
-            "collisions": []
-        },
-        "frame_00165.jpg": {
-            "detections": [
-                {
-                    "class": "person",
-                    "confidence": 0.922519862651825,
+                    "class": "cell phone",
+                    "confidence": 0.350456565618515,
                     "box": {
                         "x1": 0.0,
-                        "y1": 0.9,
-                        "x2": 264.7,
-                        "y2": 214.6
+                        "y1": 0.8,
+                        "x2": 37.6,
+                        "y2": 174.2
                     }
                 },
                 {
-                    "class": "book",
-                    "confidence": 0.27543845772743225,
+                    "class": "car",
+                    "confidence": 0.3060271739959717,
                     "box": {
-                        "x1": 119.7,
-                        "y1": 140.5,
-                        "x2": 187.8,
-                        "y2": 214.8
+                        "x1": 257.6,
+                        "y1": 182.2,
+                        "x2": 510.6,
+                        "y2": 255.7
+                    }
+                }
+            ],
+            "collisions": []
+        },
+        "frame_25.jpg": {
+            "detections": [
+                {
+                    "class": "car",
+                    "confidence": 0.40743929147720337,
+                    "box": {
+                        "x1": 256.5,
+                        "y1": 128.5,
+                        "x2": 511.1,
+                        "y2": 255.7
                     }
                 }
             ],

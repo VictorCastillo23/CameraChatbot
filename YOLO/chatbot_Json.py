@@ -25,7 +25,7 @@ class Chatbot_YOLO_JSON():
         return os.getenv('OPENAI_API_KEY')
 
     def initialize_llm(self):
-        return ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        return ChatOpenAI(model="gpt-4o", temperature=0)
 
     def init_db(self):
         conn = mysql.connector.connect(**self.mysql_config)
@@ -104,24 +104,24 @@ class Chatbot_YOLO_JSON():
                 collisions = data.get("collisions", [])
 
                 prompt = (
-                    f"Vas a recibir un archivo en formato JSON con datos extraidos por un algoritmo detector de objectos."
-                    "Analiza los datos de la imagen '{image_name}' en la carpeta '{carpeta}'. "
-                    "CONTEXTO: CÁMARA DE UN CENTRO COMERCIAL EN EL ÁREA DE TECNOLOGÍAS\n"
-                    "Devuélveme SOLO un JSON con las siguientes claves:\n"
-                    "- general_description: descripción general breve de las clases detectadas.\n"
-                    "- objects_list: lista en formato bullet de cantidad de objetos por clase.\n"
-                    "- collision_analysis: análisis de colisiones y su posible significado.\n"
-                    "- narrative: interpretación narrativa de la escena, en lenguaje natural.\n\n"
-                    "Por favor, responde SOLO con el JSON plano, sin marcarlo con ```json ni ningún otro formato.\n\n"
-                    "Ejemplo de JSON:\n"
+                    f"You are going to receive a JSON file with data extracted by an object detection algorithm. "
+                    f"Analyze the data of the image '{image_name}' in the folder '{carpeta}'. "
+                    "CONTEXT: SECURITY CAMERA IN A CAR\n"
+                    "Return ONLY a JSON with the following keys:\n"
+                    "- general_description: brief general description of the detected classes.\n"
+                    "- objects_list: bullet-point list of the number of objects per class.\n"
+                    "- collision_analysis: analysis of collisions and their possible meaning.\n"
+                    "- narrative: narrative interpretation of the scene, in natural language.\n\n"
+                    "Please respond ONLY with the plain JSON, without ```json or any other formatting.\n\n"
+                    "Example of JSON:\n"
                     "{\n"
-                    "  \"general_description\": \"En la imagen 'frame_00012.jpg', se han detectado dos clases de objetos: personas y botellas.\",\n"
-                    "  \"objects_list\": \"- Personas: 1\\n- Botellas: 1\",\n"
-                    "  \"collision_analysis\": \"Análisis de Colisiones\\nNo se han registrado colisiones...\",\n"
-                    "  \"narrative\": \"Interpretación Narrativa de la Escena\\nImaginemos que...\"\n"
+                    "  \"general_description\": \"In the image 'frame_00012.jpg', two object classes have been detected: persons and bottles.\",\n"
+                    "  \"objects_list\": \"- Persons: 1\\n- Bottles: 1\",\n"
+                    "  \"collision_analysis\": \"Collision Analysis\\nNo collisions have been recorded...\",\n"
+                    "  \"narrative\": \"Narrative Interpretation of the Scene\\nLet’s imagine that...\"\n"
                     "}\n\n"
-                    f"Detecciones: {json.dumps(detections, indent=2)}\n"
-                    f"Colisiones: {json.dumps(collisions, indent=2)}"
+                    f"Detections: {json.dumps(detections, indent=2)}\n"
+                    f"Collisions: {json.dumps(collisions, indent=2)}"
                 )
 
                 msg = HumanMessage(content=prompt)
@@ -169,11 +169,11 @@ class Chatbot_YOLO_JSON():
 
         for carpeta, narrativas in narrativas_por_carpeta.items():
             resumen_prompt = (
-                    f"Has recibido una serie de narrativas que corresponden a imágenes extraídas de un video de vigilancia "
-                    f"en un centro comercial. A partir de estas narrativas, genera una narrativa general coherente del video.\n\n"
-                    f"Lista de narrativas por imagen:\n\n"
+                    f"You have received a series of narratives corresponding to images extracted from a SECURITY CAMERA IN A CAR. "
+                    f"Based on these narratives, generate a coherent general narrative of the video.\n\n"
+                    f"List of narratives per image:\n\n"
                     + "\n\n".join(f"- {n}" for n in narrativas)
-                    + "\n\nDevuelve SOLO una narrativa general en texto plano, sin formato JSON."
+                    + "\n\nReturn ONLY one general narrative in plain text, without JSON formatting."
             )
             msg = HumanMessage(content=resumen_prompt)
             response = self.llm.invoke([msg])
@@ -186,32 +186,61 @@ class Chatbot_YOLO_JSON():
 
         videos = list(tiempos_por_video.keys())
         tiempos = list(tiempos_por_video.values())
+        # Crear etiquetas numeradas para los videos
+        videos_numerados = [f"Video {i + 1}" for i in range(len(videos))]
+
         plt.figure(figsize=(10, 6))
-        bars = plt.bar(videos, tiempos, color='skyblue')
-        plt.title("Processing time per video (JSON)")
-        plt.xlabel("Video (folder)")
-        plt.ylabel("Time (seconds)")
-        plt.xticks(rotation=90, ha='right')
+        bars = plt.bar(videos_numerados, tiempos, color='skyblue')
+
+        plt.title("Processing time per video (JSON)", fontsize=18)
+        plt.xlabel("Video (number)", fontsize=14)
+        plt.ylabel("Time (seconds)", fontsize=14)
+        plt.xticks(rotation=90, ha='center')  # centrado debajo de cada barra
+
+        # Etiquetas con tiempo sobre cada barra
         for bar, tiempo in zip(bars, tiempos):
             altura = bar.get_height()
-            plt.text(bar.get_x() + bar.get_width() / 2, altura + 0.5, f"{tiempo:.2f}s", ha='center', va='bottom',
-                     rotation=90)
+            plt.text(
+                bar.get_x() + bar.get_width() / 2,
+                altura + 0.5,
+                f"{tiempo:.2f}s",
+                ha='center',
+                va='bottom',
+                rotation=90
+            )
+
         plt.tight_layout()
         plt.savefig("tiempos_por_video_WITH_JSON.png")
         plt.show()
 
         videos_memoria = list(memoria_por_video.keys())
         usos_memoria = list(memoria_por_video.values())
+        # Crear etiquetas numeradas para los videos
+        videos_numerados = [f"Video {i + 1}" for i in range(len(videos_memoria))]
+
         plt.figure(figsize=(10, 6))
-        bars_memoria = plt.bar(videos_memoria, usos_memoria, color='lightcoral')
-        plt.title("Memory peak per video (JSON)")
-        plt.xlabel("Video (folder)")
-        plt.ylabel("Memory (MB)")
-        plt.xticks(rotation=90, ha='right')
+        bars_memoria = plt.bar(videos_numerados, usos_memoria, color='lightcoral')
+
+        plt.title("Memory peak per video (JSON)", fontsize=18)
+        plt.xlabel("Video (number)", fontsize=14)
+        plt.ylabel("Memory (MB)", fontsize=14)
+        plt.xticks(rotation=90, ha='center')  # centrado debajo de cada barra
+
+        # Etiquetas con memoria sobre cada barra
         for bar, mem in zip(bars_memoria, usos_memoria):
             altura = bar.get_height()
-            plt.text(bar.get_x() + bar.get_width() / 2, altura - 5, f"{mem:.2f} MB", ha='center', va='top', rotation=90,
-                     color='black', fontsize=9, fontweight='bold')
+            plt.text(
+                bar.get_x() + bar.get_width() / 2,
+                altura - 5,  # dentro de la barra
+                f"{mem:.2f} MB",
+                ha='center',
+                va='top',
+                rotation=90,
+                color='black',
+                fontsize=9,
+                fontweight='bold'
+            )
+
         plt.tight_layout()
         plt.savefig("memoria_por_video_WITH_JSON.png")
         plt.show()
@@ -229,10 +258,12 @@ class Chatbot_YOLO_JSON():
             c=[precision_por_video[v] for v in videos_memoria],
             cmap='viridis', s=100, alpha=0.7
         )
-        plt.colorbar(scatter, label='Accuracy (%)')
-        plt.title("Trade-off between Latency, Memory and Accuracy (WITH JSON)")
-        plt.xlabel("Time (s)")
-        plt.ylabel("Memory (MB)")
+        cbar = plt.colorbar(scatter)
+        cbar.set_label('Accuracy (%)', fontsize=14)  # aumenta solo el label de la barra
+        cbar.ax.tick_params(labelsize=10)  # tamaño de etiquetas en la barra
+        plt.title("Trade-off between Latency, Memory and Accuracy (WITH JSON)", fontsize=18)
+        plt.xlabel("Time (s)", fontsize=14)
+        plt.ylabel("Memory (MB)", fontsize=14)
         plt.grid(True)
         plt.tight_layout()
         plt.savefig("compensacion_latencia_memoria_precision_WITH_JSON.png")

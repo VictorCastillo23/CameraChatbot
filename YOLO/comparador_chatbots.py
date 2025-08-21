@@ -71,10 +71,11 @@ class ComparadorChatbots:
         valores = list(self.tiempos.values())
 
         plt.figure(figsize=(10, 6))
-        plt.bar(nombres, valores, color=["lightskyblue", "moccasin", "lightgreen"])
-        plt.title("Comparison of execution times between Chatbots")
-        plt.xlabel("Chatbot")
-        plt.ylabel("Time (seconds)")
+        plt.bar(nombres, valores, color=["lightskyblue", "moccasin", "lightgreen"]
+                )
+        plt.title("Comparison of execution times between Chatbots", fontsize=18)
+        plt.xlabel("Chatbot", fontsize=14)
+        plt.ylabel("Time (seconds)", fontsize=14)
         for i, v in enumerate(valores):
             plt.text(i, v + 0.5, f"{v:.2f}s", ha='center', va='bottom')
         plt.tight_layout()
@@ -87,9 +88,9 @@ class ComparadorChatbots:
 
         plt.figure(figsize=(10, 6))
         plt.bar(nombres, valores, color=["lightskyblue", "moccasin", "lightgreen"])
-        plt.title("Memory Usage Comparison Between Chatbots")
-        plt.xlabel("Chatbot")
-        plt.ylabel("Memory used (MB)")
+        plt.title("Memory Usage Comparison Between Chatbots", fontsize=18)
+        plt.xlabel("Chatbot", fontsize=14)
+        plt.ylabel("Memory used (MB)", fontsize=14)
         for i, v in enumerate(valores):
             plt.text(i, v + 0.5, f"{v:.2f} MB", ha='center', va='bottom')
         plt.tight_layout()

@@ -1,0 +1,3 @@
+Primero se ejecuta libraryV2/viewer.py -> KeyFrames
+Luego se ejecuta YOLO/main.py -> Aplicar YOLOv8 a los KeyFrames y extraer las imágenes con detección y el JSON
+Luego se ejecuta YOLO/comparador_chatbots.py -> Que ejecuta los chatbots de JSON, NoYOLO, WithYOLO

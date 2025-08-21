@@ -175,22 +175,30 @@ if __name__ == '__main__':
     # Diccionario global con todas las detecciones
     todas_las_detecciones_global = {}
 
-    for carpeta in os.listdir(ruta_base):
-        ruta_completa = os.path.join(ruta_base, carpeta)
+    for root, dirs, files in os.walk(ruta_base):
+        imagenes = [f for f in files if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+        if not imagenes:
+            continue  # si no hay imágenes en esta carpeta, saltar
 
-        if os.path.isdir(ruta_completa) and carpeta.startswith('keyframes_'):
-            print(f'\n🟢 Procesando carpeta: {carpeta}')
-            carpeta_salida = os.path.join('runs', 'resultados_json', carpeta)
-            print(f'\n😈 Carpeta Salida: {carpeta_salida}')
-            detecciones_carpeta = detectar_y_guardar_json_multiple(
-                model=model,
-                carpeta_imagenes_path=ruta_completa,
-                carpeta_salida=carpeta_salida
-            )
-            # Guardamos bajo la clave de la carpeta para separar por video
-            todas_las_detecciones_global[carpeta] = detecciones_carpeta
+        # Carpeta relativa a ruta_base (para usar como clave en el JSON)
+        carpeta_relativa = os.path.relpath(root, ruta_base)
 
-    # Guardar un JSON global con todas las detecciones agrupadas por carpeta (video)
+        print(f'\n🟢 Procesando carpeta: {carpeta_relativa}')
+
+        carpeta_salida = os.path.join('runs', 'resultados_json/keyframes_output', carpeta_relativa)
+        print(f'😈 Carpeta salida: {carpeta_salida}')
+
+        # Llamamos tu función que procesa todas las imágenes de esta carpeta
+        detecciones_carpeta = detectar_y_guardar_json_multiple(
+            model=model,
+            carpeta_imagenes_path=root,
+            carpeta_salida=carpeta_salida
+        )
+
+        # Guardamos bajo la clave de la carpeta relativa
+        todas_las_detecciones_global[carpeta_relativa] = detecciones_carpeta
+
+    # Guardar un JSON global con todas las detecciones agrupadas por jerarquía
     json_global_path = os.path.join('runs', 'resultados_json', 'todas_las_detecciones_global.json')
     os.makedirs(os.path.dirname(json_global_path), exist_ok=True)
     with open(json_global_path, 'w') as f:
