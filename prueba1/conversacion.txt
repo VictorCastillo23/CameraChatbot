@@ -1,9 +1,0 @@
-Usuario: Dime el horario del estacionamiento.
-Guardian: {'input': 'Dime el horario del estacionamiento.', 'history': '', 'output': 'El estacionamiento está abierto las 24 horas.'}
-
-Usuario: Adios
-Guardian: {'input': 'Adios', 'history': "Usuario: Dime el horario del estacionamiento.\nGuardian: {'input': 'Dime el horario del estacionamiento.', 'history': '', 'output': 'El estacionamiento está abierto las 24 horas.'}\n", 'output': '¡Adiós! Si necesitas ayuda en el futuro, no dudes en volver. ¡Cuídate!'}
-
-Usuario: Hola, dime que hacer en caso de incendios.
-Guardian: {'input': 'Hola, dime que hacer en caso de incendios.', 'history': '', 'output': 'En caso de incendio, sigue estos pasos:\n\n1. **Evacúa el edificio**: Sigue las señales de emergencia para encontrar la salida más cercana.\n2. **No uses ascensores**: Utiliza las escaleras para evacuar.\n3. **Mantén la calma**: Intenta no entrar en pánico y ayuda a otros si es seguro hacerlo.\n4. **Llama al 911**: Una vez fuera del edificio, llama a los servicios de emergencia para reportar el incendio.\n\nRecuerda siempre estar atento a las instrucciones de seguridad y a los procedimientos establecidos en tu lugar de trabajo o residencia.'}
-
