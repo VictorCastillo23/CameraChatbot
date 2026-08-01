@@ -1,0 +1,5070 @@
+{
+    "frame_472": [
+        {
+            "kind": "person",
+            "frame": "frame_472",
+            "class_name": "person",
+            "bbox": [
+                456,
+                0,
+                716,
+                473
+            ],
+            "confidence": 0.9427741169929504,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1473.6578369140625,
+                "median": 1892.6163330078125,
+                "min": 0.0
+            },
+            "_rid": 0,
+            "user_id": 0
+        },
+        {
+            "kind": "person",
+            "frame": "frame_472",
+            "class_name": "person",
+            "bbox": [
+                0,
+                214,
+                43,
+                401
+            ],
+            "confidence": 0.7863185405731201,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 717.5923461914062,
+                "median": 709.8897705078125,
+                "min": 0.0
+            },
+            "_rid": 1,
+            "user_id": 1
+        },
+        {
+            "kind": "person",
+            "frame": "frame_472",
+            "class_name": "person",
+            "bbox": [
+                275,
+                206,
+                332,
+                321
+            ],
+            "confidence": 0.7812842130661011,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 357.3611755371094,
+                "median": 373.43914794921875,
+                "min": 0.0
+            },
+            "_rid": 2,
+            "user_id": 2
+        },
+        {
+            "kind": "object",
+            "frame": "frame_472",
+            "class_name": "chair",
+            "bbox": [
+                219,
+                254,
+                273,
+                340
+            ],
+            "confidence": 0.7531946301460266,
+            "depth": {
+                "mean": 405.73199462890625,
+                "median": 403.84283447265625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_472",
+            "class_name": "person",
+            "bbox": [
+                405,
+                198,
+                461,
+                332
+            ],
+            "confidence": 0.7509526610374451,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 387.2110900878906,
+                "median": 394.671142578125,
+                "min": 0.0
+            },
+            "_rid": 3,
+            "user_id": 3
+        },
+        {
+            "kind": "object",
+            "frame": "frame_472",
+            "class_name": "chair",
+            "bbox": [
+                79,
+                245,
+                118,
+                334
+            ],
+            "confidence": 0.7066083550453186,
+            "depth": {
+                "mean": 457.1853332519531,
+                "median": 470.3548278808594,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_472",
+            "class_name": "person",
+            "bbox": [
+                334,
+                200,
+                394,
+                326
+            ],
+            "confidence": 0.6443440318107605,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 371.7339172363281,
+                "median": 390.18359375,
+                "min": 0.0
+            },
+            "_rid": 4,
+            "user_id": 4
+        },
+        {
+            "kind": "object",
+            "frame": "frame_472",
+            "class_name": "bottle",
+            "bbox": [
+                202,
+                223,
+                213,
+                254
+            ],
+            "confidence": 0.5434842109680176,
+            "depth": {
+                "mean": 228.6224365234375,
+                "median": 229.0371551513672,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_472",
+            "class_name": "person",
+            "bbox": [
+                23,
+                203,
+                83,
+                256
+            ],
+            "confidence": 0.5189983248710632,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 479.8351135253906,
+                "median": 552.0863037109375,
+                "min": 0.0
+            },
+            "_rid": 5,
+            "user_id": 5
+        },
+        {
+            "kind": "object",
+            "frame": "frame_472",
+            "class_name": "dining table",
+            "bbox": [
+                682,
+                267,
+                828,
+                429
+            ],
+            "confidence": 0.46863317489624023,
+            "depth": {
+                "mean": 883.1043701171875,
+                "median": 867.1851806640625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_472",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                315,
+                515,
+                395
+            ],
+            "confidence": 0.46320804953575134,
+            "depth": {
+                "mean": 866.48583984375,
+                "median": 834.7392578125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_472",
+            "class_name": "chair",
+            "bbox": [
+                139,
+                241,
+                187,
+                317
+            ],
+            "confidence": 0.4610326886177063,
+            "depth": {
+                "mean": 336.7466125488281,
+                "median": 337.41082763671875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_472",
+            "class_name": "bottle",
+            "bbox": [
+                61,
+                230,
+                70,
+                255
+            ],
+            "confidence": 0.41139623522758484,
+            "depth": {
+                "mean": 532.5459594726562,
+                "median": 531.7870483398438,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_472",
+            "class_name": "person",
+            "bbox": [
+                696,
+                174,
+                769,
+                273
+            ],
+            "confidence": 0.3772491216659546,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 710.3595581054688,
+                "median": 789.6947631835938,
+                "min": 0.0
+            },
+            "_rid": 6,
+            "user_id": 6
+        },
+        {
+            "kind": "person",
+            "frame": "frame_472",
+            "class_name": "person",
+            "bbox": [
+                388,
+                205,
+                414,
+                247
+            ],
+            "confidence": 0.3765944540500641,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 357.15447998046875,
+                "median": 375.04779052734375,
+                "min": 0.0
+            },
+            "_rid": 7,
+            "user_id": 7
+        },
+        {
+            "kind": "object",
+            "frame": "frame_472",
+            "class_name": "chair",
+            "bbox": [
+                776,
+                255,
+                847,
+                366
+            ],
+            "confidence": 0.34892651438713074,
+            "depth": {
+                "mean": 506.2721862792969,
+                "median": 415.82550048828125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_472",
+            "class_name": "chair",
+            "bbox": [
+                20,
+                254,
+                75,
+                368
+            ],
+            "confidence": 0.30604761838912964,
+            "depth": {
+                "mean": 640.693359375,
+                "median": 633.854248046875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_472",
+            "class_name": "backpack",
+            "bbox": [
+                437,
+                288,
+                491,
+                349
+            ],
+            "confidence": 0.28646329045295715,
+            "depth": {
+                "mean": 548.078857421875,
+                "median": 555.6105346679688,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_472",
+            "class_name": "dining table",
+            "bbox": [
+                108,
+                247,
+                168,
+                320
+            ],
+            "confidence": 0.2717134356498718,
+            "depth": {
+                "mean": 343.5876770019531,
+                "median": 337.8917236328125,
+                "min": 0.0
+            }
+        }
+    ],
+    "frame_500": [
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                0,
+                0,
+                284,
+                471
+            ],
+            "confidence": 0.939471960067749,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1689.97021484375,
+                "median": 2114.89306640625,
+                "min": 0.0
+            },
+            "_rid": 8,
+            "user_id": 8
+        },
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                0,
+                193,
+                50,
+                400
+            ],
+            "confidence": 0.8038755655288696,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 755.64990234375,
+                "median": 699.2947998046875,
+                "min": 0.0
+            },
+            "_rid": 9,
+            "user_id": 9
+        },
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                639,
+                172,
+                768,
+                394
+            ],
+            "confidence": 0.7609689235687256,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 797.8890991210938,
+                "median": 896.135986328125,
+                "min": 0.0
+            },
+            "_rid": 10,
+            "user_id": 10
+        },
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                508,
+                184,
+                596,
+                380
+            ],
+            "confidence": 0.7369174957275391,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 721.7272338867188,
+                "median": 743.236083984375,
+                "min": 0.0
+            },
+            "_rid": 11,
+            "user_id": 11
+        },
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                406,
+                197,
+                463,
+                329
+            ],
+            "confidence": 0.6813185811042786,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 462.22991943359375,
+                "median": 464.625732421875,
+                "min": 0.0
+            },
+            "_rid": 12,
+            "user_id": 12
+        },
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                284,
+                206,
+                331,
+                316
+            ],
+            "confidence": 0.6605963110923767,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 374.2941589355469,
+                "median": 377.54217529296875,
+                "min": 0.0
+            },
+            "_rid": 13,
+            "user_id": 13
+        },
+        {
+            "kind": "object",
+            "frame": "frame_500",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                317,
+                512,
+                395
+            ],
+            "confidence": 0.5518661737442017,
+            "depth": {
+                "mean": 777.4678344726562,
+                "median": 811.5533447265625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                333,
+                200,
+                393,
+                329
+            ],
+            "confidence": 0.5128774642944336,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 406.1033630371094,
+                "median": 413.35504150390625,
+                "min": 0.0
+            },
+            "_rid": 14,
+            "user_id": 14
+        },
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                615,
+                208,
+                656,
+                254
+            ],
+            "confidence": 0.5023319721221924,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 606.7305908203125,
+                "median": 647.4525146484375,
+                "min": 0.0
+            },
+            "_rid": 15,
+            "user_id": 15
+        },
+        {
+            "kind": "object",
+            "frame": "frame_500",
+            "class_name": "laptop",
+            "bbox": [
+                105,
+                278,
+                263,
+                367
+            ],
+            "confidence": 0.48866942524909973,
+            "depth": {
+                "mean": 2301.766357421875,
+                "median": 2548.396484375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                581,
+                196,
+                624,
+                255
+            ],
+            "confidence": 0.48727932572364807,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 607.2193603515625,
+                "median": 622.727783203125,
+                "min": 0.0
+            },
+            "_rid": 16,
+            "user_id": 16
+        },
+        {
+            "kind": "object",
+            "frame": "frame_500",
+            "class_name": "dining table",
+            "bbox": [
+                659,
+                265,
+                828,
+                430
+            ],
+            "confidence": 0.4570399522781372,
+            "depth": {
+                "mean": 841.1577758789062,
+                "median": 900.5694580078125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                509,
+                184,
+                594,
+                268
+            ],
+            "confidence": 0.41736507415771484,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 677.8200073242188,
+                "median": 771.0889892578125,
+                "min": 0.0
+            },
+            "_rid": 17,
+            "user_id": 17
+        },
+        {
+            "kind": "object",
+            "frame": "frame_500",
+            "class_name": "chair",
+            "bbox": [
+                500,
+                268,
+                609,
+                421
+            ],
+            "confidence": 0.4067178964614868,
+            "depth": {
+                "mean": 786.1412353515625,
+                "median": 775.1435546875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_500",
+            "class_name": "backpack",
+            "bbox": [
+                604,
+                331,
+                683,
+                422
+            ],
+            "confidence": 0.3599450886249542,
+            "depth": {
+                "mean": 895.2119750976562,
+                "median": 900.4133911132812,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_500",
+            "class_name": "chair",
+            "bbox": [
+                19,
+                258,
+                92,
+                368
+            ],
+            "confidence": 0.3349679112434387,
+            "depth": {
+                "mean": 818.3334350585938,
+                "median": 543.18896484375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                484,
+                206,
+                529,
+                261
+            ],
+            "confidence": 0.308631032705307,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 549.688720703125,
+                "median": 546.7918701171875,
+                "min": 0.0
+            },
+            "_rid": 18,
+            "user_id": 18
+        },
+        {
+            "kind": "object",
+            "frame": "frame_500",
+            "class_name": "chair",
+            "bbox": [
+                776,
+                254,
+                847,
+                366
+            ],
+            "confidence": 0.302140474319458,
+            "depth": {
+                "mean": 639.3151245117188,
+                "median": 567.97607421875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_500",
+            "class_name": "person",
+            "bbox": [
+                387,
+                206,
+                414,
+                244
+            ],
+            "confidence": 0.261669784784317,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 414.9236145019531,
+                "median": 420.70001220703125,
+                "min": 0.0
+            },
+            "_rid": 19,
+            "user_id": 19
+        }
+    ],
+    "frame_1018": [
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                0,
+                0,
+                272,
+                473
+            ],
+            "confidence": 0.9647316336631775,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1503.138671875,
+                "median": 1880.5126953125,
+                "min": 0.0
+            },
+            "_rid": 20,
+            "user_id": 20
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                634,
+                171,
+                759,
+                394
+            ],
+            "confidence": 0.8004942536354065,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 767.1145629882812,
+                "median": 897.3934936523438,
+                "min": 0.0
+            },
+            "_rid": 21,
+            "user_id": 21
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                577,
+                192,
+                620,
+                255
+            ],
+            "confidence": 0.7332651615142822,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 483.85565185546875,
+                "median": 558.335205078125,
+                "min": 0.0
+            },
+            "_rid": 22,
+            "user_id": 22
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                513,
+                180,
+                595,
+                381
+            ],
+            "confidence": 0.7285634875297546,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 691.4609375,
+                "median": 718.7110595703125,
+                "min": 0.0
+            },
+            "_rid": 23,
+            "user_id": 23
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                278,
+                206,
+                332,
+                320
+            ],
+            "confidence": 0.7189099788665771,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 315.3985595703125,
+                "median": 325.99432373046875,
+                "min": 0.0
+            },
+            "_rid": 24,
+            "user_id": 24
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                404,
+                198,
+                462,
+                327
+            ],
+            "confidence": 0.6848077178001404,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 366.01397705078125,
+                "median": 372.180908203125,
+                "min": 0.0
+            },
+            "_rid": 25,
+            "user_id": 25
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                330,
+                200,
+                395,
+                325
+            ],
+            "confidence": 0.6315085887908936,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 339.9404296875,
+                "median": 352.7669677734375,
+                "min": 0.0
+            },
+            "_rid": 26,
+            "user_id": 26
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1018",
+            "class_name": "chair",
+            "bbox": [
+                802,
+                255,
+                847,
+                364
+            ],
+            "confidence": 0.6301325559616089,
+            "depth": {
+                "mean": 417.1065979003906,
+                "median": 399.0887145996094,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                0,
+                199,
+                44,
+                345
+            ],
+            "confidence": 0.5722617506980896,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 856.7404174804688,
+                "median": 730.8446655273438,
+                "min": 0.0
+            },
+            "_rid": 27,
+            "user_id": 27
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1018",
+            "class_name": "backpack",
+            "bbox": [
+                604,
+                331,
+                689,
+                422
+            ],
+            "confidence": 0.5425856709480286,
+            "depth": {
+                "mean": 902.1011352539062,
+                "median": 906.7975463867188,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1018",
+            "class_name": "frisbee",
+            "bbox": [
+                0,
+                166,
+                121,
+                187
+            ],
+            "confidence": 0.5357080698013306,
+            "depth": {
+                "mean": 2005.960693359375,
+                "median": 2009.28369140625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                21,
+                203,
+                67,
+                259
+            ],
+            "confidence": 0.5299436450004578,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 690.7162475585938,
+                "median": 598.8114013671875,
+                "min": 0.0
+            },
+            "_rid": 28,
+            "user_id": 28
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1018",
+            "class_name": "dining table",
+            "bbox": [
+                648,
+                264,
+                809,
+                422
+            ],
+            "confidence": 0.5156360864639282,
+            "depth": {
+                "mean": 798.7086181640625,
+                "median": 873.7259521484375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                514,
+                180,
+                594,
+                268
+            ],
+            "confidence": 0.5010297298431396,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 602.9505004882812,
+                "median": 702.5433349609375,
+                "min": 0.0
+            },
+            "_rid": 29,
+            "user_id": 29
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                392,
+                205,
+                419,
+                244
+            ],
+            "confidence": 0.4995110034942627,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 329.9814453125,
+                "median": 352.23822021484375,
+                "min": 0.0
+            },
+            "_rid": 30,
+            "user_id": 30
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1018",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                317,
+                513,
+                395
+            ],
+            "confidence": 0.49648961424827576,
+            "depth": {
+                "mean": 749.857421875,
+                "median": 800.2130126953125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1018",
+            "class_name": "chair",
+            "bbox": [
+                220,
+                259,
+                274,
+                340
+            ],
+            "confidence": 0.4364498555660248,
+            "depth": {
+                "mean": 409.0279235839844,
+                "median": 378.96490478515625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1018",
+            "class_name": "chair",
+            "bbox": [
+                501,
+                266,
+                610,
+                421
+            ],
+            "confidence": 0.4161176085472107,
+            "depth": {
+                "mean": 792.4602661132812,
+                "median": 761.6072387695312,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1018",
+            "class_name": "backpack",
+            "bbox": [
+                437,
+                287,
+                491,
+                349
+            ],
+            "confidence": 0.4112708568572998,
+            "depth": {
+                "mean": 523.970458984375,
+                "median": 533.4375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1018",
+            "class_name": "person",
+            "bbox": [
+                487,
+                207,
+                526,
+                266
+            ],
+            "confidence": 0.33770665526390076,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 501.0810546875,
+                "median": 555.947509765625,
+                "min": 0.0
+            },
+            "_rid": 31,
+            "user_id": 31
+        }
+    ],
+    "frame_1176": [
+        {
+            "kind": "person",
+            "frame": "frame_1176",
+            "class_name": "person",
+            "bbox": [
+                0,
+                0,
+                212,
+                473
+            ],
+            "confidence": 0.9455199837684631,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1684.4130859375,
+                "median": 2181.747314453125,
+                "min": 0.0
+            },
+            "_rid": 32,
+            "user_id": 32
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1176",
+            "class_name": "person",
+            "bbox": [
+                624,
+                171,
+                763,
+                390
+            ],
+            "confidence": 0.7921629548072815,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 962.2894897460938,
+                "median": 1132.50537109375,
+                "min": 0.0
+            },
+            "_rid": 33,
+            "user_id": 33
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1176",
+            "class_name": "person",
+            "bbox": [
+                276,
+                206,
+                332,
+                320
+            ],
+            "confidence": 0.7572807669639587,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 389.618896484375,
+                "median": 408.0322265625,
+                "min": 0.0
+            },
+            "_rid": 34,
+            "user_id": 34
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1176",
+            "class_name": "person",
+            "bbox": [
+                497,
+                179,
+                593,
+                382
+            ],
+            "confidence": 0.7045376896858215,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 894.3772583007812,
+                "median": 955.053955078125,
+                "min": 0.0
+            },
+            "_rid": 35,
+            "user_id": 35
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1176",
+            "class_name": "person",
+            "bbox": [
+                573,
+                194,
+                623,
+                256
+            ],
+            "confidence": 0.6978864669799805,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 496.941650390625,
+                "median": 575.49560546875,
+                "min": 0.0
+            },
+            "_rid": 36,
+            "user_id": 36
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1176",
+            "class_name": "chair",
+            "bbox": [
+                219,
+                256,
+                274,
+                339
+            ],
+            "confidence": 0.6774123311042786,
+            "depth": {
+                "mean": 416.874755859375,
+                "median": 418.10760498046875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1176",
+            "class_name": "person",
+            "bbox": [
+                332,
+                200,
+                393,
+                324
+            ],
+            "confidence": 0.6528251767158508,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 434.4338073730469,
+                "median": 448.31597900390625,
+                "min": 0.0
+            },
+            "_rid": 37,
+            "user_id": 37
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1176",
+            "class_name": "person",
+            "bbox": [
+                404,
+                199,
+                461,
+                328
+            ],
+            "confidence": 0.646411120891571,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 448.9290466308594,
+                "median": 451.1680603027344,
+                "min": 0.0
+            },
+            "_rid": 38,
+            "user_id": 38
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1176",
+            "class_name": "chair",
+            "bbox": [
+                802,
+                255,
+                847,
+                363
+            ],
+            "confidence": 0.6205102205276489,
+            "depth": {
+                "mean": 488.2879638671875,
+                "median": 466.50146484375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_1176",
+            "class_name": "person",
+            "bbox": [
+                387,
+                204,
+                418,
+                239
+            ],
+            "confidence": 0.540137529373169,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 405.7509765625,
+                "median": 468.8190002441406,
+                "min": 0.0
+            },
+            "_rid": 39,
+            "user_id": 39
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1176",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                317,
+                514,
+                395
+            ],
+            "confidence": 0.4797993302345276,
+            "depth": {
+                "mean": 990.44873046875,
+                "median": 1054.4609375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1176",
+            "class_name": "bottle",
+            "bbox": [
+                202,
+                223,
+                214,
+                254
+            ],
+            "confidence": 0.4672847390174866,
+            "depth": {
+                "mean": 270.3469543457031,
+                "median": 271.81927490234375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1176",
+            "class_name": "backpack",
+            "bbox": [
+                437,
+                287,
+                491,
+                349
+            ],
+            "confidence": 0.4350762665271759,
+            "depth": {
+                "mean": 675.8051147460938,
+                "median": 707.6746826171875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1176",
+            "class_name": "backpack",
+            "bbox": [
+                604,
+                332,
+                687,
+                422
+            ],
+            "confidence": 0.4273257553577423,
+            "depth": {
+                "mean": 1200.7044677734375,
+                "median": 1210.5635986328125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1176",
+            "class_name": "chair",
+            "bbox": [
+                502,
+                266,
+                611,
+                421
+            ],
+            "confidence": 0.40968796610832214,
+            "depth": {
+                "mean": 1051.510009765625,
+                "median": 1025.1705322265625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1176",
+            "class_name": "dining table",
+            "bbox": [
+                649,
+                263,
+                809,
+                422
+            ],
+            "confidence": 0.3548233211040497,
+            "depth": {
+                "mean": 1054.984619140625,
+                "median": 1157.862060546875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_1176",
+            "class_name": "dining table",
+            "bbox": [
+                180,
+                248,
+                269,
+                341
+            ],
+            "confidence": 0.31649529933929443,
+            "depth": {
+                "mean": 404.94744873046875,
+                "median": 401.69036865234375,
+                "min": 0.0
+            }
+        }
+    ],
+    "frame_3574": [
+        {
+            "kind": "person",
+            "frame": "frame_3574",
+            "class_name": "person",
+            "bbox": [
+                24,
+                0,
+                250,
+                472
+            ],
+            "confidence": 0.951298177242279,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1935.5614013671875,
+                "median": 2322.85205078125,
+                "min": 0.0
+            },
+            "_rid": 40,
+            "user_id": 40
+        },
+        {
+            "kind": "person",
+            "frame": "frame_3574",
+            "class_name": "person",
+            "bbox": [
+                0,
+                189,
+                68,
+                371
+            ],
+            "confidence": 0.9131188988685608,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1092.8646240234375,
+                "median": 640.01708984375,
+                "min": 0.0
+            },
+            "_rid": 41,
+            "user_id": 41
+        },
+        {
+            "kind": "person",
+            "frame": "frame_3574",
+            "class_name": "person",
+            "bbox": [
+                644,
+                173,
+                767,
+                406
+            ],
+            "confidence": 0.853952944278717,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 882.1765747070312,
+                "median": 1066.5618896484375,
+                "min": 0.0
+            },
+            "_rid": 42,
+            "user_id": 42
+        },
+        {
+            "kind": "person",
+            "frame": "frame_3574",
+            "class_name": "person",
+            "bbox": [
+                511,
+                181,
+                600,
+                384
+            ],
+            "confidence": 0.7713629603385925,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 832.1576538085938,
+                "median": 890.344482421875,
+                "min": 0.0
+            },
+            "_rid": 43,
+            "user_id": 43
+        },
+        {
+            "kind": "object",
+            "frame": "frame_3574",
+            "class_name": "backpack",
+            "bbox": [
+                604,
+                331,
+                690,
+                423
+            ],
+            "confidence": 0.7504591941833496,
+            "depth": {
+                "mean": 1101.3961181640625,
+                "median": 1110.3387451171875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_3574",
+            "class_name": "person",
+            "bbox": [
+                278,
+                206,
+                331,
+                321
+            ],
+            "confidence": 0.7423638701438904,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 363.69696044921875,
+                "median": 368.521240234375,
+                "min": 0.0
+            },
+            "_rid": 44,
+            "user_id": 44
+        },
+        {
+            "kind": "person",
+            "frame": "frame_3574",
+            "class_name": "person",
+            "bbox": [
+                404,
+                199,
+                461,
+                333
+            ],
+            "confidence": 0.6793515682220459,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 390.9897155761719,
+                "median": 384.00274658203125,
+                "min": 0.0
+            },
+            "_rid": 45,
+            "user_id": 45
+        },
+        {
+            "kind": "object",
+            "frame": "frame_3574",
+            "class_name": "chair",
+            "bbox": [
+                0,
+                302,
+                32,
+                367
+            ],
+            "confidence": 0.6603056788444519,
+            "depth": {
+                "mean": 536.5989379882812,
+                "median": 527.2448120117188,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_3574",
+            "class_name": "chair",
+            "bbox": [
+                219,
+                258,
+                275,
+                340
+            ],
+            "confidence": 0.6547403931617737,
+            "depth": {
+                "mean": 408.4609069824219,
+                "median": 401.07379150390625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_3574",
+            "class_name": "person",
+            "bbox": [
+                331,
+                202,
+                392,
+                332
+            ],
+            "confidence": 0.6019020676612854,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 390.306884765625,
+                "median": 389.2117004394531,
+                "min": 0.0
+            },
+            "_rid": 46,
+            "user_id": 46
+        },
+        {
+            "kind": "object",
+            "frame": "frame_3574",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                317,
+                513,
+                395
+            ],
+            "confidence": 0.571062445640564,
+            "depth": {
+                "mean": 900.0557861328125,
+                "median": 962.2962646484375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_3574",
+            "class_name": "person",
+            "bbox": [
+                574,
+                199,
+                613,
+                257
+            ],
+            "confidence": 0.523027777671814,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 587.317626953125,
+                "median": 810.7935791015625,
+                "min": 0.0
+            },
+            "_rid": 47,
+            "user_id": 47
+        },
+        {
+            "kind": "object",
+            "frame": "frame_3574",
+            "class_name": "dining table",
+            "bbox": [
+                648,
+                263,
+                809,
+                421
+            ],
+            "confidence": 0.46136751770973206,
+            "depth": {
+                "mean": 944.6947021484375,
+                "median": 1064.638916015625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_3574",
+            "class_name": "person",
+            "bbox": [
+                386,
+                205,
+                419,
+                251
+            ],
+            "confidence": 0.40751704573631287,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 384.5765380859375,
+                "median": 416.3953552246094,
+                "min": 0.0
+            },
+            "_rid": 48,
+            "user_id": 48
+        },
+        {
+            "kind": "object",
+            "frame": "frame_3574",
+            "class_name": "backpack",
+            "bbox": [
+                436,
+                288,
+                491,
+                350
+            ],
+            "confidence": 0.36716923117637634,
+            "depth": {
+                "mean": 623.3896484375,
+                "median": 668.956298828125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_3574",
+            "class_name": "dining table",
+            "bbox": [
+                498,
+                262,
+                631,
+                420
+            ],
+            "confidence": 0.3225680887699127,
+            "depth": {
+                "mean": 965.1697998046875,
+                "median": 957.8821411132812,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_3574",
+            "class_name": "person",
+            "bbox": [
+                483,
+                206,
+                534,
+                322
+            ],
+            "confidence": 0.31214001774787903,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 712.0520629882812,
+                "median": 774.638427734375,
+                "min": 0.0
+            },
+            "_rid": 49,
+            "user_id": 49
+        },
+        {
+            "kind": "person",
+            "frame": "frame_3574",
+            "class_name": "person",
+            "bbox": [
+                483,
+                206,
+                534,
+                266
+            ],
+            "confidence": 0.288126140832901,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 549.993408203125,
+                "median": 629.07861328125,
+                "min": 0.0
+            },
+            "_rid": 50,
+            "user_id": 50
+        }
+    ],
+    "frame_4946": [
+        {
+            "kind": "person",
+            "frame": "frame_4946",
+            "class_name": "person",
+            "bbox": [
+                1,
+                0,
+                220,
+                472
+            ],
+            "confidence": 0.9432178735733032,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 2033.79541015625,
+                "median": 2304.13720703125,
+                "min": 0.0
+            },
+            "_rid": 51,
+            "user_id": 51
+        },
+        {
+            "kind": "person",
+            "frame": "frame_4946",
+            "class_name": "person",
+            "bbox": [
+                635,
+                177,
+                774,
+                409
+            ],
+            "confidence": 0.8563892841339111,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 832.5635375976562,
+                "median": 990.7088623046875,
+                "min": 0.0
+            },
+            "_rid": 52,
+            "user_id": 52
+        },
+        {
+            "kind": "person",
+            "frame": "frame_4946",
+            "class_name": "person",
+            "bbox": [
+                276,
+                206,
+                332,
+                322
+            ],
+            "confidence": 0.7430165410041809,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 322.280517578125,
+                "median": 338.9554138183594,
+                "min": 0.0
+            },
+            "_rid": 53,
+            "user_id": 53
+        },
+        {
+            "kind": "person",
+            "frame": "frame_4946",
+            "class_name": "person",
+            "bbox": [
+                401,
+                198,
+                460,
+                334
+            ],
+            "confidence": 0.6774659156799316,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 349.62176513671875,
+                "median": 355.17926025390625,
+                "min": 0.0
+            },
+            "_rid": 54,
+            "user_id": 54
+        },
+        {
+            "kind": "object",
+            "frame": "frame_4946",
+            "class_name": "chair",
+            "bbox": [
+                219,
+                255,
+                274,
+                339
+            ],
+            "confidence": 0.6445283889770508,
+            "depth": {
+                "mean": 358.64373779296875,
+                "median": 357.08233642578125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_4946",
+            "class_name": "person",
+            "bbox": [
+                502,
+                181,
+                601,
+                396
+            ],
+            "confidence": 0.5989895462989807,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 749.9840087890625,
+                "median": 809.4686279296875,
+                "min": 0.0
+            },
+            "_rid": 55,
+            "user_id": 55
+        },
+        {
+            "kind": "object",
+            "frame": "frame_4946",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                317,
+                513,
+                395
+            ],
+            "confidence": 0.5830515027046204,
+            "depth": {
+                "mean": 805.8594360351562,
+                "median": 864.25146484375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_4946",
+            "class_name": "person",
+            "bbox": [
+                572,
+                197,
+                611,
+                257
+            ],
+            "confidence": 0.5817470550537109,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 558.0711059570312,
+                "median": 764.875,
+                "min": 0.0
+            },
+            "_rid": 56,
+            "user_id": 56
+        },
+        {
+            "kind": "person",
+            "frame": "frame_4946",
+            "class_name": "person",
+            "bbox": [
+                333,
+                200,
+                389,
+                327
+            ],
+            "confidence": 0.5796483755111694,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 333.6913757324219,
+                "median": 340.48016357421875,
+                "min": 0.0
+            },
+            "_rid": 57,
+            "user_id": 57
+        },
+        {
+            "kind": "object",
+            "frame": "frame_4946",
+            "class_name": "backpack",
+            "bbox": [
+                604,
+                330,
+                686,
+                422
+            ],
+            "confidence": 0.5075101256370544,
+            "depth": {
+                "mean": 1012.2822875976562,
+                "median": 1023.0238037109375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_4946",
+            "class_name": "backpack",
+            "bbox": [
+                436,
+                288,
+                491,
+                350
+            ],
+            "confidence": 0.48403090238571167,
+            "depth": {
+                "mean": 543.5857543945312,
+                "median": 572.253662109375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_4946",
+            "class_name": "person",
+            "bbox": [
+                493,
+                207,
+                526,
+                261
+            ],
+            "confidence": 0.35517415404319763,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 425.8465881347656,
+                "median": 424.7662353515625,
+                "min": 0.0
+            },
+            "_rid": 58,
+            "user_id": 58
+        },
+        {
+            "kind": "person",
+            "frame": "frame_4946",
+            "class_name": "person",
+            "bbox": [
+                386,
+                204,
+                415,
+                249
+            ],
+            "confidence": 0.30701711773872375,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 339.5773010253906,
+                "median": 367.0495910644531,
+                "min": 0.0
+            },
+            "_rid": 59,
+            "user_id": 59
+        },
+        {
+            "kind": "person",
+            "frame": "frame_4946",
+            "class_name": "person",
+            "bbox": [
+                490,
+                207,
+                527,
+                322
+            ],
+            "confidence": 0.28827276825904846,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 626.9794311523438,
+                "median": 683.4668579101562,
+                "min": 0.0
+            },
+            "_rid": 60,
+            "user_id": 60
+        },
+        {
+            "kind": "object",
+            "frame": "frame_4946",
+            "class_name": "chair",
+            "bbox": [
+                657,
+                265,
+                808,
+                422
+            ],
+            "confidence": 0.27330857515335083,
+            "depth": {
+                "mean": 886.7817993164062,
+                "median": 973.0812377929688,
+                "min": 0.0
+            }
+        }
+    ],
+    "frame_5397": [
+        {
+            "kind": "person",
+            "frame": "frame_5397",
+            "class_name": "person",
+            "bbox": [
+                1,
+                0,
+                275,
+                470
+            ],
+            "confidence": 0.928928792476654,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 2152.539794921875,
+                "median": 2400.1884765625,
+                "min": 0.0
+            },
+            "_rid": 61,
+            "user_id": 61
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5397",
+            "class_name": "person",
+            "bbox": [
+                635,
+                176,
+                772,
+                403
+            ],
+            "confidence": 0.8563769459724426,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 825.846923828125,
+                "median": 1000.8038940429688,
+                "min": 0.0
+            },
+            "_rid": 62,
+            "user_id": 62
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5397",
+            "class_name": "person",
+            "bbox": [
+                402,
+                199,
+                461,
+                336
+            ],
+            "confidence": 0.7861334085464478,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 357.4599304199219,
+                "median": 355.6976013183594,
+                "min": 0.0
+            },
+            "_rid": 63,
+            "user_id": 63
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5397",
+            "class_name": "person",
+            "bbox": [
+                280,
+                205,
+                332,
+                319
+            ],
+            "confidence": 0.7179936766624451,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 331.5800476074219,
+                "median": 342.2041931152344,
+                "min": 0.0
+            },
+            "_rid": 64,
+            "user_id": 64
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5397",
+            "class_name": "person",
+            "bbox": [
+                503,
+                156,
+                622,
+                383
+            ],
+            "confidence": 0.6867556571960449,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 711.3895263671875,
+                "median": 800.9490356445312,
+                "min": 0.0
+            },
+            "_rid": 65,
+            "user_id": 65
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5397",
+            "class_name": "backpack",
+            "bbox": [
+                605,
+                330,
+                690,
+                422
+            ],
+            "confidence": 0.6635901927947998,
+            "depth": {
+                "mean": 1033.46240234375,
+                "median": 1042.502685546875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5397",
+            "class_name": "person",
+            "bbox": [
+                342,
+                199,
+                394,
+                324
+            ],
+            "confidence": 0.6579834818840027,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 358.2179260253906,
+                "median": 366.1603088378906,
+                "min": 0.0
+            },
+            "_rid": 66,
+            "user_id": 66
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5397",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                317,
+                513,
+                396
+            ],
+            "confidence": 0.6512747406959534,
+            "depth": {
+                "mean": 862.591796875,
+                "median": 939.3543701171875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5397",
+            "class_name": "chair",
+            "bbox": [
+                224,
+                267,
+                276,
+                340
+            ],
+            "confidence": 0.47368574142456055,
+            "depth": {
+                "mean": 649.5440063476562,
+                "median": 423.7555847167969,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5397",
+            "class_name": "person",
+            "bbox": [
+                492,
+                207,
+                529,
+                266
+            ],
+            "confidence": 0.47229036688804626,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 518.0676879882812,
+                "median": 569.5999145507812,
+                "min": 0.0
+            },
+            "_rid": 67,
+            "user_id": 67
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5397",
+            "class_name": "person",
+            "bbox": [
+                334,
+                208,
+                361,
+                249
+            ],
+            "confidence": 0.4226236641407013,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 337.00799560546875,
+                "median": 362.3844909667969,
+                "min": 0.0
+            },
+            "_rid": 68,
+            "user_id": 68
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5397",
+            "class_name": "backpack",
+            "bbox": [
+                437,
+                288,
+                492,
+                349
+            ],
+            "confidence": 0.3453909158706665,
+            "depth": {
+                "mean": 574.8333740234375,
+                "median": 613.1447143554688,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5397",
+            "class_name": "chair",
+            "bbox": [
+                501,
+                269,
+                617,
+                421
+            ],
+            "confidence": 0.2735787630081177,
+            "depth": {
+                "mean": 892.1295776367188,
+                "median": 865.1765747070312,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5397",
+            "class_name": "person",
+            "bbox": [
+                627,
+                209,
+                661,
+                254
+            ],
+            "confidence": 0.2597028613090515,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 652.7051391601562,
+                "median": 899.3203735351562,
+                "min": 0.0
+            },
+            "_rid": 69,
+            "user_id": 69
+        }
+    ],
+    "frame_5512": [
+        {
+            "kind": "person",
+            "frame": "frame_5512",
+            "class_name": "person",
+            "bbox": [
+                0,
+                210,
+                48,
+                374
+            ],
+            "confidence": 0.8376778960227966,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 644.3214111328125,
+                "median": 693.052490234375,
+                "min": 0.0
+            },
+            "_rid": 70,
+            "user_id": 70
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5512",
+            "class_name": "person",
+            "bbox": [
+                601,
+                0,
+                847,
+                474
+            ],
+            "confidence": 0.8034008741378784,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1503.28125,
+                "median": 1889.333984375,
+                "min": 0.0
+            },
+            "_rid": 71,
+            "user_id": 71
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5512",
+            "class_name": "person",
+            "bbox": [
+                341,
+                183,
+                375,
+                234
+            ],
+            "confidence": 0.7478139996528625,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 347.80218505859375,
+                "median": 381.541748046875,
+                "min": 0.0
+            },
+            "_rid": 72,
+            "user_id": 72
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5512",
+            "class_name": "person",
+            "bbox": [
+                403,
+                201,
+                460,
+                332
+            ],
+            "confidence": 0.7106449604034424,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 357.11376953125,
+                "median": 361.6896057128906,
+                "min": 0.0
+            },
+            "_rid": 73,
+            "user_id": 73
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5512",
+            "class_name": "person",
+            "bbox": [
+                279,
+                206,
+                333,
+                316
+            ],
+            "confidence": 0.7026128172874451,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 334.5885925292969,
+                "median": 349.76409912109375,
+                "min": 0.0
+            },
+            "_rid": 74,
+            "user_id": 74
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5512",
+            "class_name": "laptop",
+            "bbox": [
+                532,
+                217,
+                583,
+                266
+            ],
+            "confidence": 0.6909186840057373,
+            "depth": {
+                "mean": 1031.51806640625,
+                "median": 1088.7310791015625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5512",
+            "class_name": "person",
+            "bbox": [
+                575,
+                193,
+                621,
+                255
+            ],
+            "confidence": 0.6501681804656982,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 532.3870849609375,
+                "median": 507.5565185546875,
+                "min": 0.0
+            },
+            "_rid": 75,
+            "user_id": 75
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5512",
+            "class_name": "chair",
+            "bbox": [
+                87,
+                245,
+                118,
+                335
+            ],
+            "confidence": 0.6054995059967041,
+            "depth": {
+                "mean": 425.2803649902344,
+                "median": 442.830322265625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5512",
+            "class_name": "person",
+            "bbox": [
+                335,
+                202,
+                396,
+                325
+            ],
+            "confidence": 0.5980421304702759,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 355.2126159667969,
+                "median": 361.0751037597656,
+                "min": 0.0
+            },
+            "_rid": 76,
+            "user_id": 76
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5512",
+            "class_name": "bottle",
+            "bbox": [
+                202,
+                223,
+                213,
+                254
+            ],
+            "confidence": 0.5936996936798096,
+            "depth": {
+                "mean": 230.17086791992188,
+                "median": 230.76702880859375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5512",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                317,
+                513,
+                395
+            ],
+            "confidence": 0.5784146785736084,
+            "depth": {
+                "mean": 803.0509643554688,
+                "median": 861.0631713867188,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5512",
+            "class_name": "chair",
+            "bbox": [
+                219,
+                261,
+                277,
+                340
+            ],
+            "confidence": 0.5676178336143494,
+            "depth": {
+                "mean": 386.4637756347656,
+                "median": 384.1239013671875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5512",
+            "class_name": "person",
+            "bbox": [
+                504,
+                177,
+                600,
+                382
+            ],
+            "confidence": 0.5165971517562866,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 749.46142578125,
+                "median": 749.3035278320312,
+                "min": 0.0
+            },
+            "_rid": 77,
+            "user_id": 77
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5512",
+            "class_name": "person",
+            "bbox": [
+                34,
+                197,
+                97,
+                254
+            ],
+            "confidence": 0.5058205127716064,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 392.68707275390625,
+                "median": 489.2354736328125,
+                "min": 0.0
+            },
+            "_rid": 78,
+            "user_id": 78
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5512",
+            "class_name": "chair",
+            "bbox": [
+                140,
+                241,
+                188,
+                315
+            ],
+            "confidence": 0.47151413559913635,
+            "depth": {
+                "mean": 310.32904052734375,
+                "median": 308.96002197265625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5512",
+            "class_name": "backpack",
+            "bbox": [
+                438,
+                288,
+                491,
+                348
+            ],
+            "confidence": 0.43582481145858765,
+            "depth": {
+                "mean": 561.8624267578125,
+                "median": 597.8409423828125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5512",
+            "class_name": "dining table",
+            "bbox": [
+                181,
+                246,
+                271,
+                341
+            ],
+            "confidence": 0.40192481875419617,
+            "depth": {
+                "mean": 371.346435546875,
+                "median": 376.4956970214844,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5512",
+            "class_name": "dining table",
+            "bbox": [
+                107,
+                246,
+                168,
+                320
+            ],
+            "confidence": 0.2879750430583954,
+            "depth": {
+                "mean": 313.9654235839844,
+                "median": 309.43408203125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5512",
+            "class_name": "person",
+            "bbox": [
+                34,
+                197,
+                99,
+                322
+            ],
+            "confidence": 0.28716957569122314,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 471.69384765625,
+                "median": 510.2691650390625,
+                "min": 0.0
+            },
+            "_rid": 79,
+            "user_id": 79
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5512",
+            "class_name": "chair",
+            "bbox": [
+                586,
+                299,
+                624,
+                394
+            ],
+            "confidence": 0.28020378947257996,
+            "depth": {
+                "mean": 785.618896484375,
+                "median": 768.890380859375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5512",
+            "class_name": "chair",
+            "bbox": [
+                750,
+                270,
+                806,
+                419
+            ],
+            "confidence": 0.2595749795436859,
+            "depth": {
+                "mean": 1059.3013916015625,
+                "median": 874.7232666015625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5512",
+            "class_name": "person",
+            "bbox": [
+                391,
+                206,
+                412,
+                241
+            ],
+            "confidence": 0.2566891014575958,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 370.77142333984375,
+                "median": 400.5837707519531,
+                "min": 0.0
+            },
+            "_rid": 80,
+            "user_id": 80
+        }
+    ],
+    "frame_5610": [
+        {
+            "kind": "person",
+            "frame": "frame_5610",
+            "class_name": "person",
+            "bbox": [
+                634,
+                0,
+                847,
+                472
+            ],
+            "confidence": 0.960015058517456,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1630.677490234375,
+                "median": 1942.43798828125,
+                "min": 0.0
+            },
+            "_rid": 81,
+            "user_id": 81
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5610",
+            "class_name": "person",
+            "bbox": [
+                0,
+                214,
+                43,
+                368
+            ],
+            "confidence": 0.8158625364303589,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 678.3428955078125,
+                "median": 710.9507446289062,
+                "min": 0.0
+            },
+            "_rid": 82,
+            "user_id": 82
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5610",
+            "class_name": "person",
+            "bbox": [
+                280,
+                206,
+                333,
+                319
+            ],
+            "confidence": 0.7666333317756653,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 381.4347229003906,
+                "median": 396.3826904296875,
+                "min": 0.0
+            },
+            "_rid": 83,
+            "user_id": 83
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5610",
+            "class_name": "person",
+            "bbox": [
+                505,
+                181,
+                599,
+                382
+            ],
+            "confidence": 0.7246676683425903,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 710.8189086914062,
+                "median": 739.03857421875,
+                "min": 0.0
+            },
+            "_rid": 84,
+            "user_id": 84
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5610",
+            "class_name": "person",
+            "bbox": [
+                402,
+                203,
+                460,
+                334
+            ],
+            "confidence": 0.6816849708557129,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 388.0960693359375,
+                "median": 391.62371826171875,
+                "min": 0.0
+            },
+            "_rid": 85,
+            "user_id": 85
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5610",
+            "class_name": "person",
+            "bbox": [
+                334,
+                204,
+                397,
+                325
+            ],
+            "confidence": 0.679423451423645,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 392.88214111328125,
+                "median": 403.04156494140625,
+                "min": 0.0
+            },
+            "_rid": 86,
+            "user_id": 86
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5610",
+            "class_name": "chair",
+            "bbox": [
+                219,
+                258,
+                273,
+                340
+            ],
+            "confidence": 0.5918229818344116,
+            "depth": {
+                "mean": 419.5801696777344,
+                "median": 418.0206298828125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5610",
+            "class_name": "bottle",
+            "bbox": [
+                202,
+                223,
+                213,
+                254
+            ],
+            "confidence": 0.5875558257102966,
+            "depth": {
+                "mean": 278.4783630371094,
+                "median": 278.74127197265625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5610",
+            "class_name": "person",
+            "bbox": [
+                580,
+                192,
+                620,
+                257
+            ],
+            "confidence": 0.5680695176124573,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 588.29541015625,
+                "median": 583.24951171875,
+                "min": 0.0
+            },
+            "_rid": 87,
+            "user_id": 87
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5610",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                317,
+                513,
+                395
+            ],
+            "confidence": 0.5562522411346436,
+            "depth": {
+                "mean": 803.5093994140625,
+                "median": 873.6405029296875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5610",
+            "class_name": "chair",
+            "bbox": [
+                88,
+                245,
+                118,
+                335
+            ],
+            "confidence": 0.5393130779266357,
+            "depth": {
+                "mean": 449.8091735839844,
+                "median": 464.5504150390625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5610",
+            "class_name": "person",
+            "bbox": [
+                389,
+                180,
+                439,
+                235
+            ],
+            "confidence": 0.5298806428909302,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 343.4584655761719,
+                "median": 388.12786865234375,
+                "min": 0.0
+            },
+            "_rid": 88,
+            "user_id": 88
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5610",
+            "class_name": "backpack",
+            "bbox": [
+                437,
+                288,
+                491,
+                349
+            ],
+            "confidence": 0.43518221378326416,
+            "depth": {
+                "mean": 549.8072509765625,
+                "median": 565.7747802734375,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5610",
+            "class_name": "chair",
+            "bbox": [
+                142,
+                241,
+                191,
+                313
+            ],
+            "confidence": 0.38068926334381104,
+            "depth": {
+                "mean": 344.7957763671875,
+                "median": 344.48992919921875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5610",
+            "class_name": "dining table",
+            "bbox": [
+                181,
+                248,
+                269,
+                341
+            ],
+            "confidence": 0.37314921617507935,
+            "depth": {
+                "mean": 406.6759338378906,
+                "median": 407.9299011230469,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5610",
+            "class_name": "person",
+            "bbox": [
+                43,
+                196,
+                96,
+                255
+            ],
+            "confidence": 0.3411172032356262,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 426.8797912597656,
+                "median": 500.4381103515625,
+                "min": 0.0
+            },
+            "_rid": 89,
+            "user_id": 89
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5610",
+            "class_name": "person",
+            "bbox": [
+                612,
+                187,
+                687,
+                380
+            ],
+            "confidence": 0.32676446437835693,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1046.994140625,
+                "median": 993.0997314453125,
+                "min": 0.0
+            },
+            "_rid": 90,
+            "user_id": 90
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5610",
+            "class_name": "bottle",
+            "bbox": [
+                62,
+                230,
+                72,
+                257
+            ],
+            "confidence": 0.3187122941017151,
+            "depth": {
+                "mean": 521.1195678710938,
+                "median": 521.7225341796875,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5610",
+            "class_name": "chair",
+            "bbox": [
+                806,
+                272,
+                847,
+                366
+            ],
+            "confidence": 0.28818511962890625,
+            "depth": {
+                "mean": 786.21484375,
+                "median": 429.19781494140625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5610",
+            "class_name": "person",
+            "bbox": [
+                486,
+                205,
+                532,
+                262
+            ],
+            "confidence": 0.25738584995269775,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 411.4588623046875,
+                "median": 368.47119140625,
+                "min": 0.0
+            },
+            "_rid": 91,
+            "user_id": 91
+        }
+    ],
+    "frame_5695": [
+        {
+            "kind": "person",
+            "frame": "frame_5695",
+            "class_name": "person",
+            "bbox": [
+                0,
+                1,
+                224,
+                471
+            ],
+            "confidence": 0.9524049162864685,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1795.01123046875,
+                "median": 2051.44384765625,
+                "min": 0.0
+            },
+            "_rid": 92,
+            "user_id": 92
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5695",
+            "class_name": "person",
+            "bbox": [
+                635,
+                174,
+                771,
+                402
+            ],
+            "confidence": 0.8640235662460327,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 757.3101196289062,
+                "median": 887.5496826171875,
+                "min": 0.0
+            },
+            "_rid": 93,
+            "user_id": 93
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5695",
+            "class_name": "person",
+            "bbox": [
+                484,
+                172,
+                529,
+                240
+            ],
+            "confidence": 0.7204489707946777,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 436.5869140625,
+                "median": 477.43585205078125,
+                "min": 0.0
+            },
+            "_rid": 94,
+            "user_id": 94
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5695",
+            "class_name": "person",
+            "bbox": [
+                403,
+                199,
+                462,
+                331
+            ],
+            "confidence": 0.715419352054596,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 375.2682800292969,
+                "median": 379.4201354980469,
+                "min": 0.0
+            },
+            "_rid": 95,
+            "user_id": 95
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5695",
+            "class_name": "person",
+            "bbox": [
+                280,
+                207,
+                333,
+                317
+            ],
+            "confidence": 0.698579728603363,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 338.7685546875,
+                "median": 348.64501953125,
+                "min": 0.0
+            },
+            "_rid": 96,
+            "user_id": 96
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5695",
+            "class_name": "person",
+            "bbox": [
+                576,
+                189,
+                620,
+                255
+            ],
+            "confidence": 0.6553577184677124,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 530.2239379882812,
+                "median": 608.048828125,
+                "min": 0.0
+            },
+            "_rid": 97,
+            "user_id": 97
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5695",
+            "class_name": "person",
+            "bbox": [
+                507,
+                185,
+                603,
+                381
+            ],
+            "confidence": 0.6530839204788208,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 739.4508666992188,
+                "median": 771.2354736328125,
+                "min": 0.0
+            },
+            "_rid": 98,
+            "user_id": 98
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5695",
+            "class_name": "person",
+            "bbox": [
+                334,
+                200,
+                393,
+                325
+            ],
+            "confidence": 0.65081387758255,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 357.1805419921875,
+                "median": 373.1695251464844,
+                "min": 0.0
+            },
+            "_rid": 99,
+            "user_id": 99
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5695",
+            "class_name": "chair",
+            "bbox": [
+                219,
+                268,
+                273,
+                340
+            ],
+            "confidence": 0.5924874544143677,
+            "depth": {
+                "mean": 382.24578857421875,
+                "median": 374.4723815917969,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5695",
+            "class_name": "backpack",
+            "bbox": [
+                612,
+                330,
+                693,
+                422
+            ],
+            "confidence": 0.5251314640045166,
+            "depth": {
+                "mean": 917.8132934570312,
+                "median": 918.44775390625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5695",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                316,
+                512,
+                395
+            ],
+            "confidence": 0.5207381248474121,
+            "depth": {
+                "mean": 759.92919921875,
+                "median": 795.2161254882812,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5695",
+            "class_name": "person",
+            "bbox": [
+                388,
+                205,
+                413,
+                245
+            ],
+            "confidence": 0.4485495090484619,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 350.6238708496094,
+                "median": 367.4212646484375,
+                "min": 0.0
+            },
+            "_rid": 100,
+            "user_id": 100
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5695",
+            "class_name": "person",
+            "bbox": [
+                490,
+                207,
+                529,
+                260
+            ],
+            "confidence": 0.3865165710449219,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 551.7923583984375,
+                "median": 519.3511962890625,
+                "min": 0.0
+            },
+            "_rid": 101,
+            "user_id": 101
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5695",
+            "class_name": "backpack",
+            "bbox": [
+                437,
+                288,
+                491,
+                349
+            ],
+            "confidence": 0.35199031233787537,
+            "depth": {
+                "mean": 577.819091796875,
+                "median": 615.8876953125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5695",
+            "class_name": "dining table",
+            "bbox": [
+                651,
+                266,
+                811,
+                420
+            ],
+            "confidence": 0.3489839434623718,
+            "depth": {
+                "mean": 814.9973754882812,
+                "median": 884.9158325195312,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5695",
+            "class_name": "cup",
+            "bbox": [
+                272,
+                233,
+                282,
+                252
+            ],
+            "confidence": 0.25694650411605835,
+            "depth": {
+                "mean": 329.49371337890625,
+                "median": 338.94830322265625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5695",
+            "class_name": "chair",
+            "bbox": [
+                182,
+                275,
+                207,
+                342
+            ],
+            "confidence": 0.2535552978515625,
+            "depth": {
+                "mean": 736.4861450195312,
+                "median": 424.820556640625,
+                "min": 0.0
+            }
+        }
+    ],
+    "frame_5943": [
+        {
+            "kind": "person",
+            "frame": "frame_5943",
+            "class_name": "person",
+            "bbox": [
+                254,
+                62,
+                372,
+                451
+            ],
+            "confidence": 0.9279022812843323,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1272.0592041015625,
+                "median": 1594.1104736328125,
+                "min": 0.0
+            },
+            "_rid": 102,
+            "user_id": 102
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5943",
+            "class_name": "person",
+            "bbox": [
+                634,
+                171,
+                770,
+                396
+            ],
+            "confidence": 0.8485069870948792,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1077.864990234375,
+                "median": 1286.3046875,
+                "min": 0.0
+            },
+            "_rid": 103,
+            "user_id": 103
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5943",
+            "class_name": "chair",
+            "bbox": [
+                219,
+                255,
+                275,
+                339
+            ],
+            "confidence": 0.7236601114273071,
+            "depth": {
+                "mean": 468.0443115234375,
+                "median": 473.3906555175781,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5943",
+            "class_name": "person",
+            "bbox": [
+                404,
+                199,
+                462,
+                329
+            ],
+            "confidence": 0.6981509923934937,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 515.89013671875,
+                "median": 506.1120910644531,
+                "min": 0.0
+            },
+            "_rid": 104,
+            "user_id": 104
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5943",
+            "class_name": "person",
+            "bbox": [
+                576,
+                190,
+                617,
+                255
+            ],
+            "confidence": 0.6736404895782471,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 672.010009765625,
+                "median": 702.483154296875,
+                "min": 0.0
+            },
+            "_rid": 105,
+            "user_id": 105
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5943",
+            "class_name": "person",
+            "bbox": [
+                509,
+                181,
+                600,
+                381
+            ],
+            "confidence": 0.6049439907073975,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1024.65771484375,
+                "median": 1073.457275390625,
+                "min": 0.0
+            },
+            "_rid": 106,
+            "user_id": 106
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5943",
+            "class_name": "person",
+            "bbox": [
+                0,
+                219,
+                60,
+                398
+            ],
+            "confidence": 0.5898367762565613,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 809.9094848632812,
+                "median": 791.0405883789062,
+                "min": 0.0
+            },
+            "_rid": 107,
+            "user_id": 107
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5943",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                318,
+                513,
+                396
+            ],
+            "confidence": 0.5897839665412903,
+            "depth": {
+                "mean": 1193.5587158203125,
+                "median": 1247.200439453125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5943",
+            "class_name": "chair",
+            "bbox": [
+                141,
+                241,
+                188,
+                315
+            ],
+            "confidence": 0.5310823321342468,
+            "depth": {
+                "mean": 383.85382080078125,
+                "median": 384.4639892578125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5943",
+            "class_name": "chair",
+            "bbox": [
+                86,
+                245,
+                118,
+                334
+            ],
+            "confidence": 0.5235536098480225,
+            "depth": {
+                "mean": 522.0518188476562,
+                "median": 541.9492797851562,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5943",
+            "class_name": "person",
+            "bbox": [
+                359,
+                209,
+                396,
+                251
+            ],
+            "confidence": 0.5186235904693604,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 587.7664184570312,
+                "median": 555.2823486328125,
+                "min": 0.0
+            },
+            "_rid": 108,
+            "user_id": 108
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5943",
+            "class_name": "dining table",
+            "bbox": [
+                181,
+                247,
+                271,
+                341
+            ],
+            "confidence": 0.5030423998832703,
+            "depth": {
+                "mean": 451.13873291015625,
+                "median": 464.8847351074219,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5943",
+            "class_name": "cup",
+            "bbox": [
+                62,
+                237,
+                72,
+                255
+            ],
+            "confidence": 0.46034979820251465,
+            "depth": {
+                "mean": 652.7027587890625,
+                "median": 652.9170532226562,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5943",
+            "class_name": "chair",
+            "bbox": [
+                9,
+                301,
+                57,
+                358
+            ],
+            "confidence": 0.45576557517051697,
+            "depth": {
+                "mean": 758.6049194335938,
+                "median": 744.9948120117188,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5943",
+            "class_name": "backpack",
+            "bbox": [
+                613,
+                329,
+                688,
+                422
+            ],
+            "confidence": 0.4143421947956085,
+            "depth": {
+                "mean": 1309.2742919921875,
+                "median": 1330.4703369140625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5943",
+            "class_name": "bottle",
+            "bbox": [
+                202,
+                223,
+                214,
+                254
+            ],
+            "confidence": 0.41002869606018066,
+            "depth": {
+                "mean": 231.6276397705078,
+                "median": 232.0807647705078,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5943",
+            "class_name": "backpack",
+            "bbox": [
+                437,
+                288,
+                491,
+                349
+            ],
+            "confidence": 0.3901778757572174,
+            "depth": {
+                "mean": 928.18017578125,
+                "median": 1046.10009765625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5943",
+            "class_name": "person",
+            "bbox": [
+                36,
+                201,
+                100,
+                341
+            ],
+            "confidence": 0.3398301899433136,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 598.704345703125,
+                "median": 641.4503784179688,
+                "min": 0.0
+            },
+            "_rid": 109,
+            "user_id": 109
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5943",
+            "class_name": "person",
+            "bbox": [
+                488,
+                205,
+                531,
+                263
+            ],
+            "confidence": 0.26577967405319214,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 654.0841674804688,
+                "median": 695.6502075195312,
+                "min": 0.0
+            },
+            "_rid": 110,
+            "user_id": 110
+        },
+        {
+            "kind": "object",
+            "frame": "frame_5943",
+            "class_name": "dining table",
+            "bbox": [
+                109,
+                247,
+                168,
+                319
+            ],
+            "confidence": 0.2642129957675934,
+            "depth": {
+                "mean": 381.1503601074219,
+                "median": 380.2196350097656,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5943",
+            "class_name": "person",
+            "bbox": [
+                487,
+                205,
+                532,
+                323
+            ],
+            "confidence": 0.2607323229312897,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 903.1129760742188,
+                "median": 1029.970458984375,
+                "min": 0.0
+            },
+            "_rid": 111,
+            "user_id": 111
+        },
+        {
+            "kind": "person",
+            "frame": "frame_5943",
+            "class_name": "person",
+            "bbox": [
+                511,
+                181,
+                600,
+                269
+            ],
+            "confidence": 0.2571190595626831,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 868.2725830078125,
+                "median": 1046.6890869140625,
+                "min": 0.0
+            },
+            "_rid": 112,
+            "user_id": 112
+        }
+    ],
+    "frame_6537": [
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                0,
+                0,
+                284,
+                472
+            ],
+            "confidence": 0.9260155558586121,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 1694.1763916015625,
+                "median": 2150.963134765625,
+                "min": 0.0
+            },
+            "_rid": 113,
+            "user_id": 113
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                634,
+                176,
+                773,
+                409
+            ],
+            "confidence": 0.8553258180618286,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 825.0198974609375,
+                "median": 971.0830078125,
+                "min": 0.0
+            },
+            "_rid": 114,
+            "user_id": 114
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                403,
+                198,
+                459,
+                328
+            ],
+            "confidence": 0.7794653177261353,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 333.9219055175781,
+                "median": 325.1708068847656,
+                "min": 0.0
+            },
+            "_rid": 115,
+            "user_id": 115
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                280,
+                207,
+                333,
+                317
+            ],
+            "confidence": 0.6900442838668823,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 312.3467712402344,
+                "median": 324.2520751953125,
+                "min": 0.0
+            },
+            "_rid": 116,
+            "user_id": 116
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                571,
+                195,
+                613,
+                256
+            ],
+            "confidence": 0.657207190990448,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 561.91015625,
+                "median": 752.5125732421875,
+                "min": 0.0
+            },
+            "_rid": 117,
+            "user_id": 117
+        },
+        {
+            "kind": "object",
+            "frame": "frame_6537",
+            "class_name": "backpack",
+            "bbox": [
+                613,
+                319,
+                687,
+                422
+            ],
+            "confidence": 0.6422659754753113,
+            "depth": {
+                "mean": 991.5159912109375,
+                "median": 1003.548828125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                0,
+                218,
+                56,
+                399
+            ],
+            "confidence": 0.5602536201477051,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 547.588134765625,
+                "median": 520.7454833984375,
+                "min": 0.0
+            },
+            "_rid": 118,
+            "user_id": 118
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                510,
+                181,
+                599,
+                380
+            ],
+            "confidence": 0.5441939830780029,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 757.2383422851562,
+                "median": 804.5252075195312,
+                "min": 0.0
+            },
+            "_rid": 119,
+            "user_id": 119
+        },
+        {
+            "kind": "object",
+            "frame": "frame_6537",
+            "class_name": "backpack",
+            "bbox": [
+                459,
+                317,
+                512,
+                396
+            ],
+            "confidence": 0.5136701464653015,
+            "depth": {
+                "mean": 793.5620727539062,
+                "median": 853.2041015625,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                335,
+                208,
+                398,
+                326
+            ],
+            "confidence": 0.48976701498031616,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 327.72174072265625,
+                "median": 332.21295166015625,
+                "min": 0.0
+            },
+            "_rid": 120,
+            "user_id": 120
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                515,
+                180,
+                599,
+                269
+            ],
+            "confidence": 0.44480660557746887,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 649.2057495117188,
+                "median": 802.677978515625,
+                "min": 0.0
+            },
+            "_rid": 121,
+            "user_id": 121
+        },
+        {
+            "kind": "object",
+            "frame": "frame_6537",
+            "class_name": "backpack",
+            "bbox": [
+                437,
+                288,
+                491,
+                349
+            ],
+            "confidence": 0.39858976006507874,
+            "depth": {
+                "mean": 534.889404296875,
+                "median": 575.637939453125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                19,
+                200,
+                83,
+                256
+            ],
+            "confidence": 0.3854304254055023,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 443.90606689453125,
+                "median": 426.6922912597656,
+                "min": 0.0
+            },
+            "_rid": 122,
+            "user_id": 122
+        },
+        {
+            "kind": "object",
+            "frame": "frame_6537",
+            "class_name": "chair",
+            "bbox": [
+                497,
+                267,
+                612,
+                421
+            ],
+            "confidence": 0.31651508808135986,
+            "depth": {
+                "mean": 863.8842163085938,
+                "median": 840.4981689453125,
+                "min": 0.0
+            }
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                334,
+                208,
+                396,
+                252
+            ],
+            "confidence": 0.30678698420524597,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 311.9046936035156,
+                "median": 343.7387390136719,
+                "min": 0.0
+            },
+            "_rid": 123,
+            "user_id": 123
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                487,
+                206,
+                531,
+                322
+            ],
+            "confidence": 0.28794828057289124,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 643.8678588867188,
+                "median": 706.23779296875,
+                "min": 0.0
+            },
+            "_rid": 124,
+            "user_id": 124
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                488,
+                206,
+                531,
+                263
+            ],
+            "confidence": 0.2793734073638916,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 473.4030456542969,
+                "median": 489.058349609375,
+                "min": 0.0
+            },
+            "_rid": 125,
+            "user_id": 125
+        },
+        {
+            "kind": "person",
+            "frame": "frame_6537",
+            "class_name": "person",
+            "bbox": [
+                18,
+                200,
+                85,
+                330
+            ],
+            "confidence": 0.2559661567211151,
+            "attributes": {
+                "pose": null,
+                "hands": null,
+                "face": null,
+                "eyes": null
+            },
+            "track_id": null,
+            "person_global_id": null,
+            "depth": {
+                "mean": 489.1875,
+                "median": 445.216064453125,
+                "min": 0.0
+            },
+            "_rid": 126,
+            "user_id": 126
+        },
+        {
+            "kind": "object",
+            "frame": "frame_6537",
+            "class_name": "chair",
+            "bbox": [
+                6,
+                300,
+                53,
+                357
+            ],
+            "confidence": 0.25263532996177673,
+            "depth": {
+                "mean": 497.77874755859375,
+                "median": 460.9613037109375,
+                "min": 0.0
+            }
+        }
+    ]
+}

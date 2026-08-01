@@ -1,0 +1,22 @@
+.env
+models
+.idea
+gallery.index
+id_map.json
+proto_store.npy
+record/video/WhatsApp Video 2025-10-15 at 3.42.22 PM*.mp4
+record/video/
+datasets
+.venv39
+venv310
+yolo11m.pt
+res/keyFrames/yolo_reid
+runs
+standing_vs_sitting
+YOLO
+videos
+MEDIUM_YOLO
+mis_frames
+__pycache__/
+*.pyc
+.atl/
