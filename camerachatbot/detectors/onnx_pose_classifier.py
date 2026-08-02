@@ -37,6 +37,28 @@ source in this sandbox's venv):
    at the crop's edges/corners and *will* fail the ±0.02 probability
    parity tolerance in `tools/verify_onnx_parity.py`.
 
+5. **The resize step operates on a PIL Image, not a torch Tensor —
+   confirmed by reading `ClassificationPredictor.preprocess()` directly**:
+   `self.transforms(Image.fromarray(cv2.cvtColor(im, cv2.COLOR_BGR2RGB)))`.
+   `T.Resize`'s `forward()` dispatches on the input type; for a PIL input
+   it delegates straight to `torchvision.transforms._functional_pil.resize()`,
+   which is nothing more than `img.resize(size, Image.BILINEAR)` — Pillow's
+   own C resize, not torchvision's tensor-path resize. This matters because
+   Pillow's BILINEAR resize *always* antialiases internally when
+   downsampling (there is no separate antialias flag on the PIL codepath —
+   `torchvision.transforms.functional.resize()`'s own docstring says so
+   explicitly: "on PIL images, antialiasing is always applied on bilinear
+   or bicubic modes"). This is a **third, distinct filter** from both
+   `cv2.INTER_AREA` (a box filter) and torch's own tensor-path antialiased
+   bilinear (a separable triangle filter applied in float, pre-scaled by
+   the resize ratio) — approximating it with `cv2.INTER_AREA` (as an
+   earlier revision of this module did) leaves a real, measurable residual
+   on aggressive downsamples (confirmed: up to 0.0645 max probability
+   diff on 2/14 real `keyFrames` images in `tools/verify_onnx_parity.py`).
+   `_preprocess()` below uses `PIL.Image.resize(..., Image.BILINEAR)`
+   directly instead, matching the real pipeline's resize call bit-for-bit
+   rather than approximating it.
+
 2. **A real correction to the design's own stated hazard**: the design
    assumed `classify_transforms` applies "ImageNet normalize". Reading
    `ultralytics/data/augment.py` directly shows `classify_transforms`'s
@@ -72,6 +94,7 @@ source in this sandbox's venv):
 import cv2
 import numpy as np
 import onnxruntime as ort
+from PIL import Image
 
 
 class PoseClsOnnxClassifier:
@@ -121,9 +144,10 @@ class PoseClsOnnxClassifier:
     def _preprocess(self, crops: list) -> np.ndarray:
         """BGR crops -> `(B, 3, imgsz, imgsz)` float32 NCHW, `classify_transforms` parity.
 
-        Per-crop: BGR->RGB -> resize shortest edge to `imgsz` (bilinear,
-        aspect ratio preserved, `int()`-truncated target long-edge exactly
-        as `torchvision.transforms.functional._compute_resized_output_size`
+        Per-crop: BGR->RGB -> `PIL.Image.fromarray` -> resize shortest edge
+        to `imgsz` via `Image.resize(..., Image.BILINEAR)` (aspect ratio
+        preserved, `int()`-truncated target long-edge exactly as
+        `torchvision.transforms.functional._compute_resized_output_size`
         computes it) -> center crop to `(imgsz, imgsz)` (offsets via
         `round((dim - imgsz) / 2.0)`, exactly as
         `torchvision.transforms.functional.center_crop`) -> `/255`.
@@ -155,24 +179,18 @@ class PoseClsOnnxClassifier:
 
             new_w = max(1, new_w)
             new_h = max(1, new_h)
-            # `classify_transforms` builds its `Resize` with `antialias=True`
-            # (confirmed: `Resize(size=224, interpolation=bilinear,
-            # max_size=None, antialias=True)`), i.e. a low-pass-filtered
-            # downsample, not a naive bilinear sample. Plain
-            # `cv2.INTER_LINEAR` diverges sharply from that on any
-            # significant downscale (measured directly: >0.5 max pixel
-            # diff on a >2x shrink of high-frequency content) — OpenCV's
-            # own docs recommend `INTER_AREA` for shrinking specifically
-            # because it approximates area/box-filter antialiasing, which
-            # is far closer to torchvision's antialiased bilinear than
-            # `INTER_LINEAR` is. `INTER_LINEAR` is kept for the
-            # upscale case (matches `cv2.dnn`/Ultralytics' own convention
-            # of `INTER_LINEAR` for enlarging, and antialiasing is a
-            # downsampling-only concept — there is nothing to filter when
-            # enlarging).
-            is_downscale = new_w < w or new_h < h
-            interp = cv2.INTER_AREA if is_downscale else cv2.INTER_LINEAR
-            resized = cv2.resize(rgb, (new_w, new_h), interpolation=interp)
+
+            # `classify_transforms` runs its `Resize` on a `PIL.Image`, not a
+            # tensor (see hazard #5 above) — `T.Resize`'s PIL codepath is
+            # exactly `img.resize(size, Image.BILINEAR)`, Pillow's own C
+            # resize, which always antialiases BILINEAR/BICUBIC downsamples
+            # internally (no separate antialias flag exists on that path).
+            # Use PIL directly here instead of approximating with an OpenCV
+            # filter, so this matches the real pipeline's resize call
+            # bit-for-bit rather than through a different filter kernel.
+            pil_img = Image.fromarray(rgb)
+            resized_pil = pil_img.resize((new_w, new_h), Image.BILINEAR)
+            resized = np.asarray(resized_pil)
 
             # Center crop to (imgsz, imgsz); pad with 0 first if the resized
             # image is smaller than imgsz along any edge (defensive — should
