@@ -111,6 +111,15 @@ class KalmanBoxTracker:
         self.hits = 0
         self.age = 0
         self.time_since_update = 0
+        # True once this track has EVER satisfied the reporting gate
+        # (hits >= min_hits, or the tracker-startup exception) at least once.
+        # Stays True for the track's whole lifetime, even though `hits`
+        # itself keeps resetting to 0 on every missed-frame gap -- this is
+        # what lets a re-matched "Lost" track report again immediately
+        # instead of re-earning min_hits from scratch (real ByteTrack/
+        # DeepSORT-family "Lost track re-activation" semantics). Set by
+        # `ByteTracker.update()`, not here.
+        self.confirmed = False
 
     def predict(self) -> np.ndarray:
         """Advance the state one frame (no observation yet) and return the
@@ -255,11 +264,24 @@ class ByteTracker:
         for det_i, trk in det_to_track.items():
             if trk.track_id not in alive_ids:
                 continue
-            # SORT startup exception: report even with hits < min_hits during
-            # the tracker's first min_hits frames, otherwise no track could
-            # ever be reported in a video's opening seconds.
-            confirmed = trk.hits >= self.min_hits or self.frame_count <= self.min_hits
-            if confirmed and trk.time_since_update == 0:
+            # First-time confirmation gate: hits >= min_hits, or the SORT
+            # startup exception (report even with hits < min_hits during the
+            # tracker's first min_hits frames, otherwise no track could ever
+            # be reported in a video's opening seconds). Once satisfied,
+            # latch `trk.confirmed` permanently -- this is the ONLY place a
+            # track becomes confirmed.
+            if trk.hits >= self.min_hits or self.frame_count <= self.min_hits:
+                trk.confirmed = True
+
+            # Real ByteTrack/DeepSORT "Lost track re-activation" semantics: a
+            # track that has EVER been confirmed keeps reporting under the
+            # same track_id on every successful re-match, with no fresh
+            # min_hits delay after an occlusion gap -- only a genuinely NEW
+            # (never-yet-confirmed) track goes through the min_hits startup
+            # gate. `hits`/`hit_streak` still reset on a miss (unchanged --
+            # that bookkeeping is what proves first-time confirmation), but
+            # `confirmed` does not, so recovery is reported immediately.
+            if trk.confirmed and trk.time_since_update == 0:
                 results.append((int(det_i), int(trk.track_id)))
 
         return sorted(results, key=lambda pair: pair[0])

@@ -13,16 +13,24 @@ What it verifies (Fase 4a / PR7 tasks):
    with a moved observation converges the state toward that motion) and the
    `hits`/`age`/`time_since_update` bookkeeping SORT's startup/confirmation
    logic depends on.
-2. `security.tracker.ByteTracker.update()` against four hand-authored,
+2. `security.tracker.ByteTracker.update()` against five hand-authored,
    synthetic fixtures under `tests_manual/fixtures/` (no images, no models):
    - `tracks_linear.json` -- one steadily-translating box -> exactly one
      stable track id throughout.
-   - `tracks_occlusion.json` -- a 5-frame gap (no detections at all) then a
-     LOW-confidence reappearance near the Kalman-predicted position ->
-     validates `max_age` tolerance and the stage-2 low-confidence match: the
-     SAME internal track is recovered (never a second track id), even
-     though full re-confirmation (being included in the returned list
-     again) takes a few more consecutive hits per SORT semantics.
+   - `tracks_occlusion.json` -- 10 lead frames (well past `min_hits`, so the
+     track is fully confirmed before the gap), a 5-frame gap (no detections
+     at all), then a LOW-confidence reappearance near the Kalman-predicted
+     position -> validates `max_age` tolerance, the stage-2 low-confidence
+     match, AND real ByteTrack "Lost track re-activation" semantics: the
+     SAME internal track is recovered (never a second track id) and is
+     REPORTED again immediately on its first recovery frame, with no
+     re-confirmation delay, because it had already earned confirmation once
+     before the occlusion.
+   - `tracks_new_track_needs_min_hits.json` -- a freshly-spawned track
+     (never confirmed before) that misses a single frame partway through its
+     own startup window -> proves the `min_hits` startup gate still applies
+     in full to genuinely NEW tracks, i.e. the re-activation shortcut above
+     is specific to previously-confirmed tracks, not a blanket relaxation.
    - `tracks_crossing.json` -- two boxes crossing paths -> two distinct,
      stable ids that never swap.
    - `tracks_lowconf.json` -- one continuously-present box whose confidence
@@ -149,7 +157,7 @@ def test_linear_motion_single_stable_track_id():
     assert len(ids_seen) == 1
 
 
-def test_occlusion_recovers_same_track_no_spurious_new_id():
+def test_occlusion_recovers_same_track_no_reporting_gap():
     fixture = _load_fixture("tracks_occlusion.json")
     tracker, per_frame = _run_fixture(fixture)
 
@@ -168,16 +176,49 @@ def test_occlusion_recovers_same_track_no_spurious_new_id():
     assert len(tracker.tracks) == 1, \
         f"expected exactly one track to have ever existed, got {len(tracker.tracks)}"
 
-    # The reappearance frame itself is a low-confidence match: it correctly
-    # re-associates (internally) but is not yet re-confirmed for reporting.
-    assert per_frame[reappear_frame] == {}, per_frame[reappear_frame]
+    # Real ByteTrack/DeepSORT "Lost track re-activation" semantics: this
+    # track was already confirmed/reported many frames before the occlusion
+    # gap (10 lead frames >> min_hits), so its recovery on the very FIRST
+    # post-gap detection is reported immediately -- no fresh min_hits delay.
+    # This is the behavior the vanilla-SORT reset-on-any-miss gate used to
+    # defeat, which is exactly the bug this fixture now locks in the fix for.
+    assert 0 in per_frame[reappear_frame], \
+        f"frame {reappear_frame}: previously-confirmed track was not reported on its first recovery frame -- {per_frame[reappear_frame]}"
+    assert per_frame[reappear_frame][0] == lead_id, \
+        f"recovered track id changed -- expected {lead_id}, got {per_frame[reappear_frame][0]}"
 
-    # Track eventually gets reported again, with the SAME id as before the
-    # gap, once enough consecutive hits accumulate post-recovery.
-    later_reports = [fm[0] for fm in per_frame[reappear_frame + 1:] if 0 in fm]
-    assert later_reports, "track was never reported again after recovering from occlusion"
-    assert all(tid == lead_id for tid in later_reports), \
-        f"recovered track id changed -- expected {lead_id}, got {set(later_reports)}"
+    # Every frame from recovery onward keeps reporting continuously, same id,
+    # with NO gap at all -- unlike the old (incorrect) behavior that required
+    # a few more consecutive hits before reporting resumed.
+    for i in range(reappear_frame, len(per_frame)):
+        assert 0 in per_frame[i], f"frame {i}: reporting gap after recovery -- {per_frame[i]}"
+        assert per_frame[i][0] == lead_id, \
+            f"frame {i}: recovered track id changed -- expected {lead_id}, got {per_frame[i][0]}"
+
+
+def test_new_track_still_needs_min_hits_after_a_miss():
+    fixture = _load_fixture("tracks_new_track_needs_min_hits.json")
+    _tracker, per_frame = _run_fixture(fixture)
+
+    spawn_frame = fixture["spawn_frame"]
+    miss_frame = fixture["miss_frame"]
+    expected_first_report_frame = fixture["expected_first_report_frame"]
+
+    # Nothing reported before the track is ever confirmed -- this includes
+    # the spawn frame itself, the frame right before the miss, the miss
+    # frame, and the frames spent re-earning hits after the miss. Contrast
+    # with tracks_occlusion.json, where an ALREADY-confirmed track recovers
+    # with zero reporting delay -- here the track was NEVER confirmed before
+    # its miss, so the min_hits startup gate still applies in full.
+    for i in range(spawn_frame, expected_first_report_frame):
+        assert per_frame[i] == {}, \
+            f"frame {i}: new (never-confirmed) track reported before earning min_hits -- {per_frame[i]}"
+
+    assert per_frame[miss_frame] == {}, "miss frame should report nothing (no detection at all)"
+
+    # From the point it earns min_hits onward, it reports continuously.
+    for i in range(expected_first_report_frame, len(per_frame)):
+        assert 0 in per_frame[i], f"frame {i}: expected the newly-confirmed track to be reported"
 
 
 def test_crossing_tracks_never_swap_ids():
@@ -277,7 +318,8 @@ def main():
     check("KalmanBoxTracker converges toward observed velocity", test_kalman_converges_toward_observed_velocity)
     check("KalmanBoxTracker hits/age/time_since_update bookkeeping", test_kalman_hits_age_time_since_update_bookkeeping)
     check("ByteTracker: tracks_linear.json -> one stable id", test_linear_motion_single_stable_track_id)
-    check("ByteTracker: tracks_occlusion.json -> same id recovered, no spurious new id", test_occlusion_recovers_same_track_no_spurious_new_id)
+    check("ByteTracker: tracks_occlusion.json -> same id recovered, reported with no gap (already confirmed)", test_occlusion_recovers_same_track_no_reporting_gap)
+    check("ByteTracker: tracks_new_track_needs_min_hits.json -> never-confirmed track still needs min_hits after a miss", test_new_track_still_needs_min_hits_after_a_miss)
     check("ByteTracker: tracks_crossing.json -> no id swap", test_crossing_tracks_never_swap_ids)
     check("ByteTracker: tracks_lowconf.json -> stage-2 keeps track alive every frame", test_lowconf_dip_keeps_track_alive_every_frame)
     check("assign_track_ids() writes track_id on every person entry + rid-indexed labels", test_assign_track_ids_writes_track_id_on_every_person_entry)
