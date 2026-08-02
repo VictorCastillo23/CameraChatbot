@@ -149,6 +149,68 @@ def ensure_schema_and_tables(cur):
         )
     """)
 
+    # --------------------- tablas de seguridad (Fase 0, inertes: nada las lee/escribe todavía) ---------------------
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS camera_calibration (
+            id SERIAL PRIMARY KEY,
+            camera_id INTEGER REFERENCES camera(id),
+            homography DOUBLE PRECISION[],
+            units TEXT,
+            reference_points JSONB,
+            reprojection_error DOUBLE PRECISION,
+            is_active BOOLEAN DEFAULT TRUE,
+            created_at TIMESTAMP DEFAULT NOW()
+        )
+    """)
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_camera_calibration_camera ON camera_calibration(camera_id)")
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS zone (
+            id SERIAL PRIMARY KEY,
+            camera_id INTEGER REFERENCES camera(id),
+            name TEXT,
+            zone_type TEXT,
+            polygon JSONB,
+            schedule JSONB,
+            is_active BOOLEAN DEFAULT TRUE,
+            created_at TIMESTAMP DEFAULT NOW()
+        )
+    """)
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_zone_camera ON zone(camera_id)")
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS authorized_identity (
+            person_global_id INTEGER PRIMARY KEY,
+            display_name TEXT,
+            role TEXT,
+            is_active BOOLEAN DEFAULT TRUE,
+            enrolled_at TIMESTAMP DEFAULT NOW(),
+            notes TEXT,
+            created_at TIMESTAMP DEFAULT NOW()
+        )
+    """)
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS event (
+            id SERIAL PRIMARY KEY,
+            video_id INTEGER REFERENCES video(id),
+            camera_id INTEGER REFERENCES camera(id),
+            zone_id INTEGER REFERENCES zone(id),
+            key_frame_id INTEGER REFERENCES key_frame(id),
+            event_type TEXT NOT NULL,
+            person_global_id INTEGER,
+            track_id INTEGER,
+            started_at TIMESTAMP,
+            ended_at TIMESTAMP,
+            confidence DOUBLE PRECISION,
+            details JSONB,
+            created_at TIMESTAMP DEFAULT NOW()
+        )
+    """)
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_event_video ON event(video_id)")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_event_type_started ON event(event_type, started_at)")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_event_person ON event(person_global_id)")
+
 # --------------------- helpers DB ---------------------
 
 def _fetchone(cur, q, params=None):
