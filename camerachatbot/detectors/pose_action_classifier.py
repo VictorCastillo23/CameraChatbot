@@ -4,28 +4,19 @@ from camerachatbot.detectors.onnx_pose_classifier import PoseClsOnnxClassifier
 
 class PoseActionClassifier():
     def __init__(self, yolo, frames_folder=None, conf_threshold=0.60, class_map=None,
-                 imgsz=224, device=None, batch=16, res=None):
+                 imgsz=224, batch=16, res=None):
         self.model = yolo
         self.frames_folder = frames_folder
         self.confs = conf_threshold
         self.imgsz = imgsz
-        self.device = device
         self.batch = batch
         self.res = res  # opcional; si no, llama set_res() luego
         self._frames_map = None
 
-        # Fase 3b: `yolo` is a `PoseClsOnnxClassifier` when `bootstrap.py`
-        # loads `loaders_onnx` (today's default) — it owns its own ONNX
-        # Runtime session and has neither `.to()` nor `.fuse()`. It is an
-        # ultralytics `YOLO` object only on `loaders_torch` rollback.
-        # Branching on `isinstance` keeps bootstrap.py's "flip one import
-        # line" rollback promise true without also having to edit this file.
-        if not isinstance(self.model, PoseClsOnnxClassifier):
-            self.model.to(self.device)
-            try:
-                self.model.fuse()
-            except:
-                pass
+        # Fase 3c: `yolo` is always a `PoseClsOnnxClassifier` — the only
+        # loader module left is `loaders_onnx` (see `camerachatbot/runtime/
+        # bootstrap.py`), so it always owns its own ONNX Runtime session and
+        # needs neither `.to()` nor `.fuse()`.
 
         self.class_map = (class_map or {
             "sit": "sentado", "sitting": "sentado", "sentado": "sentado",
@@ -38,7 +29,6 @@ class PoseActionClassifier():
         return self.class_map.get(key, raw_label)
 
     def run_on_json(self, json_file: str, topk_per_frame: int = 6, min_area_ratio: float = 0.04) -> str:
-        import numpy as np
         with open(json_file, "r", encoding="utf-8") as f:
             data = json.load(f)
 
@@ -106,57 +96,14 @@ class PoseActionClassifier():
             print(f"[PoseCls] (sin crops) JSON guardado en {out_file}")
             return out_file
 
-        # Inferencia en batch. Camino ONNX (`loaders_onnx`, hoy por
-        # defecto): `PoseClsOnnxClassifier.predict()` ya devuelve
+        # Inferencia en batch. `PoseClsOnnxClassifier.predict()` ya devuelve
         # `(pred_idx, conf)` por crop — batching/precisión/softmax son su
-        # propia responsabilidad (ver onnx_pose_classifier.py). Camino
-        # legacy torch (`loaders_torch` rollback): reproduce exactamente el
-        # parsing de `.probs` de antes de Fase 3b.
-        imgsz = getattr(self, "imgsz", 224)
-        batch = getattr(self, "batch", 16)
+        # propia responsabilidad (ver onnx_pose_classifier.py). Fase 3c
+        # removed the legacy torch/ultralytics `.probs`-parsing path this
+        # replaced — see git history (pre-Fase-3c) if it's ever needed again.
         names = getattr(self, "names", None)
         conf_thr = float(getattr(self, "confs", 0.60))
-
-        if isinstance(self.model, PoseClsOnnxClassifier):
-            preds = self.model.predict(crops)
-        else:
-            import torch
-
-            use_half = torch.cuda.is_available()
-            with torch.inference_mode():
-                results = self.model(
-                    crops,
-                    imgsz=imgsz,
-                    batch=batch,
-                    half=use_half,
-                    verbose=False
-                )
-
-            if not isinstance(results, (list, tuple)):
-                results = list(results)
-
-            preds = []
-            for r in results:
-                probs_obj = getattr(r, "probs", None)
-                if probs_obj is None:
-                    preds.append((0, 0.0))
-                    continue
-                # extrae vector de scores de forma robusta
-                try:
-                    scores = probs_obj.data.detach().cpu().numpy()
-                except Exception:
-                    try:
-                        scores = np.asarray(probs_obj)
-                    except Exception:
-                        scores = None
-                if scores is None:
-                    preds.append((0, 0.0))
-                    continue
-                if scores.ndim > 1:
-                    scores = scores[0]
-                pred_idx = int(np.argmax(scores))
-                conf = float(scores[pred_idx])
-                preds.append((pred_idx, conf))
+        preds = self.model.predict(crops)
 
         # Escribe resultados de vuelta
         for (frame_id, i), (pred_idx, conf) in zip(backrefs, preds):

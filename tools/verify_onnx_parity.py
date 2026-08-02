@@ -1,5 +1,13 @@
 """GATE.1 — real-hardware ONNX parity verification. USER-RUN, not automated CI.
 
+**Fase 3c note**: `camerachatbot/runtime/loaders_torch.py` (this script's torch
+comparison side) was deleted once GATE.1 passed and Fase 3b was exercised on
+real data — see `sdd/security-pipeline-overhaul/gate1-signoff`. This script
+is kept for historical/audit reference (the exact parity methodology GATE.1
+was signed off against) but can no longer run: `main()`'s `loaders_torch`
+import at the bottom of this file will raise `ModuleNotFoundError`. Reviving
+it would require reverting to a pre-Fase-3c commit.
+
 Imports `camerachatbot.runtime.loaders_torch` and
 `camerachatbot.runtime.loaders_onnx` side by side and, for every image in
 `keyFrames/`, compares the torch/ultralytics stack against the ONNX
