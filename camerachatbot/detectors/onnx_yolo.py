@@ -12,8 +12,26 @@ Inert module: nothing under `camerachatbot/runtime/` imports this yet.
 `bootstrap.py` still loads the torch/ultralytics stack (see
 `camerachatbot/runtime/bootstrap.py::load_yolo_models()`). Wiring happens in
 Fase 3b, gated on the user running `tools/verify_onnx_parity.py` on real
-hardware with the real exported weights — nothing here has been numerically
-validated against the torch path in this sandbox.
+hardware with the real exported weights.
+
+**PR4b gate-review fix, real weights/images, not theoretical**: an earlier
+version of `__call__()` hardcoded `_letterbox(..., auto=False)` for every
+call — always padding to the full `imgsz`x`imgsz` square. Ultralytics'
+own predictor uses `auto=True` (minimum-rectangle canvas, no wasted square
+padding) whenever every image in a call shares one original shape, which
+`args.rect` defaults to allowing in predict mode — confirmed empirically,
+not assumed (see `__call__()`'s inline comment for the full trace). That
+mismatch was the entire root cause of `tools/verify_onnx_parity.py`'s
+reported detector conf-diff drift (up to 0.068 on matched boxes, 8
+unmatched boxes at 0.25-0.27 confidence across 7 of 14 real test images):
+feeding torch's own preprocessed tensor directly into this ONNX graph
+produced a bit-identical output (max diff 0.0000), proving it was a
+letterbox-canvas mismatch, not backend numeric precision. `__call__()` now
+computes `auto` per-call from whether every image in the batch shares one
+shape, matching Ultralytics' behavior exactly for the common case
+(`person_reid.py`'s real call site batches one camera/video's frames at a
+time, which share one resolution) while keeping the full-square fallback
+for genuinely mixed-shape batches (required for `np.concatenate`).
 """
 
 import ast
@@ -128,15 +146,50 @@ class YOLOOnnxDetector:
         single = not isinstance(imgs, (list, tuple))
         img_list = [imgs] if single else list(imgs)
 
+        # `auto` — replicates `ultralytics/engine/predictor.py::pre_transform()`'s
+        # own `same_shapes` gate exactly: **real, measured discovery, not a
+        # theoretical concern** — `tools/verify_onnx_parity.py`'s reported
+        # detector conf-diff drift (up to 0.068 on matched pairs, plus 8
+        # unmatched high-confidence boxes at 0.25-0.27) was root-caused to
+        # THIS module always forcing `auto=False` (full `imgsz`x`imgsz`
+        # square canvas), while Ultralytics' own predictor uses `auto=True`
+        # (minimum-rectangle canvas, padded only to the nearest `stride`
+        # multiple of the scaled dimension) whenever every image in the call
+        # shares the same original shape — confirmed empirically: `YOLO(...)
+        # .predict(...)`'s own `args.rect` defaults to `True` for predict
+        # mode (NOT the `False` the module docstring below previously
+        # assumed by reading only `ultralytics/cfg/default.yaml`'s
+        # train/val-section default, without checking the predict-mode
+        # runtime value), so `same_shapes and args.rect and format=="pt"`
+        # reduces to just `same_shapes` in practice. Feeding torch's own
+        # rectangular-canvas preprocessed tensor directly into this same
+        # ONNX graph (which exports with dynamic height/width — confirmed
+        # via `sess.get_inputs()[0].shape == ['batch', 3, 'height',
+        # 'width']`) produces a BIT-IDENTICAL `(1, 300, 6)` output to the
+        # torch forward pass (max conf diff 0.0000 across all boxes) —
+        # proof the drift was 100% a canvas-shape mismatch, not backend
+        # numeric precision. `person_reid.py::detect_and_embed()`'s real
+        # call site batches images read straight from one `frames_folder`
+        # (one camera/video per call), which in practice always share one
+        # resolution — exactly the `same_shapes=True` case this fixes.
+        #
+        # For a genuinely MIXED-shape batch (`same_shapes=False`), `auto`
+        # stays `False` (full square canvas) — this is NOT a regression,
+        # it is required: `np.concatenate(blobs, axis=0)` below needs every
+        # blob in the batch to share one canvas size, and only the full
+        # square canvas is shape-independent of the per-image aspect ratio.
+        same_shapes = len({img.shape for img in img_list}) == 1
+        auto = same_shapes
+
         blobs, ratios, pads, shapes = [], [], [], []
         for img in img_list:
-            lb_img, ratio, pad = self._letterbox(img, (self.imgsz, self.imgsz))
+            lb_img, ratio, pad = self._letterbox(img, (self.imgsz, self.imgsz), auto=auto)
             blobs.append(self._to_blob(lb_img))
             ratios.append(ratio)
             pads.append(pad)
             shapes.append(img.shape[:2])  # (H, W) of the ORIGINAL image
 
-        batch = np.concatenate(blobs, axis=0)  # (N, 3, imgsz, imgsz)
+        batch = np.concatenate(blobs, axis=0)  # (N, 3, canvas_h, canvas_w)
         raw = self.session.run([self.output_name], {self.input_name: batch})[0]
 
         return self._postprocess(raw, ratios, pads, shapes, conf, iou)
@@ -149,21 +202,39 @@ class YOLOOnnxDetector:
         asymmetric rounding Ultralytics uses so the two sides never differ
         by more than one pixel).
 
-        `auto=False` by default — this is NOT an oversight: Ultralytics'
-        own predictor (`ultralytics/engine/predictor.py::pre_transform`)
-        only sets `auto=True` when `self.model.format == "pt"` (or a
-        dynamic-shape non-imx backend); for every exported format,
-        including ONNX, it is hard-coded `False` (confirmed by reading the
-        installed `ultralytics==8.4.115` source). With `auto=False`, every
-        letterboxed image is padded to the FULL `new_shape` square
-        (typically a multiple of 32 already, e.g. 640), not just to the
-        nearest stride multiple of its own scaled size — this is what
-        makes `np.concatenate(blobs, axis=0)` in `__call__` valid across a
-        batch of differently-shaped/aspect-ratio source images. Using
-        `auto=True` here would produce a different padded canvas size per
-        image and silently break batching (or require per-image inference
-        calls), and would also not match the fixed spatial shape the
-        exported ONNX graph was traced/tested against.
+        `auto=False` is only the METHOD default (used directly if called
+        standalone) — `__call__` above always passes an explicit `auto=`
+        computed from whether every image in the current call shares one
+        original shape, mirroring `ultralytics/engine/predictor.py
+        ::pre_transform`'s own `same_shapes and self.args.rect and
+        (self.model.format == "pt" or ...)` gate.
+
+        **Correction (PR4b gate review, real weights)**: an earlier version
+        of this docstring claimed `auto=False` was ALWAYS correct because
+        "every exported format, including ONNX, is hard-coded auto=False"
+        in Ultralytics' predictor — that is true for the format check, but
+        incomplete: it silently assumed `self.args.rect` defaults to
+        `False` (true for `train`/`val` per `ultralytics/cfg/default.yaml`,
+        but NOT for `predict` mode — confirmed empirically: a freshly
+        loaded `YOLO(...).predict(img)` call has `predictor.args.rect ==
+        True`). So for the format this module actually mimics — a `.pt`
+        model doing a single-image or same-shape-batch predict call —
+        Ultralytics' real, measured `auto` value is `True`, not `False`.
+        Hard-coding `auto=False` unconditionally caused a real, measured
+        parity gap (`tools/verify_onnx_parity.py`: up to 0.068 conf diff on
+        matched boxes, 8 unmatched boxes at 0.25-0.27 confidence) — see
+        this module's top docstring for the full root-cause trace.
+
+        `auto=True` (`dw, dh` reduced modulo `stride` instead of padded to
+        the full square) DOES still require every image in the batch to
+        share the same original shape for `np.concatenate` to stay valid
+        (all of them then compute the identical padded canvas size) — that
+        is exactly the condition `__call__` checks before choosing `auto`.
+        For a genuinely mixed-shape batch, `auto=False` (full square,
+        shape-independent of aspect ratio) remains the only option that
+        keeps batching valid, and is not a parity gap in that case since
+        Ultralytics' own `same_shapes` gate would ALSO force `auto=False`
+        for the torch side under the same mixed-shape condition.
 
         Returns `(padded_img, ratio, (dw, dh))` — `ratio` is a single float
         (uniform scale, aspect ratio preserved) and `(dw, dh)` is the
