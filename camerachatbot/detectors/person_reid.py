@@ -4,9 +4,11 @@ from collections import defaultdict
 from sklearn.cluster import DBSCAN
 from PIL import Image
 from time import perf_counter as now
+
+from camerachatbot.geometry.bbox_utils import center, iou, clamp_bbox
 class YOLOPersonReID:
     def __init__(self,model: YOLO,frames_folder=None,output_folder=None,transform=None,
-                 reid_model=None,device=None,depth_model=None,depth_transform=None,save_deph=False):
+                 reid_model=None,device=None):
         self.model = model
         self.frames_folder=frames_folder
         self.output_folder = output_folder
@@ -15,15 +17,11 @@ class YOLOPersonReID:
         self.reid_transform = transform
         self.reid_model = reid_model.eval().to(device) if reid_model is not None else None
 
-        self.depth_model = depth_model.eval().to(device) if depth_model is not None else None
-        self.depth_transform = depth_transform
-
         self.device = device if device is not None else torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         self.person_class_id = 0
         self.embeddings = []
         self.metadata = []
-        self.save_deph = save_deph
         self.results_json = defaultdict(list)
 
     def extract_embedding(self, crop):
@@ -37,38 +35,6 @@ class YOLOPersonReID:
             feat = self.reid_model(ten).detach().cpu().numpy()[0]
         feat = feat / (np.linalg.norm(feat) + 1e-12)
         return feat.astype("float32")
-
-    def _compute_depth_map(self, img_rgb):
-        if self.depth_model is None or self.depth_transform is None:
-            return None, None
-
-        input_batch = self.depth_transform(img_rgb).to(self.device)
-        with torch.no_grad():
-            pred = self.depth_model(input_batch)
-
-        pred = torch.nn.functional.interpolate(
-            pred.unsqueeze(1),
-            size=img_rgb.shape[:2],
-            mode="bicubic",
-            align_corners=False,
-        ).squeeze()
-
-        depth_map = pred.detach().cpu().numpy().astype(np.float32)
-        depth_norm = cv2.normalize(depth_map, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
-        return depth_map, depth_norm
-
-    @staticmethod
-    def _depth_stats(roi):
-        if roi is None or roi.size == 0:
-            return None
-        roi_flat = roi[np.isfinite(roi)]
-        if roi_flat.size == 0:
-            return None
-        return {
-            "mean": float(np.mean(roi_flat)),
-            "median": float(np.median(roi_flat)),
-            "min": min(0.0,float(np.min(roi_flat)))
-        }
 
     def detect_and_embed(self,
                          conf=0.25,
@@ -148,27 +114,10 @@ class YOLOPersonReID:
                         print(f"[ERROR] YOLO single failed: {ee}")
                         yres_list.append(None)
 
-            # 4) Post-proceso por imagen: depth_map, depth_stats ROI, ReID y JSON en memoria
+            # 4) Post-proceso por imagen: ReID y JSON en memoria
             for (frame, fp), img_bgr, yres in zip(batch_frames, batch_imgs, yres_list):
                 if yres is None:
                     continue
-
-                # 4.1 depth_map por imagen (per-image MiDaS map, gated by
-                # save_deph — set from security_config.DETECTOR_FLAGS["depth"]
-                # at the pipeline_service call site). When False (default),
-                # depth_map stays None and the per-ROI depth_stats() below is
-                # skipped for every detection, avoiding wasted MiDaS compute —
-                # the only consumer of "depth" is debugging/annotate.py's
-                # manual debug overlay, not the production output path.
-                depth_map = None
-                if self.save_deph:
-                    try:
-                        t_dm0 = now()
-                        img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
-                        depth_map, _ = self._compute_depth_map(img_rgb)
-                        _acc("depth_map", now() - t_dm0)
-                    except Exception as e:
-                        print(f"[Depth] WARN ({frame}): {e}")
 
                 names = getattr(yres, "names", None) or getattr(self.model, "names", {}) or {}
                 boxes = getattr(yres, "boxes", None)
@@ -184,13 +133,9 @@ class YOLOPersonReID:
                 for b in boxes:
                     try:
                         cls_id = int(b.cls[0])
-                        x1, y1, x2, y2 = map(lambda v: int(round(float(v))), b.xyxy[0])
 
                         # clamp a la imagen
-                        x1 = max(0, min(W - 1, x1));
-                        x2 = max(0, min(W - 1, x2))
-                        y1 = max(0, min(H - 1, y1));
-                        y2 = max(0, min(H - 1, y2))
+                        x1, y1, x2, y2 = clamp_bbox(b.xyxy[0], W, H)
                         if x2 <= x1 or y2 <= y1:
                             continue
 
@@ -202,18 +147,6 @@ class YOLOPersonReID:
                         # stages (video schema, Postgres).
                         if class_name not in allowlist:
                             continue
-
-                        # 4.2 depth_stats por ROI (si hay depth_map)
-                        depth_info = None
-                        if depth_map is not None:
-                            roi = depth_map[y1:y2, x1:x2]
-                            if roi.size > 0:
-                                try:
-                                    t_ds0 = now()
-                                    depth_info = self._depth_stats(roi)
-                                    _acc("depth_stats_roi", now() - t_ds0)
-                                except Exception as e:
-                                    print(f"[Depth] WARN stats ({frame}): {e}")
 
                         if cls_id == self.person_class_id:
                             persons_frame += 1
@@ -243,8 +176,6 @@ class YOLOPersonReID:
                                 "track_id": None,
                                 "person_global_id": None
                             }
-                            if depth_info is not None:
-                                entry["depth"] = depth_info
                             if rid_assigned is not None:
                                 entry["_rid"] = rid_assigned
                                 entry["user_id"] = rid_assigned
@@ -258,8 +189,6 @@ class YOLOPersonReID:
                                 "bbox": [x1, y1, x2, y2],
                                 "confidence": confidence
                             }
-                            if depth_info is not None:
-                                entry["depth"] = depth_info
                             frame_list.append(entry)
 
                     except Exception as e:
@@ -292,7 +221,6 @@ class YOLOPersonReID:
             "scan_files",
             "read_images",
             "yolo_batch", "yolo_fallback",
-            "depth_map", "depth_stats_roi",
             "embedding",
             # "json_serialize_only",  # si lo activas
             "save_embeddings", "save_json",
@@ -608,21 +536,11 @@ class YOLOPersonReID:
         return out_json
 
     def build_neighborhood(self, min_iou=0.01, near_thresh=0.15, out_path=None, video_id="session_001"):
+        # center()/iou() come from geometry.bbox_utils (module-level import) —
+        # spatial() stays a local closure because it captures near_thresh and
+        # is neighborhood-specific, not general-purpose bbox math.
         relations = []
         rid = 1
-
-        def center(b):
-            x1, y1, x2, y2 = b
-            return (0.5 * (x1 + x2), 0.5 * (y1 + y2))
-
-        def iou(b1, b2):
-            xA, yA = max(b1[0], b2[0]), max(b1[1], b2[1])
-            xB, yB = min(b1[2], b2[2]), min(b1[3], b2[3])
-            inter = max(0, xB - xA) * max(0, yB - yA)
-            if inter <= 0: return 0.0
-            a1 = (b1[2] - b1[0]) * (b1[3] - b1[1])
-            a2 = (b2[2] - b2[0]) * (b2[3] - b2[1])
-            return inter / (a1 + a2 - inter + 1e-12)
 
         def spatial(b_ref, b_other):
             (cx1, cy1), (cx2, cy2) = center(b_ref), center(b_other)
