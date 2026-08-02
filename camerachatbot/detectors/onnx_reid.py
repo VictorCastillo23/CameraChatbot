@@ -57,9 +57,28 @@ class OSNetOnnxEmbedder:
         self._out_dim = int(last_dim) if isinstance(last_dim, int) else _DEFAULT_OUT_DIM
 
     def _preprocess(self, crop_bgr):
-        """BGR -> RGB -> resize (bilinear) -> /255 -> ImageNet normalize -> NCHW."""
+        """BGR -> RGB -> resize -> /255 -> ImageNet normalize -> NCHW.
+
+        `torchreid.data.transforms.build_transforms`'s `Resize` operates on
+        a PIL `Image`, which antialiases on downsample same as
+        `onnx_pose_classifier.py::PoseClsOnnxClassifier._preprocess()`'s
+        `classify_transforms` counterpart (see that module's docstring
+        hazard #1 for the measured divergence). Plain `cv2.INTER_LINEAR`
+        diverges from that on aggressive downscale — confirmed directly via
+        `tools/verify_onnx_parity.py` against real weights/crops: cosine
+        similarity dropped to ~0.96 on large person crops needing
+        significant downsampling to the fixed `(128, 256)` embedding input,
+        while smaller/less-downsampled crops in the same image scored
+        0.9995+. Same fix as the pose classifier: `cv2.INTER_AREA` when
+        either target dimension is smaller than the source (downscaling),
+        `cv2.INTER_LINEAR` otherwise (upscaling, or equal size).
+        """
         rgb = cv2.cvtColor(crop_bgr, cv2.COLOR_BGR2RGB)
-        resized = cv2.resize(rgb, self.size, interpolation=cv2.INTER_LINEAR)
+        h, w = rgb.shape[:2]
+        target_w, target_h = self.size
+        is_downscale = target_w < w or target_h < h
+        interp = cv2.INTER_AREA if is_downscale else cv2.INTER_LINEAR
+        resized = cv2.resize(rgb, self.size, interpolation=interp)
         arr = resized.astype(np.float32) / 255.0
         arr = (arr - _IMAGENET_MEAN) / _IMAGENET_STD
         arr = np.transpose(arr, (2, 0, 1))  # HWC -> CHW
