@@ -269,6 +269,18 @@ def _fmt_stats(values):
     return f"min={min(values):.4f} mean={sum(values) / len(values):.4f}"
 
 
+def _fmt_stats_max(values):
+    """Same as `_fmt_stats()` but also reports `max` — aggregate min/mean alone
+    can hide a single large outlier (e.g. one 0.068 conf_diff buried in a
+    mean of 0.008 across dozens of matched pairs). Kept as a separate helper
+    rather than changing `_fmt_stats()`'s output shape everywhere, since not
+    every caller wants max (e.g. IoU's max is always uninteresting — 1.0-ish).
+    """
+    if not values:
+        return "n/a"
+    return f"min={min(values):.4f} mean={sum(values) / len(values):.4f} max={max(values):.4f}"
+
+
 def print_report(per_image_rows):
     print("\n=== tools/verify_onnx_parity.py — per-image report ===")
     for name, det_row, extra_row in per_image_rows:
@@ -278,16 +290,22 @@ def print_report(per_image_rows):
             f"  detector: torch={det_row['n_torch']} onnx={det_row['n_onnx']} "
             f"matched={det_row['n_matched']} "
             f"IoU[{_fmt_stats(det_row['iou_values'])}] "
-            f"conf_diff[{_fmt_stats(det_row['conf_diffs'])}] "
+            f"conf_diff[{_fmt_stats_max(det_row['conf_diffs'])}] "
             f"cls_mismatches={len(det_row['cls_mismatches'])} "
             f"unmatched_high_conf={len(det_row['unmatched_high_conf'])}"
         )
+        # SUGGESTION from PR4b's gate review: a bare unmatched-box COUNT let a
+        # prior batch's own narrative undercount this — print the actual
+        # side/index/confidence of every unmatched high-confidence box so a
+        # future run's summary can't repeat that mistake.
+        for side, idx, conf in det_row["unmatched_high_conf"]:
+            print(f"    unmatched high-conf box: side={side} idx={idx} conf={conf:.4f}")
         print(
             f"  reid: n_crops={extra_row['n_person_crops']} "
             f"cosine[{_fmt_stats(extra_row['reid_cosines'])}]"
         )
         print(
-            f"  posecls: prob_diff[{_fmt_stats(extra_row['posecls_prob_diffs'])}] "
+            f"  posecls: prob_diff[{_fmt_stats_max(extra_row['posecls_prob_diffs'])}] "
             f"cls_mismatches={extra_row['posecls_cls_mismatches']}"
         )
 
@@ -295,12 +313,24 @@ def print_report(per_image_rows):
     all_conf_diff = [v for _, d, _ in per_image_rows for v in d["conf_diffs"]]
     all_cosine = [v for _, _, e in per_image_rows for v in e["reid_cosines"]]
     all_prob_diff = [v for _, _, e in per_image_rows for v in e["posecls_prob_diffs"]]
+    all_unmatched_high_conf = [
+        (name, side, idx, conf)
+        for name, d, _ in per_image_rows
+        for side, idx, conf in d["unmatched_high_conf"]
+    ]
 
     print("\n=== aggregate ===")
     print(f"detector IoU:        {_fmt_stats(all_iou)}")
-    print(f"detector conf diff:  {_fmt_stats(all_conf_diff)}")
+    print(f"detector conf diff:  {_fmt_stats_max(all_conf_diff)}")
     print(f"reid cosine:         {_fmt_stats(all_cosine)}")
-    print(f"posecls prob diff:   {_fmt_stats(all_prob_diff)}")
+    print(f"posecls prob diff:   {_fmt_stats_max(all_prob_diff)}")
+    print(
+        f"unmatched high-conf boxes: {len(all_unmatched_high_conf)} total "
+        f"across {len({name for name, *_ in all_unmatched_high_conf})} image(s)"
+    )
+    if all_unmatched_high_conf:
+        confs = [c for *_, c in all_unmatched_high_conf]
+        print(f"  confidence range: min={min(confs):.4f} max={max(confs):.4f}")
 
 
 # ---------------------------------------------------------------------------
