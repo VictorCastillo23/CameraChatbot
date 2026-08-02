@@ -1,0 +1,33 @@
+# Dev-only dependencies for `tools/export_to_onnx.py`. Only for offline
+# export — never install this file in the runtime environment.
+#
+# Fase 3 (security-pipeline-overhaul) is replacing the torch/ultralytics/
+# torchreid runtime stack with ONNX Runtime wrappers
+# (camerachatbot/detectors/onnx_yolo.py, onnx_reid.py). This file exists so
+# the ONNX export step still has somewhere to pin the torch-side tooling
+# once Fase 3c removes torch/ultralytics/torchreid/scikit-learn from
+# requirements.txt — export then happens in a separate, throwaway
+# environment built from THIS file, not the runtime one.
+#
+# Pins mirror requirements.txt exactly as of the same date that file's pins
+# were verified (2026-08-01) — keep them in sync if requirements.txt's
+# torch/ultralytics/torchreid pins ever move.
+#
+# Install order matches requirements.txt's own instruction (CUDA 11.8 index
+# first, then the rest):
+#   pip install torch==2.7.1+cu118 torchvision==0.22.1+cu118 --index-url https://download.pytorch.org/whl/cu118
+#   pip install -r requirements-export.txt
+torch==2.7.1+cu118
+torchvision==0.22.1+cu118
+
+ultralytics==8.4.115
+torchreid==0.2.5
+
+# Required by `ultralytics`'s `model.export(format="onnx")` path and by
+# `tools/export_to_onnx.py::_ensure_names_metadata()` (reads/writes
+# `metadata_props` directly via `onnx.load`/`onnx.save`). Not pinned to an
+# exact version here — this sandbox has no `onnx` package installed to
+# verify a specific release against onnxruntime==1.23.2 (the runtime pin in
+# requirements.txt); confirm compatibility when actually running the export
+# in a real environment.
+onnx>=1.16,<1.18
