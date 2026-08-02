@@ -1,6 +1,7 @@
 import os,time
 
-from camerachatbot.security_config import IDENTITY_THRESHOLDS, COCO_ALLOWLIST
+from camerachatbot.security_config import IDENTITY_THRESHOLDS, COCO_ALLOWLIST, SECURITY_RULES
+from camerachatbot.security.tracker import assign_track_ids
 
 def multi_models(
     yoloPersonReID, detail_detectors, keyframes_path, gallery, eps=0.5, min_samples=4,
@@ -33,12 +34,23 @@ def multi_models(
 
     start_post_process = time.time()
 
-    labels = tracker.cluster_locally(eps=eps, min_samples=min_samples)
+    # Fase 4a: label_source is the rollback switch between the pre-Fase-4
+    # cosine-clustering label source and the new continuous tracker. Default
+    # stays "cluster" — this PR adds the CAPABILITY, it does not flip the
+    # default. When "tracker" is active, cluster_locally()'s O(N^2)
+    # similarity pass is skipped entirely.
+    label_source = SECURITY_RULES["label_source"]
+    print(f"[INFO] label_source={label_source}")
+
+    if label_source == "tracker":
+        labels = assign_track_ids(tracker, SECURITY_RULES["tracker"])
+    else:
+        labels = tracker.cluster_locally(eps=eps, min_samples=min_samples)
 
     try:
         n_items = len(labels) if labels is not None else 0
-        n_clusters = len({l for l in labels if l != -1}) if labels is not None else 0
-        print(f"[STAGE POST] Items clusterizados: {n_items}, clusters (sin ruido): {n_clusters}")
+        n_labels = len({l for l in labels if l != -1}) if labels is not None else 0
+        print(f"[STAGE POST] label_source={label_source}, items etiquetados: {n_items}, labels distintos (sin ruido): {n_labels}")
     except Exception as _:
         pass
 
