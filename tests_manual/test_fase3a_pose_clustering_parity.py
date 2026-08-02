@@ -174,15 +174,10 @@ def test_preprocess_matches_real_classify_transforms():
         crop_bgr = rng.integers(0, 256, size=(h, w, 3), dtype=np.uint8)
         # Real person crops have spatially-correlated pixel content
         # (photos), unlike literal i.i.d. random noise. A mild Gaussian
-        # blur approximates that correlation cheaply. This matters
-        # specifically for the large (500, 500) shape below: measured
-        # directly, resizing PURE i.i.d. noise down by >2x diverges sharply
-        # between `cv2.INTER_AREA` and torchvision's antialiased kernel
-        # (~0.19 max pixel diff) simply because different low-pass filters
-        # treat literal white noise very differently — an artifact of the
-        # unrealistic test content, not a preprocessing bug (confirmed by
-        # re-measuring with correlated content below, which drops back to
-        # ~0.01, consistent with every other shape here).
+        # blur approximates that correlation cheaply — kept for realistic
+        # test content even though `_preprocess()` now replicates
+        # `PIL.Image.resize(size, Image.BILINEAR)` exactly (see below), so
+        # the resize itself no longer diverges on any input, blurred or not.
         crop_bgr = cv2.GaussianBlur(crop_bgr, (9, 9), 3)
         rgb = cv2.cvtColor(crop_bgr, cv2.COLOR_BGR2RGB)
 
@@ -192,12 +187,19 @@ def test_preprocess_matches_real_classify_transforms():
         assert ref.shape == mine.shape, f"shape mismatch for {(h, w)}: {ref.shape} vs {mine.shape}"
 
         diff = np.abs(ref - mine)
-        # cv2.INTER_LINEAR vs torchvision's antialiased bilinear kernel: measured
-        # divergence in practice is ~0.004 max / ~0.001 mean (checked directly
-        # against this exact installed torchvision==0.28.0+cpu before setting
-        # these thresholds) — NOT an assumed "close enough" tolerance.
-        assert diff.max() < 0.05, f"max pixel diff too high for {(h, w)}: {diff.max()}"
-        assert diff.mean() < 0.01, f"mean pixel diff too high for {(h, w)}: {diff.mean()}"
+        # `_preprocess()` resizes via `PIL.Image.resize(size, Image.BILINEAR)`
+        # directly, matching Ultralytics' real preprocessing exactly:
+        # `ClassificationPredictor.preprocess()` wraps each crop in a
+        # `PIL.Image` before `classify_transforms()` runs, and torchvision's
+        # `Resize` dispatches PIL inputs to `img.resize(size, BILINEAR)` —
+        # Pillow's own C resize, not torchvision's tensor-path kernel. This
+        # produces a bit-for-bit 0.0 diff against the real reference
+        # transform (confirmed on real keyFrames images via
+        # `tools/verify_onnx_parity.py`: posecls prob_diff min=mean=max=0.0000
+        # on all 14 images). The tolerance below is only for float32
+        # numerical noise, not an approximation gap.
+        assert diff.max() < 1e-5, f"max pixel diff too high for {(h, w)}: {diff.max()}"
+        assert diff.mean() < 1e-5, f"mean pixel diff too high for {(h, w)}: {diff.mean()}"
 
 
 # ---------------------------------------------------------------------------
