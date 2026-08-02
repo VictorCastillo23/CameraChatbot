@@ -70,8 +70,23 @@ class OSNetOnnxEmbedder:
         norm = np.linalg.norm(x, axis=axis, keepdims=True)
         return (x / (norm + eps)).astype(np.float32)
 
+    @staticmethod
+    def is_valid_embedding(vec: np.ndarray, eps: float = 1e-9) -> bool:
+        """`True` unless `vec` is the all-zero sentinel `embed()`/`embed_one()`
+        use for an invalid input crop (norm 0, NOT unit-norm — see those
+        methods' docstrings). Cheap helper for callers doing cosine
+        similarity: `np.dot(a, b)` against a zero-norm row is always `0.0`,
+        which silently looks like "no match" rather than "no data" unless
+        checked explicitly.
+        """
+        return bool(np.linalg.norm(vec) > eps)
+
     def embed_one(self, crop: np.ndarray):
-        """Embed a single BGR crop. Returns `(512,)` float32, L2-normalized, or `None`."""
+        """Embed a single BGR crop. Returns `(512,)` float32, L2-normalized, or `None`.
+
+        `None` is the invalid-crop signal here (caller must check for it
+        before doing anything downstream, e.g. cosine similarity).
+        """
         if crop is None or crop.size == 0:
             return None
         blob = self._preprocess(crop)
@@ -82,14 +97,22 @@ class OSNetOnnxEmbedder:
     def embed(self, crops: list) -> np.ndarray:
         """Embed a list of BGR crops in mini-batches of `self.batch`.
 
-        Returns `(len(crops), 512)` float32, L2-normalized. Row order
-        matches `crops` order — invalid entries (`None` or zero-size) are
-        skipped from ONNX inference but still occupy their row as an
-        all-zero vector, so callers that assume `embeddings[i]` corresponds
-        to `crops[i]` (positional correspondence) are never silently
-        desynced by a dropped crop. This mirrors `embed_one()`'s `None`
-        signal for a single invalid crop, without collapsing the batch
-        shape.
+        Returns `(len(crops), 512)` float32. Rows are L2-normalized (unit
+        norm) EXCEPT rows corresponding to an invalid input crop (`None` or
+        zero-size), which are a literal all-zero vector (norm 0, not
+        unit-norm) — invalid entries are skipped from ONNX inference but
+        still occupy their row, so callers that assume `embeddings[i]`
+        corresponds to `crops[i]` (positional correspondence) are never
+        silently desynced by a dropped crop. This mirrors `embed_one()`'s
+        `None` signal for a single invalid crop, without collapsing the
+        batch shape.
+
+        Callers doing cosine similarity (`np.dot`) MUST treat zero-norm rows
+        as "no match" rather than compute a cosine against them — a raw dot
+        product against an all-zero row is always `0.0`, which looks
+        identical to "compared but dissimilar" unless checked. Use
+        `OSNetOnnxEmbedder.is_valid_embedding(row)` (or `np.linalg.norm(row)
+        > 0`) to distinguish the two cases.
         """
         n = len(crops)
         embeddings = np.zeros((n, self._out_dim), dtype=np.float32)

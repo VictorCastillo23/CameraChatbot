@@ -81,7 +81,9 @@ class YOLOOnnxDetector:
     - v8-style (`(N, 4 + nc, num_anchors)`, e.g. `(N, 84, 8400)` for 80 COCO
       classes): box params come first, need transpose to
       `(num_anchors, 4 + nc)`, per-anchor class-confidence argmax, and
-      `cv2.dnn.NMSBoxes`.
+      per-class `cv2.dnn.NMSBoxesBatched` (Ultralytics' default is per-class
+      NMS, `agnostic_nms=False` — boxes of different classes must not
+      suppress each other).
     """
 
     def __init__(self, onnx_path, providers=None, imgsz=640, conf=0.25, iou=0.45, names=None):
@@ -235,9 +237,20 @@ class YOLOOnnxDetector:
         # floods detections instead of raising.
         nms_free = raw.ndim == 3 and raw.shape[-1] == 6
 
+        if raw.shape[0] != n:
+            raise RuntimeError(
+                f"YOLOOnnxDetector: ONNX session output batch dimension "
+                f"({raw.shape[0]}) does not match the number of input images "
+                f"({n}). Silently reusing image-0's detections for every "
+                f"image would duplicate/misattribute results across the "
+                f"batch instead of failing loudly — check the exported "
+                f"model's dynamic-batch axis and the output layout branch "
+                f"(nms_free={nms_free}, raw.shape={raw.shape})."
+            )
+
         results = []
         for i in range(n):
-            per_image = raw[i] if raw.shape[0] == n else raw[0]
+            per_image = raw[i]
             orig_h, orig_w = shapes[i]
             ratio_i, pad_i = ratios[i], pads[i]
 
@@ -269,11 +282,20 @@ class YOLOOnnxDetector:
                 boxes_xyxy = self._xywh_to_xyxy(box_xywh)
 
                 if len(boxes_xyxy) > 0:
+                    # Per-class NMS: `cv2.dnn.NMSBoxesBatched` suppresses only
+                    # within the same `class_ids` group, matching Ultralytics'
+                    # own default (`agnostic_nms=False` — boxes of different
+                    # classes must never suppress each other, e.g. an
+                    # overlapping "person" and "backpack" box are both kept).
+                    # A plain `cv2.dnn.NMSBoxes` call here would be
+                    # class-agnostic and wrongly drop one of them.
                     nms_input = [
                         [float(x1), float(y1), float(x2 - x1), float(y2 - y1)]
                         for x1, y1, x2, y2 in boxes_xyxy
                     ]
-                    kept_idx = cv2.dnn.NMSBoxes(nms_input, scores.tolist(), conf, iou)
+                    kept_idx = cv2.dnn.NMSBoxesBatched(
+                        nms_input, scores.tolist(), cls_ids_f.astype(np.int32).tolist(), conf, iou
+                    )
                     kept_idx = np.array(kept_idx).reshape(-1) if len(kept_idx) else np.empty(0, dtype=int)
                     boxes_xyxy = boxes_xyxy[kept_idx]
                     scores = scores[kept_idx]
