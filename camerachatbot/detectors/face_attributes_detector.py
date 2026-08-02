@@ -109,6 +109,7 @@ class FaceAttributesDetector:
         age_colorspace: str = "RGB",
         face_expand: float = 1.8,
         min_face_size: int = 48,
+        face_attention_enabled: bool = True,
     ):
         self.frames_folder = frames_folder
         self.emotion_input, self.emotion_output = emotion_input, emotion_output
@@ -119,6 +120,21 @@ class FaceAttributesDetector:
         self.age_mean, self.age_std = age_mean, age_std
         self.emotion_colorspace, self.age_colorspace = emotion_colorspace, age_colorspace
         self.face_expand, self.min_face_size = float(face_expand), int(min_face_size)
+        self.face_attention_enabled = bool(face_attention_enabled)
+
+        # `face` bbox (the localization this detector's crop depends on) is written
+        # by FaceDetector, gated by DETECTOR_FLAGS["face_attention"]. If emotion/age
+        # is enabled but face_attention is not, every entry falls through the
+        # "no bbox" branch in run_on_json() and silently emits
+        # {label: None, confidence: 0.0} for every person, with no visible signal
+        # that this happened. Warn once at construction instead of staying silent.
+        if (self.emotion_sess is not None or self.age_sess is not None) and not self.face_attention_enabled:
+            print(
+                "[WARN] FaceAttributesDetector: emotion/age está habilitado pero "
+                "DETECTOR_FLAGS['face_attention'] es False — no habrá bbox de cara "
+                "disponible y emotion/age quedarán en label=None/confidence=0.0 "
+                "para todas las personas."
+            )
 
     def predict_emotion(self, face_bgr: np.ndarray) -> Dict[str, Any]:
         if self.emotion_sess is None:

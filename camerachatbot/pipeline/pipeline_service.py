@@ -3,6 +3,7 @@ import time
 import json
 
 from camerachatbot import paths
+from camerachatbot.security_config import DETECTOR_FLAGS
 from camerachatbot.pipeline import orchestrator
 from camerachatbot.detectors.pose_action_classifier import PoseActionClassifier
 from camerachatbot.detectors.face_detector import FaceDetector
@@ -27,33 +28,42 @@ def _safe_div(n, d):
 
 
 def build_detail_detectors(runtime, frames_folder):
-    emotion_sess = runtime["emotion"]["sess"]
-    emotion_input = runtime["emotion"]["input"]
-    emotion_output = runtime["emotion"]["output"]
+    """Build the detail-detector pipeline, gated by `security_config.DETECTOR_FLAGS`.
 
-    age_sess = runtime["age"]["sess"]
-    age_input = runtime["age"]["input"]
-    age_output = runtime["age"]["output"]
+    Emotion and age share a single ONNX-backed detector (`FaceAttributesDetector`)
+    and a single loader in `bootstrap.load_face_attr_sessions()`, so that detector
+    is included when either flag is True (matching the bootstrap gating decision),
+    not only when both are True.
+    """
+    detectors = []
 
-    return [
-        PoseActionClassifier(
+    if DETECTOR_FLAGS["pose"]:
+        detectors.append(PoseActionClassifier(
             yolo=runtime["yolo_posecls"],
             frames_folder=frames_folder,
             class_map={"sentado": "sentado", "parado": "de pie", "standing": "de pie", "sitting": "sentado"},
             conf_threshold=0.60
-        ),
-        FaceDetector(frames_folder=frames_folder),
-        HandDetector(frames_folder=frames_folder),
-        FaceAttributesDetector(
-            emotion_input=emotion_input,
-            emotion_output=emotion_output,
-            age_input=age_input,
-            age_output=age_output,
+        ))
+
+    if DETECTOR_FLAGS["face_attention"]:
+        detectors.append(FaceDetector(frames_folder=frames_folder))
+
+    if DETECTOR_FLAGS["hands"]:
+        detectors.append(HandDetector(frames_folder=frames_folder))
+
+    if DETECTOR_FLAGS["emotion"] or DETECTOR_FLAGS["age"]:
+        detectors.append(FaceAttributesDetector(
+            emotion_input=runtime["emotion"]["input"],
+            emotion_output=runtime["emotion"]["output"],
+            age_input=runtime["age"]["input"],
+            age_output=runtime["age"]["output"],
             frames_folder=frames_folder,
-            age_sess=age_sess,
-            emotion_sess=emotion_sess,
-        ),
-    ]
+            age_sess=runtime["age"]["sess"],
+            emotion_sess=runtime["emotion"]["sess"],
+            face_attention_enabled=DETECTOR_FLAGS["face_attention"],
+        ))
+
+    return detectors
 
 
 def run_pipeline_and_persist(*, runtime, gallery, frames_folder, n_keyframes, size_xy, start_at,

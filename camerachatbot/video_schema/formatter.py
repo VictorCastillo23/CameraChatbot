@@ -90,14 +90,6 @@ def reformat_to_video_schema_uniform(
             ))
         return _md_object("hands", "hands", children)
 
-    def _build_depth_metadata(depth: dict) -> dict:
-        children = []
-        if isinstance(depth, dict):
-            if "mean" in depth:   children.append(_md_scalar("mean",   "mean",   "float", depth.get("mean")))
-            if "median" in depth: children.append(_md_scalar("median", "median", "float", depth.get("median")))
-            if "min" in depth:    children.append(_md_scalar("min",    "min",    "float", depth.get("min")))
-        return _md_object("depth", "depth", children)
-
     def _entry_to_object(e: dict) -> dict:
         cls = e.get("class_name", "object")
         conf = e.get("confidence")
@@ -124,7 +116,6 @@ def reformat_to_video_schema_uniform(
             if "pose_conf" in attrs: obj["metadata"].append(_md_scalar("pose_conf","pose_conf","float",attrs.get("pose_conf")))
             obj["metadata"].append(_build_hands_metadata(attrs.get("hands")))
             obj["metadata"].append(_build_face_metadata(attrs.get("face")))
-        obj["metadata"].append(_build_depth_metadata(e.get("depth")))
         return obj
 
     with open(src_json_path, "r", encoding="utf-8") as f:
