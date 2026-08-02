@@ -112,6 +112,85 @@ class _ConstOutputModule(torch.nn.Module):
         return self.fixed_output.unsqueeze(0).expand(b, *self.fixed_output.shape)
 
 
+class _FixedBatchOutputModule(torch.nn.Module):
+    """Always returns a batch-size-1 output, ignoring the actual input batch
+    size — used to simulate an ONNX session whose output batch dimension
+    disagrees with the number of input images, so `__call__` can be tested
+    against that mismatch (Finding 1: must raise loudly, never silently
+    reuse image-0's detections for every image via a `raw[0]` fallback).
+    """
+
+    def __init__(self, fixed_output: torch.Tensor):
+        super().__init__()
+        self.register_buffer("fixed_output", fixed_output)
+
+    def forward(self, x):
+        # `+ 0.0 * x.sum()` keeps `x` referenced in the traced graph (a
+        # `forward` that never touches `x` at all gets its input pruned
+        # entirely by `torch.onnx.export`, leaving a graph with ZERO
+        # declared inputs instead of the batch-size-mismatch scenario this
+        # module exists to simulate) without affecting the actual output
+        # value or its batch size.
+        return self.fixed_output.unsqueeze(0) + 0.0 * x.sum()
+
+
+def _export_fixed_batch_model(fixed_output, input_shape, tmpdir, name):
+    module = _FixedBatchOutputModule(fixed_output)
+    module.eval()
+    dummy = torch.zeros(*input_shape, dtype=torch.float32)
+    path = os.path.join(tmpdir, name)
+    torch.onnx.export(
+        module, dummy, path,
+        input_names=["images"], output_names=["output"],
+        # Only the INPUT batch axis is dynamic — the output is intentionally
+        # NOT marked dynamic on its batch axis, so a >1-image call still
+        # gets back a (1, ...) raw output: the mismatch under test.
+        dynamic_axes={"images": {0: "batch"}},
+        opset_version=17,
+        dynamo=False,
+    )
+    return path
+
+
+class _PerBatchIndexDetModule(torch.nn.Module):
+    """Encodes each input's position in the batch into its own detection box
+    coordinates (via `torch.arange(b)`, independent of pixel content), so
+    the raw per-image output genuinely differs across a real multi-image
+    batch. Lets a test verify `__call__` attributes `result[i]` to input
+    image `i` — not a duplicate/swap of another image's detections, and not
+    a copy of a shared/incorrectly-indexed raw row — for images of
+    DIFFERENT original sizes in one real batched inference call (the exact
+    scenario `auto=False` letterboxing exists for).
+    """
+
+    def forward(self, x):
+        b = x.shape[0]
+        idx = torch.arange(b, dtype=torch.float32)
+        det = torch.zeros(b, 300, 6, dtype=torch.float32)
+        det[:, 0, 0] = idx * 10.0        # x1, letterbox-space
+        det[:, 0, 1] = idx * 10.0        # y1
+        det[:, 0, 2] = idx * 10.0 + 5.0  # x2
+        det[:, 0, 3] = idx * 10.0 + 5.0  # y2
+        det[:, 0, 4] = 0.9               # conf
+        det[:, 0, 5] = 0.0               # cls
+        return det
+
+
+def _export_per_batch_index_model(input_shape, tmpdir, name):
+    module = _PerBatchIndexDetModule()
+    module.eval()
+    dummy = torch.zeros(*input_shape, dtype=torch.float32)
+    path = os.path.join(tmpdir, name)
+    torch.onnx.export(
+        module, dummy, path,
+        input_names=["images"], output_names=["output"],
+        dynamic_axes={"images": {0: "batch"}, "output": {0: "batch"}},
+        opset_version=17,
+        dynamo=False,
+    )
+    return path
+
+
 def _export_const_model(fixed_output, input_shape, tmpdir, name):
     module = _ConstOutputModule(fixed_output)
     module.eval()
@@ -251,6 +330,119 @@ def test_call_v8_style_branch_with_real_nms_suppression():
         # the surviving class-0 box must be the higher-confidence anchor 0.9, not 0.6
         person_box = next(b for b in boxes if int(b.cls[0]) == 0)
         assert abs(float(person_box.conf[0]) - 0.9) < 1e-4
+
+
+def test_call_v8_style_branch_cross_class_high_overlap_not_suppressed():
+    """Finding 2: NMS in the v8-style branch must be per-class. Two heavily
+    OVERLAPPING boxes of DIFFERENT classes must both survive — a
+    class-agnostic `cv2.dnn.NMSBoxes` call would wrongly suppress the
+    lower-confidence one just because it spatially overlaps the
+    higher-confidence box, even though they're different classes.
+    """
+    with tempfile.TemporaryDirectory() as tmp:
+        imgsz = 64
+        nc = 2
+        num_anchors = 2
+        raw = torch.zeros(4 + nc, num_anchors, dtype=torch.float32)
+        # anchor 0: class 0, box xyxy ~ (20,20)-(40,40), conf 0.9
+        raw[:, 0] = torch.tensor([30.0, 30.0, 20.0, 20.0, 0.9, 0.05])
+        # anchor 1: class 1, box xyxy ~ (21,21)-(41,41) -- HEAVILY overlapping
+        # anchor 0 (IoU well above the 0.45 threshold), lower conf 0.8
+        raw[:, 1] = torch.tensor([31.0, 31.0, 20.0, 20.0, 0.05, 0.8])
+        path = _export_const_model(raw, (1, 3, imgsz, imgsz), tmp, "v8_cross_class.onnx")
+
+        det = YOLOOnnxDetector(path, imgsz=imgsz, conf=0.25, iou=0.45,
+                                names={0: "person", 1: "backpack"})
+        img = np.zeros((64, 64, 3), dtype=np.uint8)
+        out = det([img])
+
+        boxes = out[0].boxes
+        cls_ids = sorted(int(b.cls[0]) for b in boxes)
+        assert cls_ids == [0, 1], (
+            "class-agnostic NMS would wrongly suppress one of these "
+            f"heavily-overlapping different-class boxes; got cls_ids={cls_ids}"
+        )
+
+
+def test_call_batch_size_mismatch_raises():
+    """Finding 1: a mismatch between the ONNX session's actual output batch
+    dimension and the number of input images must raise loudly (never
+    silently fall back to reusing image-0's detections for every image).
+    """
+    with tempfile.TemporaryDirectory() as tmp:
+        imgsz = 64
+        dets = torch.zeros(300, 6, dtype=torch.float32)
+        dets[0] = torch.tensor([10.0, 10.0, 40.0, 40.0, 0.9, 0.0])
+        path = _export_fixed_batch_model(dets, (1, 3, imgsz, imgsz), tmp, "fixed_batch.onnx")
+
+        det = YOLOOnnxDetector(path, imgsz=imgsz, conf=0.5, names={0: "person"})
+        img1 = np.zeros((64, 64, 3), dtype=np.uint8)
+        img2 = np.zeros((80, 60, 3), dtype=np.uint8)
+
+        raised = False
+        try:
+            det([img1, img2])  # session always returns batch=1, we sent 2 images
+        except RuntimeError as e:
+            raised = True
+            msg = str(e).lower()
+            assert "batch" in msg, f"error message should mention batch size, got: {e}"
+        assert raised, "expected RuntimeError on batch-size mismatch, no exception was raised"
+
+
+def test_call_multi_image_batch_different_sizes_correctly_attributed():
+    """Real multi-image batch (`len(imgs) > 1`) of DIFFERENT original sizes
+    in a single `__call__` — the exact scenario `auto=False` letterboxing
+    was chosen for (so every image in the batch letterboxes to the same
+    canvas size and `np.concatenate` is valid). Verifies per-image results
+    are correctly attributed to their own input image (not duplicated or
+    swapped) by encoding each image's batch position into its own raw
+    detection box, independent of pixel content.
+    """
+    with tempfile.TemporaryDirectory() as tmp:
+        imgsz = 128
+        path = _export_per_batch_index_model((1, 3, imgsz, imgsz), tmp, "per_batch_idx.onnx")
+
+        det = YOLOOnnxDetector(path, imgsz=imgsz, conf=0.5, names={0: "person"})
+
+        # Two DIFFERENT original sizes -> different letterbox ratio/pad per image.
+        img0 = np.zeros((80, 60, 3), dtype=np.uint8)   # portrait
+        img1 = np.zeros((50, 120, 3), dtype=np.uint8)  # landscape
+        imgs = [img0, img1]
+
+        out = det(imgs)
+        assert len(out) == 2
+
+        # Recompute each image's OWN ratio/pad independently (mirrors what
+        # __call__ does internally) to predict the expected un-letterboxed
+        # box for that specific batch index, then confirm result[i] matches
+        # image i's prediction -- NOT image (1-i)'s, which is what a
+        # swapped/duplicated attribution bug would produce.
+        for i, img in enumerate(imgs):
+            _, ratio_i, pad_i = det._letterbox(img, (imgsz, imgsz))
+            lb_box = np.array([[i * 10.0, i * 10.0, i * 10.0 + 5.0, i * 10.0 + 5.0]], dtype=np.float32)
+            expected = det._unletterbox(lb_box.copy(), ratio_i, pad_i, img.shape[1], img.shape[0])
+
+            res_boxes = out[i].boxes
+            assert len(res_boxes) == 1, f"image {i}: expected 1 box, got {len(res_boxes)}"
+            got = res_boxes[0].xyxy
+            assert np.allclose(got, expected, atol=1e-2), (
+                f"image {i}: attribution mismatch -- got {got}, expected {expected} "
+                f"(would indicate a duplicated/swapped per-image result)"
+            )
+
+        # Cross-check: image 0's box must NOT equal image 1's raw (idx=1)
+        # detection un-letterboxed with image 0's own ratio/pad -- i.e. this
+        # would fail if the code used raw[0] for every image (Finding 1's bug
+        # class) or swapped indices between images.
+        _, ratio_0, pad_0 = det._letterbox(img0, (imgsz, imgsz))
+        idx1_box_via_img0_geom = det._unletterbox(
+            np.array([[10.0, 10.0, 15.0, 15.0]], dtype=np.float32), ratio_0, pad_0,
+            img0.shape[1], img0.shape[0],
+        )
+        assert not np.allclose(out[0].boxes[0].xyxy, idx1_box_via_img0_geom, atol=1e-2), (
+            "image 0's result must not match image 1's raw detection -- "
+            "indicates a duplicated/swapped per-image attribution bug"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -447,6 +639,9 @@ def main():
     check("onnx_yolo.__call__() NMS-free (1,300,6) branch, real onnxruntime session", test_call_nms_free_branch_end_to_end)
     check("onnx_yolo.__call__() single image (not a list) still returns a list", test_call_single_image_not_a_list_still_returns_list)
     check("onnx_yolo.__call__() v8-style branch, real cv2.dnn.NMSBoxes suppression", test_call_v8_style_branch_with_real_nms_suppression)
+    check("onnx_yolo.__call__() v8-style branch, cross-class overlap NOT suppressed (per-class NMS)", test_call_v8_style_branch_cross_class_high_overlap_not_suppressed)
+    check("onnx_yolo.__call__() raises on ONNX output batch-size mismatch (no silent raw[0] fallback)", test_call_batch_size_mismatch_raises)
+    check("onnx_yolo.__call__() real multi-image batch, different sizes, correctly attributed per-image", test_call_multi_image_batch_different_sizes_correctly_attributed)
     check("onnx_yolo._read_names_metadata() ast.literal_eval round-trip + COCO_NAMES fallback", test_read_names_metadata_ast_literal_eval_roundtrip)
     check("onnx_reid._preprocess() vs real torchreid test transform (bounded divergence)", test_osnet_preprocess_matches_torchreid_test_transform)
     check("onnx_reid.embed_one() vs real torch forward on same exported graph (cosine>0.999)", test_osnet_onnx_embedder_matches_torch_forward_on_same_preprocessed_tensor)
