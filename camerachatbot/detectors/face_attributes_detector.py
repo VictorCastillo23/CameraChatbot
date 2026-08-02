@@ -93,6 +93,27 @@ def _preprocess_bgr(
     blob = img[None, ...]
     return blob.astype(np.float32) if dtype == np.float32 else blob
 
+# ---------- Warning dedup (process-level, not per-instance) ----------
+# `run_webhook.py` runs as a long-lived Flask process and calls
+# `build_detail_detectors()` (which constructs a new `FaceAttributesDetector`)
+# once per `/webhook` POST. A per-instance guard would reprint this warning
+# on every request; this module-level flag makes it fire once per process.
+_face_attention_warning_emitted = False
+
+
+def _warn_face_attention_disabled_once() -> None:
+    global _face_attention_warning_emitted
+    if _face_attention_warning_emitted:
+        return
+    _face_attention_warning_emitted = True
+    print(
+        "[WARN] FaceAttributesDetector: emotion/age está habilitado pero "
+        "DETECTOR_FLAGS['face_attention'] es False — no habrá bbox de cara "
+        "disponible y emotion/age quedarán en label=None/confidence=0.0 "
+        "para todas las personas."
+    )
+
+
 # ---------- Detector ----------
 class FaceAttributesDetector:
     def __init__(
@@ -127,14 +148,9 @@ class FaceAttributesDetector:
         # is enabled but face_attention is not, every entry falls through the
         # "no bbox" branch in run_on_json() and silently emits
         # {label: None, confidence: 0.0} for every person, with no visible signal
-        # that this happened. Warn once at construction instead of staying silent.
+        # that this happened. Warn once per process instead of staying silent.
         if (self.emotion_sess is not None or self.age_sess is not None) and not self.face_attention_enabled:
-            print(
-                "[WARN] FaceAttributesDetector: emotion/age está habilitado pero "
-                "DETECTOR_FLAGS['face_attention'] es False — no habrá bbox de cara "
-                "disponible y emotion/age quedarán en label=None/confidence=0.0 "
-                "para todas las personas."
-            )
+            _warn_face_attention_disabled_once()
 
     def predict_emotion(self, face_bgr: np.ndarray) -> Dict[str, Any]:
         if self.emotion_sess is None:

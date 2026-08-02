@@ -153,7 +153,13 @@ class YOLOPersonReID:
                 if yres is None:
                     continue
 
-                # 4.1 depth_map por imagen
+                # 4.1 depth_map por imagen (per-image MiDaS map, gated by
+                # save_deph — set from security_config.DETECTOR_FLAGS["depth"]
+                # at the pipeline_service call site). When False (default),
+                # depth_map stays None and the per-ROI depth_stats() below is
+                # skipped for every detection, avoiding wasted MiDaS compute —
+                # the only consumer of "depth" is debugging/annotate.py's
+                # manual debug overlay, not the production output path.
                 depth_map = None
                 if self.save_deph:
                     try:

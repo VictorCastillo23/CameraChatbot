@@ -80,7 +80,8 @@ def run_pipeline_and_persist(*, runtime, gallery, frames_folder, n_keyframes, si
         gallery=gallery, yoloPersonReID=YOLOPersonReID(
             runtime["yolo_det"], frames_folder, yolo_output,
             runtime["reid_transform"], runtime["reid_model"], runtime["device"],
-            depth_model=runtime["depth"]["model"], depth_transform=runtime["depth"]["transform"]
+            depth_model=runtime["depth"]["model"], depth_transform=runtime["depth"]["transform"],
+            save_deph=DETECTOR_FLAGS["depth"],
         )
     )
     print(f'final_json = {final_json}')

@@ -34,12 +34,18 @@ COCO_ALLOWLIST = frozenset({
 })
 
 # Which detail detectors run in `pipeline_service.build_detail_detectors()`.
+# "depth" is a separate axis: it gates `YOLOPersonReID`'s per-image MiDaS
+# depth map + per-ROI depth stats (person_reid.py), consumed only by
+# debugging/annotate.py's manual debug overlay — nothing in the production
+# Postgres/video_schema output path reads it. Kept False by default to avoid
+# wasted compute; flip to True only for local debug runs with annotate.py.
 DETECTOR_FLAGS = MappingProxyType({
     "pose": True,
     "face_attention": False,
     "hands": False,
     "emotion": False,
     "age": False,
+    "depth": False,
 })
 
 # Identity-matching thresholds, centralized so every call site resolves
