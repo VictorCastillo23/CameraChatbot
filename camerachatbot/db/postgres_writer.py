@@ -369,7 +369,7 @@ def prepare_event_rows(video_id, camera_id, events, keyframe_ids):
         ))
     return rows
 
-def insert_events(cur, video_id, camera_id, events, keyframe_ids):
+def insert_events_in_batches(cur, video_id, camera_id, events, keyframe_ids):
     """Inserts `event` rows for this run's security events (Fase 4b, PR8b).
 
     Runs SYNCHRONOUSLY, in the same transaction right after
@@ -554,9 +554,9 @@ def json_to_postgre(json_file: str) -> str:
 
                 # eventos de seguridad (Fase 4b, PR8b) -> síncrono, aquí mismo
                 # (no en los workers de metadata/neighborhood; ver docstring
-                # de insert_events()).
+                # de insert_events_in_batches()).
                 events = data["video"].get("events", [])
-                insert_events(cur, video_id, camera_id, events, keyframe_ids)
+                insert_events_in_batches(cur, video_id, camera_id, events, keyframe_ids)
 
                 # Nota: no insertamos metadata/neighborhood aquí; lo hacemos en paralelo más abajo
             # commit implícito por with conn:

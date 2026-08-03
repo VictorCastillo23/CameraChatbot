@@ -164,10 +164,7 @@ def reformat_to_video_schema_uniform(
     # -- so `postgres_writer.json_to_postgre()` reads it via
     # `data["video"].get("events", [])`, mirroring how it already reads
     # `data["video"].get("neighborhood", [])`.
-    events_out = [
-        (e if isinstance(e, dict) else event_to_dict(e))
-        for e in (events or [])
-    ]
+    events_out = [event_to_dict(e) for e in (events or [])]
 
     out = {"video": {"key": video_key,
                      "start_at": _iso_z(t0),

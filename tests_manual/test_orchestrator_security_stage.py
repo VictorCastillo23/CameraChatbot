@@ -43,8 +43,8 @@ What it verifies:
    `keyframe_ids[event["first_frame_idx"]]`, returns `None` instead of
    raising `IndexError` on an out-of-range/missing index.
 6. `db.postgres_writer.prepare_event_rows()` -- shapes each event dict into
-   the exact positional tuple `insert_events()`'s `execute_values` template
-   expects, including wrapping `details` in `psycopg2.extras.Json`.
+   the exact positional tuple `insert_events_in_batches()`'s `execute_values`
+   template expects, including wrapping `details` in `psycopg2.extras.Json`.
 
 Uses only synthetic in-memory data throughout -- no real camera frames, no
 ONNX models, no live Postgres connection, and never touches the repo's real
@@ -252,6 +252,81 @@ def test_run_zones_events_stage_degrades_when_calibration_lookup_raises():
         assert person["world_xy"] is None
 
 
+def test_run_zones_events_stage_degrades_on_malformed_zone_schedule():
+    """Gate-review fix regression test: a zone with a malformed
+    `schedule["from"]`/`["to"]` string (e.g. `"22h00"` instead of `"22:00"`)
+    used to crash `zones.py::_parse_hhmm()` with
+    `ValueError: not enough values to unpack`, and that propagated all the
+    way up through `evaluate_intrusion()` and out of
+    `_run_zones_events_stage()`, aborting the whole `multi_models()` call
+    (pose classification + Postgres persistence included) for the entire
+    batch -- not just the security-events stage. Only the calib/zones DB
+    LOOKUPS were try/excepted before this fix; everything downstream
+    (`_write_zone_and_world_xy`, `build_tracks_timeline`,
+    `evaluate_intrusion`, `evaluate_loitering`) was not.
+    """
+    bad_zone = Zone(
+        id=9, camera_id=5, name="Vault", zone_type="restricted",
+        polygon=[(0, 0), (100, 0), (100, 100), (0, 100)],
+        schedule={"from": "22h00", "to": "06:00"},  # malformed -- no ":" split
+        is_active=True,
+    )
+
+    class _FakeCalibCls:
+        @classmethod
+        def load(cls, camera_id):
+            return _FakeCalib()
+
+    def _fake_load_zones(camera_id):
+        return [bad_zone]
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        results_json = {
+            "0": [{"kind": "person", "bbox": [0, 0, 10, 20], "track_id": 1,
+                    "person_global_id": 7, "confidence": 0.9}],
+        }
+        reid = _FakeReID(["0"], results_json, output_folder=tmpdir)
+
+        events = _with_patched_orchestrator(
+            {"CameraCalibration": _FakeCalibCls, "load_zones": _fake_load_zones},
+            lambda: _run_zones_events_stage(reid, camera_id=5, start_at="2026-01-01T00:00:00Z", fps=10),
+        )
+
+        assert events == [], "a malformed zone schedule must degrade to no events, not crash the batch"
+
+        ckpt_path = os.path.join(tmpdir, "security_events.json")
+        assert os.path.exists(ckpt_path), "the events checkpoint must still be dumped on degrade"
+        with open(ckpt_path, "r", encoding="utf-8") as f:
+            assert json.load(f) == []
+
+
+def test_run_zones_events_stage_degrades_on_fps_zero():
+    """Gate-review fix regression test: `fps=0` used to crash with
+    `ZeroDivisionError` inside `video_schema.timing.frame_timestamp()`
+    (called from `build_tracks_timeline()` for EVERY observation,
+    regardless of whether a camera is calibrated), propagating out of
+    `_run_zones_events_stage()` the same way the malformed-schedule case
+    did."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        results_json = {
+            "0": [{"kind": "person", "bbox": [0, 0, 10, 20], "track_id": 1,
+                    "person_global_id": 7, "confidence": 0.9}],
+        }
+        reid = _FakeReID(["0"], results_json, output_folder=tmpdir)
+
+        # No camera_id needed: build_tracks_timeline() computes
+        # frame_timestamp() for every observation unconditionally, so
+        # fps=0 crashes even with calib=None/zones=[].
+        events = _run_zones_events_stage(reid, camera_id=None, start_at="2026-01-01T00:00:00Z", fps=0)
+
+        assert events == [], "fps=0 must degrade to no events, not crash the batch"
+
+        ckpt_path = os.path.join(tmpdir, "security_events.json")
+        assert os.path.exists(ckpt_path), "the events checkpoint must still be dumped on degrade"
+        with open(ckpt_path, "r", encoding="utf-8") as f:
+            assert json.load(f) == []
+
+
 # ---------------------------------------------------------------------------
 # security.events.event_to_dict()
 # ---------------------------------------------------------------------------
@@ -376,6 +451,10 @@ def main():
           test_run_zones_events_stage_with_camera_id_builds_intrusion_event)
     check("_run_zones_events_stage(): calibration/zone lookup failure degrades, does not raise",
           test_run_zones_events_stage_degrades_when_calibration_lookup_raises)
+    check("_run_zones_events_stage(): malformed zone schedule degrades, does not crash the batch",
+          test_run_zones_events_stage_degrades_on_malformed_zone_schedule)
+    check("_run_zones_events_stage(): fps=0 degrades, does not crash the batch",
+          test_run_zones_events_stage_degrades_on_fps_zero)
 
     check("event_to_dict(): ISO timestamps, None ended_at stays None",
           test_event_to_dict_serializes_timestamps_and_none_ended_at)
