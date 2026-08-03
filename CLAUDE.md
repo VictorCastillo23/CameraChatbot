@@ -83,3 +83,9 @@ Treat this directory as exploratory — don't assume anything in it besides `key
 ### Language note
 
 Code comments, log messages, and JSON field values (e.g. `"sentado"`, `"de pie"`) are in Spanish throughout this codebase — this is the established convention, not an inconsistency to fix. Module/file names are English (snake_case), following this same established split.
+
+## Keeping `docs/` up to date
+
+A `docs/` folder (currently on `docs/project-overview`, not yet merged to `main`) is the maintained, current-state reference for this project — this `CLAUDE.md` file is a lighter-weight map and is not where new architecture/capability changes should be recorded in detail.
+
+Whenever a change adds, removes, or rewires something `docs/` describes — a new module, a capability going from "built" to "wired into the live pipeline" or "wired" to "persisted," a changed function signature named in the docs, a new/changed database table or column, a new entry point — update the relevant `docs/*.md` file(s) in the same change, not as separate follow-up work. Match the existing style: explicit "wired in: yes/no" phrasing per module, the three-axis distinction between *implemented*, *invoked by the live pipeline*, and *saved to the database* in `docs/01-overview-and-capabilities.md`, and "confirmed against the code" claims backed by an actual grep/read, not an assumption. If a capability is real but still dormant for a specific, trackable reason (a missing wire, not a config flag), say so explicitly rather than letting the docs overclaim.
