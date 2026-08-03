@@ -23,10 +23,10 @@ Created inertly alongside the core tables, but at very different stages of actua
 
 | Table | Schema created | Read | Written | Notes |
 |---|---|---|---|---|
-| `camera_calibration` | Yes | No production caller (`CameraCalibration.load()` is only called from the unwired `zones.py`/`events.py`) | Yes — `geometry/calibrate_camera.py`'s manual CLI | Stores a per-camera homography (`DOUBLE PRECISION[]`, 9-element row-major), `reference_points`/`units`/`reprojection_error` |
-| `zone` | Yes | Yes — `security/zones.py::load_zones()`, but that function itself has no production caller | **No CLI exists** — unlike `camera_calibration`, there's no tool to insert a zone; it has to be done by hand via SQL | `polygon`/`schedule` are JSONB |
+| `camera_calibration` | Yes | Yes, as of PR8b — `orchestrator.py`'s zones+events stage calls `CameraCalibration.load(camera_id)`, but only when `camera_id` is set, which no entry point does yet (dormant in production, see [`02`](02-architecture.md)) | Yes — `geometry/calibrate_camera.py`'s manual CLI | Stores a per-camera homography (`DOUBLE PRECISION[]`, 9-element row-major), `reference_points`/`units`/`reprojection_error` |
+| `zone` | Yes | Yes, as of PR8b — `orchestrator.py`'s zones+events stage calls `load_zones()`; same `camera_id` dormancy caveat as `camera_calibration` above | **No CLI exists** — unlike `camera_calibration`, there's no tool to insert a zone; it has to be done by hand via SQL | `polygon`/`schedule` are JSONB |
 | `authorized_identity` | Yes | No | No | Nothing reads or writes this table anywhere in the codebase yet — reserved for the not-yet-built unauthorized-person detection feature |
-| `event` | Yes | No | No | `security/events.py` builds `SecurityEvent` objects matching this table's shape entirely in memory — nothing persists them yet |
+| `event` | Yes | No | Yes, as of PR8b — `db/postgres_writer.py::insert_events()`, synchronously right after the `object`/`key_frame` inserts | In practice this table stays empty today: the same `camera_id` dormancy above means the zones+events stage always produces `events=[]` on a real run |
 
 Column notes: `zone.polygon` and `zone.schedule` are JSONB (a list of `[x, y]` pairs and a dict respectively — see [`04-security-subsystem-reference.md`](04-security-subsystem-reference.md) for the exact shape `Zone.from_row()` expects). `event.details` is JSONB, free-form per event type. `event.person_global_id` and `object.user_id` (core table) are both plain, unconstrained integers with no foreign key — `person_global_id` lives in the FAISS gallery's `id_map.json`, not as a Postgres entity, by design.
 

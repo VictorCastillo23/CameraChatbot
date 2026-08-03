@@ -4,7 +4,7 @@ CameraChatbot ingests camera keyframes, runs person detection/re-identification/
 
 ## Scope and branch caveat
 
-This folder documents the codebase as it exists on `security-pipeline-overhaul/pr8a-fase4b-zones-events-logic` — the tip of a long, still-unmerged chain of PRs (Fase 0 through Fase 4b of the `security-pipeline-overhaul` program). It was written on `docs/project-overview`, a separate branch based on `main`.
+This folder documents the codebase as it exists on `security-pipeline-overhaul/pr8b-fase4b-orchestrator-wiring` — the tip of a long, still-unmerged chain of PRs (Fase 0 through Fase 4b of the `security-pipeline-overhaul` program). It was written on `docs/project-overview`, a separate branch based on `main`.
 
 That means: as of this writing, this folder describes modules, files, and database tables that **do not yet exist on `main`**. It will be fully accurate against `main` once that PR chain merges. Until then, treat this as documentation of the project's current, most-advanced state — check which branch you're actually on before assuming a described file exists in your checkout.
 

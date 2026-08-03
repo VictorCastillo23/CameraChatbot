@@ -26,7 +26,7 @@ A from-scratch SORT-style Kalman filter (`KalmanBoxTracker`) plus a ByteTrack-st
 
 ## `security/zones.py` — restricted/monitored/safe zone classification
 
-**Wired in**: no. Only its own tests import it — `orchestrator.py` and `pipeline_service.py` never do, confirmed by grep. Fully built and tested, sitting unused until something calls it.
+**Wired in**: yes, as of PR8b — `orchestrator.py` imports `load_zones`/`bbox_world_and_zone` directly and calls them in a new stage between identity resolution and the detail-detector loop (see the architecture doc's stage diagram). Still dormant in production today, though: no entry point (`run_local.py`/`run_webhook.py`) resolves a real `camera_id` before calling `run_pipeline_and_persist()`, so the stage always takes the `camera_id=None` degrade path (`calib=None`, `zones=[]`) on every real run — see [`02-architecture.md`](02-architecture.md) for the plumbing gap this leaves.
 
 - `Zone` — a dataclass: `id`, `camera_id`, `name`, `zone_type` (`"restricted"` \| `"monitored"` \| `"safe"`), `polygon` (world coordinates — the same units `CameraCalibration` maps into), `schedule` (optional dict: days/time window/loiter threshold), `is_active`.
 - `point_in_polygon(pt, polygon)` — textbook ray-casting, pure Python/NumPy, O(V). Chosen deliberately over OpenCV's `cv2.pointPolygonTest`: world coordinates are floats in metres, and `cv2` wants integer pixel contours — using it here would quantize a metric polygon down to whole units. A point exactly on a polygon edge counts as inside, on purpose: a zone boundary shouldn't silently exclude someone standing on the line.
@@ -36,12 +36,19 @@ A from-scratch SORT-style Kalman filter (`KalmanBoxTracker`) plus a ByteTrack-st
 
 ## `security/events.py` — intrusion & loitering rule evaluation
 
-**Wired in**: no, same as `zones.py` — no production caller. Pure logic module, explicitly: no database writes, no orchestrator wiring. Both are future work, per this module's own docstring.
+**Wired in**: yes, as of PR8b — `orchestrator.py` calls `build_tracks_timeline()`/`evaluate_intrusion()`/`evaluate_loitering()` in the same new stage as `zones.py` above, and `db/postgres_writer.py::insert_events()` persists any resulting events to the `event` table synchronously, right after the `object`/`key_frame` inserts (deliberately not through the threaded metadata/neighborhood workers — event volume is low and one event can span a range of frames that doesn't map onto any single worker's partition). Same production caveat as `zones.py`: with `camera_id=None`, the stage always produces `events=[]`, so nothing is actually written to `event` yet on a real run.
 
 - `build_tracks_timeline(reid, calib, zones, t0, fps)` — reads a tracked run's detections and groups them per `track_id`, frame-ordered, into a `TracksTimeline`. **Skips any detection without a `track_id`** — which means this function only produces a non-empty timeline when `label_source == "tracker"` was active for the run that produced `reid`'s results (the default `"cluster"` path never sets `track_id`). This dependency isn't stated anywhere else in the code; if zones/events logic is ever wired into the live pipeline without also flipping `label_source`, it will silently produce empty timelines with no error. Degrades gracefully without a camera calibration (`calib=None`): `world_xy`/`zone_id` are `None` on every observation instead of raising, so identity tracking stays usable even before any camera is calibrated.
 - `evaluate_intrusion(timeline, zones, cfg)` — one event per continuous run of observations where the zone is `"restricted"` **and** `zone_is_armed()` says so at that observation's timestamp. Tolerates gaps of up to `cfg["intrusion_gap_frames"]` frames within one run (via a shared `_runs()` helper), so one dropped detection doesn't split a single intrusion into several separate events.
 - `evaluate_loitering(timeline, zones, cfg)` — one event per zone whose effective `loiter_seconds` (the zone's own schedule, falling back to `cfg["default_loiter_seconds"]`) is set, per continuous run spent in that zone, emitted only once the run's dwell time meets or exceeds the threshold.
 - `evaluate_unenrolled` (unauthorized-person detection) and `evaluate_weapons` are not implemented — deliberately reserved slots for future work, per this module's own docstring.
+
+## `pipeline/orchestrator.py` — the zones+events stage (PR8b)
+
+The wiring that actually calls `zones.py`/`events.py` above, sitting between identity resolution and the detail-detector loop — see [`02-architecture.md`](02-architecture.md) for where it fits in the full diagram. Two things worth knowing that aren't obvious from reading `zones.py`/`events.py` alone:
+
+- **Defensive by design, on top of the modules' own graceful degrades**: the whole stage is wrapped in a top-level exception boundary, so a failure anywhere inside it — a malformed zone `schedule` string, `fps=0`, a bug in one of the evaluators, a checkpoint-write failure — degrades to `events=[]` rather than propagating up and crashing the rest of the pipeline run. Pose classification and Postgres persistence for unrelated data still succeed even if this stage breaks. This was gap-review-fixed after an initial version only guarded the calibration/zone *lookups* and let everything downstream of them raise uncaught.
+- **`[SECURITY-DEGRADED]` is a distinct, greppable log tag** used specifically when a lookup or the stage itself genuinely fails (e.g. a Postgres outage while loading calibration) — deliberately different from the plain `[WARN]` case, which just means "this camera isn't calibrated/zoned yet." The intent is that an operator or alerting rule scanning logs can tell "not configured" apart from "something broke," which matters because a broken lookup during a real intrusion would otherwise look identical to an unconfigured camera.
 
 ## `geometry/homography.py` — `CameraCalibration`
 

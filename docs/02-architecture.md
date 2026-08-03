@@ -26,6 +26,7 @@ orchestrator.multi_models()
         ├─ 2. cluster_locally()  OR  assign_track_ids()  — group same person's detections (§ label_source)
         ├─ 3. enforce_unique_label_per_frame()           — drop duplicate labels landing on one frame
         ├─ 4. enroll_and_assign_global_ids()             — resolve against the persistent identity gallery
+        ├─ 4b. zones+events stage (security, PR8b)       — zone/intrusion/loitering, dormant in prod (§ below)
         └─ 5. detail detectors loop                       — pose (default), + any flag-enabled extras
         │
         ▼
@@ -56,17 +57,21 @@ Either way, the output is the same shape: a label per detection. Everything afte
 
 `enforce_unique_label_per_frame()` is a cheap safety net that drops any duplicate label landing twice on the same frame (shouldn't happen, guards against it anyway). `enroll_and_assign_global_ids()` then takes those per-batch labels and resolves each against `GlobalIdentityService`'s persistent FAISS identity gallery — this is what turns "person #3 in this batch" into "person_global_id 47, first seen three weeks ago." It also builds the *neighborhood* records (which people/objects were spatially close to each other).
 
+### 4b. Zones + events (security, PR8b) — wired in, but still dormant in production
+
+As of PR8b, `orchestrator.py` imports `security.zones` and `security.events` directly (previously it only imported `security.tracker`, for step 3's alternate `label_source` path) — confirmed against the code, not assumed. Between step 4 and step 5, it now loads the run's `CameraCalibration`/`Zone` list, tags each person entry with `zone_id`/`world_xy`, builds a per-track timeline, and evaluates intrusion/loitering rules — dumping a `security_events.json` checkpoint next to the other stage checkpoints, and persisting any events to the `event` table via `postgres_writer.insert_events()`.
+
+It's dormant in production today for one specific, tracked reason: the stage takes an optional `camera_id` parameter, and no entry point (`run_local.py`/`run_webhook.py`) resolves a real one before calling `run_pipeline_and_persist()` — camera identity is otherwise only resolved by *name*, lazily, inside `postgres_writer.get_or_create_project_camera_video()` at persistence time. With `camera_id=None`, the stage always takes its documented degrade path (`calib=None`, `zones=[]`), so `evaluate_intrusion`/`evaluate_loitering` run over zero zones and always produce `events=[]`. Threading a real `camera_id` through is the remaining piece of future work here — a missing wire, not a config flag.
+
+The stage is also defensive by design: any failure inside it (bad zone data, `fps=0`, a bug in an evaluator, a checkpoint-write failure) is caught by a top-level exception boundary and degrades to `events=[]` instead of crashing the rest of the run — pose classification and Postgres persistence for unrelated data still succeed even if this stage breaks. See [`04-security-subsystem-reference.md`](04-security-subsystem-reference.md) for the module-level detail, including the `[SECURITY-DEGRADED]` log tag that distinguishes a genuine lookup failure from "this camera just isn't configured yet."
+
 ### 5. Detail detectors
 
 A loop over whichever detectors `build_detail_detectors()` decided to build, based on `DETECTOR_FLAGS`. Only `PoseActionClassifier` (sit/stand) is on by default. Each detector reads the previous one's output JSON and adds to it — see [`03`](03-pipeline-reference.md) for the full list and [`08`](08-legacy-and-dormant-code.md) for the ones that are built but flagged off.
 
 ### 6. Formatting and persistence
 
-`formatter.reformat_to_video_schema_uniform()` reshapes the flat frame-keyed JSON into the nested schema Postgres expects (deriving each keyframe's timestamp via `video_schema/timing.py::frame_timestamp()`). `postgres_writer.json_to_postgre()` then does the actual write: keyframes/objects/classes are inserted synchronously first (later steps need their generated ids), then metadata and neighborhood rows are fanned out across a thread pool.
-
-## Where zones/events would plug in — and why they don't yet
-
-The security subsystem's zone and event logic ([`04`](04-security-subsystem-reference.md)) is not called anywhere in the diagram above. `orchestrator.py` imports `security.tracker` (step 3's alternate path) but never imports `security.zones` or `security.events` — confirmed directly against the code, not assumed. If it were wired in, it would sit as a new stage between step 4 (identity resolution) and step 5 (detail detectors), reading each track's history and camera calibration to classify zone membership and evaluate intrusion/loitering rules. That wiring, plus actually persisting the resulting events to the `event` table, is future work — see [`01`](01-overview-and-capabilities.md)'s capability matrix.
+`formatter.reformat_to_video_schema_uniform()` reshapes the flat frame-keyed JSON into the nested schema Postgres expects (deriving each keyframe's timestamp via `video_schema/timing.py::frame_timestamp()`), attaching step 4b's `events` list as a `video.events` node the same way it already does for `neighborhood`. `postgres_writer.json_to_postgre()` then does the actual write: keyframes/objects/classes are inserted synchronously first (later steps need their generated ids), then `insert_events()` runs synchronously right after (see [`04`](04-security-subsystem-reference.md) for why events aren't threaded like metadata/neighborhood), and finally metadata and neighborhood rows are fanned out across a thread pool.
 
 ## The three entry points, at a glance
 

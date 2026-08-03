@@ -21,7 +21,7 @@ The sole model-loading module in the codebase (see [`08-legacy-and-dormant-code.
 
 ## `pipeline/orchestrator.py` — `multi_models(...)`
 
-The actual detection/identity pipeline body, called once per batch of keyframes. Resolves identity thresholds from `security_config.IDENTITY_THRESHOLDS` (any left as `None` by the caller), runs detection+embedding, branches on `SECURITY_RULES["label_source"]` to decide whether `cluster_locally()` or the tracker's `assign_track_ids()` produces per-detection labels, then resolves those labels into persistent identities and runs the detail-detector loop. See [`02-architecture.md`](02-architecture.md) for the full stage-by-stage walkthrough — this function *is* that diagram.
+The actual detection/identity pipeline body, called once per batch of keyframes. Resolves identity thresholds from `security_config.IDENTITY_THRESHOLDS` (any left as `None` by the caller), runs detection+embedding, branches on `SECURITY_RULES["label_source"]` to decide whether `cluster_locally()` or the tracker's `assign_track_ids()` produces per-detection labels, resolves those labels into persistent identities, runs the zones+events security stage (PR8b — takes `camera_id`/`start_at`/`fps`, dormant in production until a real `camera_id` is threaded in, see [`04`](04-security-subsystem-reference.md)), and finally runs the detail-detector loop. Returns a 4-tuple, `(json_output, events, final_pre_process, final_post_process)` — `events` is new as of PR8b. See [`02-architecture.md`](02-architecture.md) for the full stage-by-stage walkthrough — this function *is* that diagram.
 
 ## `pipeline/pipeline_service.py`
 
