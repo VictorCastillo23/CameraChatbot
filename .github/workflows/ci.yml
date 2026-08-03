@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install runtime dependencies
+        run: pip install -r requirements.txt
+
+      - name: Compile-check camerachatbot/
+        run: python -m compileall -q camerachatbot
+
+      # Only the tests_manual/ scripts that run against the runtime
+      # requirements.txt (numpy/opencv/faiss/onnxruntime/scipy/flask/
+      # supabase/psycopg2/dotenv) are wired here. tests_manual/test_fase3a_*
+      # compare against real torch/ultralytics/torchreid and are excluded on
+      # purpose: that stack lives in requirements-export.txt, a dev-only,
+      # CUDA-pinned export toolchain this project deliberately keeps out of
+      # CI/runtime (see requirements-export.txt's own header comment).
+      - name: Run tests_manual/ (runtime-only subset)
+        run: |
+          set -e
+          for f in \
+            tests_manual/test_identity_thresholds.py \
+            tests_manual/test_fase1_attribute_gating.py \
+            tests_manual/test_fase2_geometry.py \
+            tests_manual/test_bootstrap_init_runtime.py \
+            tests_manual/test_tracker.py \
+          ; do
+            echo "::group::$f"
+            python "$f"
+            echo "::endgroup::"
+          done
