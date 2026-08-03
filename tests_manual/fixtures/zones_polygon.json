@@ -1,0 +1,22 @@
+{
+  "square": {
+    "description": "Simple axis-aligned 10x10 square. Baseline inside/outside/on-edge/on-vertex coverage.",
+    "polygon": [[0, 0], [10, 0], [10, 10], [0, 10]],
+    "cases": [
+      {"label": "inside", "point": [5, 5], "expected": true},
+      {"label": "outside", "point": [15, 5], "expected": false},
+      {"label": "on_edge", "point": [10, 5], "expected": true},
+      {"label": "on_vertex", "point": [0, 0], "expected": true}
+    ]
+  },
+  "concave_notch": {
+    "description": "10x10 square with a downward-pointing triangular notch cut into the top edge (notch vertices (6,10),(5,6),(4,10), apex at y=6). At y=8 the notch spans x in [4.5, 5.5] (linear interpolation between the notch's slanted edges), so (5,8) sits inside the excluded notch while (2,8) -- well clear of the notch -- stays inside the polygon body. Proves ray-casting respects true polygon shape instead of falling back to a convex hull.",
+    "polygon": [[0, 0], [10, 0], [10, 10], [6, 10], [5, 6], [4, 10], [0, 10]],
+    "cases": [
+      {"label": "inside_main_body", "point": [2, 8], "expected": true},
+      {"label": "inside_notch_excluded", "point": [5, 8], "expected": false},
+      {"label": "on_edge_right", "point": [10, 5], "expected": true},
+      {"label": "outside_far", "point": [20, 20], "expected": false}
+    ]
+  }
+}
