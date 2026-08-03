@@ -16,7 +16,7 @@ from datetime import datetime
 from typing import Callable, Dict, List, Optional, Tuple, TypedDict
 
 from camerachatbot.geometry.homography import CameraCalibration
-from camerachatbot.security.zones import Zone, classify_bbox_zone, zone_is_armed
+from camerachatbot.security.zones import Zone, bbox_world_and_zone, zone_is_armed
 from camerachatbot.video_schema.timing import frame_timestamp
 
 
@@ -46,6 +46,33 @@ class SecurityEvent:
     first_frame_idx: int
     confidence: Optional[float]
     details: dict = field(default_factory=dict)
+
+
+def event_to_dict(event: SecurityEvent) -> dict:
+    """JSON/Postgres-safe serialization of a `SecurityEvent` (PR8b).
+
+    Shared by `orchestrator.multi_models()`'s `security_events.json`
+    checkpoint dump and `video_schema.formatter.reformat_to_video_schema_
+    uniform()`'s `video.events` node -- one implementation instead of two
+    that could drift on timestamp formatting (same anti-drift principle as
+    `video_schema.timing.frame_timestamp`/`parse_start_at`).
+
+    `started_at`/`ended_at` are ISO-8601 strings, matching the convention
+    `key_frame.timestamp` already uses for a Postgres TIMESTAMP column (see
+    `db.postgres_writer.prepare_keyframe_rows`, which inserts `kf["timestamp"]`
+    -- also an ISO string -- directly).
+    """
+    return {
+        "event_type": event.event_type,
+        "zone_id": event.zone_id,
+        "person_global_id": event.person_global_id,
+        "track_id": event.track_id,
+        "started_at": event.started_at.isoformat() if event.started_at else None,
+        "ended_at": event.ended_at.isoformat() if event.ended_at else None,
+        "first_frame_idx": event.first_frame_idx,
+        "confidence": event.confidence,
+        "details": event.details,
+    }
 
 
 def _frame_idx_of(frame: str, fallback: int) -> int:
@@ -100,8 +127,13 @@ def build_tracks_timeline(
             world_xy = None
             zone_id = None
             if calib is not None and bbox is not None:
-                world_xy = calib.bbox_to_world(bbox)
-                zone = classify_bbox_zone(bbox, calib, zones)
+                # PR8b: `bbox_world_and_zone()` is the single shared
+                # bbox->world->zone computation -- `orchestrator.
+                # _write_zone_and_world_xy()` uses the exact same helper for
+                # the entries themselves, so a TrackObservation's world_xy/
+                # zone_id can never drift out of sync with what's written
+                # onto `p["world_xy"]`/`p["zone_id"]`.
+                world_xy, zone = bbox_world_and_zone(bbox, calib, zones)
                 zone_id = zone.id if zone is not None else None
 
             confidence = p.get("confidence")

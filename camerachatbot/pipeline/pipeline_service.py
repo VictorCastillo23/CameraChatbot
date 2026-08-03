@@ -72,19 +72,29 @@ def build_detail_detectors(runtime, frames_folder):
 
 def run_pipeline_and_persist(*, runtime, gallery, frames_folder, n_keyframes, size_xy, start_at,
                               video_key, fps=30, final_inference=0.0,
-                              draw_debug=False, debug_images_dir=None):
+                              draw_debug=False, debug_images_dir=None, camera_id=None):
     detail_detectors = build_detail_detectors(runtime, frames_folder)
 
     output_path = str(paths.res_output_dir_for(frames_folder))
     os.makedirs(output_path, exist_ok=True)
     yolo_output = os.path.join(output_path, "yolo_reid")
 
-    final_json, final_pre_process, final_post_process = orchestrator.multi_models(
+    # Fase 4b (PR8b): `camera_id` is optional and defaults to `None` --
+    # no entry point (`run_local.py`/`run_webhook.py`) currently resolves a
+    # real numeric camera id before calling this function (camera identity
+    # is otherwise only resolved by NAME, lazily, inside
+    # `postgres_writer.get_or_create_project_camera_video()` at persistence
+    # time). Passing `None` here is the documented degrade path: tracking
+    # and identity assignment still run, `world_xy`/`zone_id` stay `None`,
+    # intrusion/loitering yield no events. See apply-progress for the
+    # camera-identity plumbing gap this leaves for a future PR.
+    final_json, events, final_pre_process, final_post_process = orchestrator.multi_models(
         detail_detectors=detail_detectors, keyframes_path=frames_folder,
         gallery=gallery, yoloPersonReID=YOLOPersonReID(
             runtime["yolo_det"], frames_folder, yolo_output,
             reid_model=runtime["reid_model"],
-        )
+        ),
+        camera_id=camera_id, start_at=start_at, fps=fps,
     )
     print(f'final_json = {final_json}')
     print(f'final_pre_process : {final_pre_process}')
@@ -106,6 +116,7 @@ def run_pipeline_and_persist(*, runtime, gallery, frames_folder, n_keyframes, si
         per_frame_inference=pf_inf,
         per_frame_preprocess=pf_pre,
         per_frame_postprocess=pf_post,
+        events=events,
     )
     t1 = time.time()
     print(f"[STAGE POST] reformat_to_video_schema_uniform: {t1 - t0:.3f}s")

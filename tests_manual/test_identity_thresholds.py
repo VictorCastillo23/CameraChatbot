@@ -191,10 +191,24 @@ class _FakeTracker:
     """Minimal stand-in for YOLOPersonReID, just enough to drive
     multi_models() through its threshold-resolution logic without a real
     detection pipeline. Records the kwargs multi_models forwards downstream.
+
+    PR8b/Fase4b: `multi_models()` now also runs a zones+events stage
+    (`_run_zones_events_stage`) right after `enroll_and_assign_global_ids()`,
+    which reads `reid.results_json`/`reid.frame_order` (via
+    `build_tracks_timeline()`) and writes a `security_events.json` checkpoint
+    under `reid.output_folder` -- so this fake now carries the minimal empty
+    versions of those three attributes, matching the new contract
+    `multi_models()` expects from any tracker-shaped argument. `camera_id`
+    stays unset (`None`) in both tests below, so this stage takes the fully
+    degraded no-calibration/no-zones path (see orchestrator.py) and
+    contributes zero events either way.
     """
 
-    def __init__(self):
+    def __init__(self, output_folder):
         self.captured_kwargs = None
+        self.results_json = {}
+        self.frame_order = []
+        self.output_folder = output_folder
 
     def detect_and_embed(self, **kwargs):
         # PR2/Fase1 added a required `allowlist` kwarg to the real
@@ -215,11 +229,16 @@ class _FakeTracker:
             t_accept=t_accept, t_reject=t_reject,
             min_sim_add=min_sim_add, max_protos_per_person=max_protos_per_person,
         )
+        # A dict, not a str path -- exercises multi_models()'s own
+        # isinstance(json_output, str) guard around the PR8b resync step
+        # (see orchestrator._resync_json_output), same as the real
+        # `enroll_and_assign_global_ids()` returning a file path would, just
+        # without needing a real file on disk for this fake.
         return {}
 
 
-def test_multi_models_resolves_none_sentinels_from_identity_thresholds():
-    tracker = _FakeTracker()
+def test_multi_models_resolves_none_sentinels_from_identity_thresholds(tmpdir):
+    tracker = _FakeTracker(tmpdir)
     # t_accept/t_reject/min_sim_add/max_protos_per_person all left at their
     # None default deliberately.
     multi_models(tracker, detail_detectors=[], keyframes_path="unused", gallery=None)
@@ -231,8 +250,8 @@ def test_multi_models_resolves_none_sentinels_from_identity_thresholds():
     assert tracker.captured_kwargs["max_protos_per_person"] == SUPPORT_MAX_PROTOS
 
 
-def test_multi_models_explicit_override_wins_over_sentinel():
-    tracker = _FakeTracker()
+def test_multi_models_explicit_override_wins_over_sentinel(tmpdir):
+    tracker = _FakeTracker(tmpdir)
     multi_models(
         tracker, detail_detectors=[], keyframes_path="unused", gallery=None,
         t_accept=0.99, t_reject=0.01, min_sim_add=0.5, max_protos_per_person=1,
@@ -264,9 +283,9 @@ def main():
               lambda: test_maybe_add_support_prototype_happy_path(tmpdir))
 
         check("multi_models: None sentinels resolve to IDENTITY_THRESHOLDS",
-              test_multi_models_resolves_none_sentinels_from_identity_thresholds)
+              lambda: test_multi_models_resolves_none_sentinels_from_identity_thresholds(tmpdir))
         check("multi_models: explicit kwargs override the resolved sentinel",
-              test_multi_models_explicit_override_wins_over_sentinel)
+              lambda: test_multi_models_explicit_override_wins_over_sentinel(tmpdir))
 
     print("\n=== Identity threshold contract verification ===")
     n_pass = sum(1 for _, ok, _ in results if ok)

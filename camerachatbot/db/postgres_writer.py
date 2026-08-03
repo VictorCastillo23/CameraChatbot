@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Tuple, Any, Dict
 
 import psycopg2
-from psycopg2.extras import execute_values
+from psycopg2.extras import execute_values, Json
 from psycopg2 import errors
 from dotenv import load_dotenv
 
@@ -323,6 +323,78 @@ def insert_objects_in_batches(cur, keyframe_ids, key_frames, class_id_by_name):
         ids.extend(ids_chunk)
     return ids, obj_index
 
+# --------------------- eventos de seguridad (Fase 4b, PR8b) ---------------------
+# `events` here is `data["video"].get("events", [])` -- a list of plain dicts
+# already JSON-decoded from the video_schema file, one per `security.events.
+# SecurityEvent` that `video_schema.formatter.reformat_to_video_schema_
+# uniform()` serialized via `security.events.event_to_dict()`. Not the
+# dataclass itself -- by the time this runs, everything has already made a
+# round trip through JSON on disk, same as every other `data["video"][...]`
+# input this module reads.
+
+def _event_keyframe_id(event: dict, keyframe_ids: List[int]):
+    """`keyframe_ids[event["first_frame_idx"]]`, bounds-checked.
+
+    design.md's own write-path spec is the unchecked `keyframe_ids[event.
+    first_frame_idx]` -- `first_frame_idx` is always a valid index into this
+    same run's `key_frames`/`keyframe_ids` under normal operation, since
+    it's derived from the very same frame stream. This bounds check is a
+    defensive addition matching this file's own existing convention
+    (`resolve_ref()`, a few functions up, bounds-checks `related_object_id`/
+    `parent_object_id` the same way) rather than letting one malformed event
+    raise an `IndexError` and abort the whole synchronous persist
+    transaction over what would otherwise be a single bad row.
+    """
+    idx = event.get("first_frame_idx")
+    if isinstance(idx, int) and 0 <= idx < len(keyframe_ids):
+        return keyframe_ids[idx]
+    return None
+
+def prepare_event_rows(video_id, camera_id, events, keyframe_ids):
+    rows = []
+    for ev in events:
+        kf_id = _event_keyframe_id(ev, keyframe_ids)
+        rows.append((
+            video_id,
+            camera_id,
+            ev.get("zone_id"),
+            kf_id,
+            ev.get("event_type"),
+            ev.get("person_global_id"),
+            ev.get("track_id"),
+            ev.get("started_at"),
+            ev.get("ended_at"),
+            ev.get("confidence"),
+            Json(ev.get("details") or {}),
+        ))
+    return rows
+
+def insert_events(cur, video_id, camera_id, events, keyframe_ids):
+    """Inserts `event` rows for this run's security events (Fase 4b, PR8b).
+
+    Runs SYNCHRONOUSLY, in the same transaction right after
+    `insert_objects_in_batches` -- NOT inside the `ThreadPoolExecutor`
+    metadata/neighborhood workers (design.md section 5): those workers are
+    partitioned by keyframe-index RANGE, but an event spans a range of
+    frames by definition and would not map onto any single partition: it
+    needs `video_id` and the fully-resolved, ordered `keyframe_ids`, both of
+    which only exist in the synchronous phase. Event volume is low (tens of
+    rows per video), so parallelizing it would add complexity for no
+    measurable gain.
+    """
+    if not events:
+        return []
+    rows = prepare_event_rows(video_id, camera_id, events, keyframe_ids)
+    base = """INSERT INTO event (video_id, camera_id, zone_id, key_frame_id, event_type,
+        person_global_id, track_id, started_at, ended_at, confidence, details, created_at)
+        VALUES %s"""
+    template = "(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,NOW())"
+    ids = []
+    for chunk_rows in chunks(rows, BATCH_SIZE):
+        ids_chunk = execute_values_returning(cur, base, chunk_rows, template, page_size=1000)
+        ids.extend(ids_chunk)
+    return ids
+
 # --------------------- funciones que se paralelizan por keyframe ranges ---------------------
 
 def build_object_maps(object_ids, obj_index, key_frames):
@@ -479,6 +551,12 @@ def json_to_postgre(json_file: str) -> str:
 
                 # objects -> en batches (síncrono): necesitamos los object ids en orden para los pasos siguientes
                 object_ids, obj_index = insert_objects_in_batches(cur, keyframe_ids, key_frames, class_map)
+
+                # eventos de seguridad (Fase 4b, PR8b) -> síncrono, aquí mismo
+                # (no en los workers de metadata/neighborhood; ver docstring
+                # de insert_events()).
+                events = data["video"].get("events", [])
+                insert_events(cur, video_id, camera_id, events, keyframe_ids)
 
                 # Nota: no insertamos metadata/neighborhood aquí; lo hacemos en paralelo más abajo
             # commit implícito por with conn:

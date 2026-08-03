@@ -1,9 +1,10 @@
-import json, os,time,re
+import json, os, time
 from datetime import datetime, timezone
-from typing import Tuple, Any
+from typing import Any, List, Optional, Tuple
 
 from camerachatbot import paths
-from camerachatbot.video_schema.timing import frame_timestamp
+from camerachatbot.video_schema.timing import frame_timestamp, parse_start_at
+from camerachatbot.security.events import event_to_dict
 
 def reformat_to_video_schema_uniform(
     src_json_path: str,
@@ -16,20 +17,8 @@ def reformat_to_video_schema_uniform(
     per_frame_inference: float,
     per_frame_preprocess: float,
     per_frame_postprocess: float,
+    events: Optional[List] = None,
 ) -> str:
-    def _parse_start(ts: str) -> datetime:
-        if ts.endswith("Z"):
-            dt = datetime.fromisoformat(ts[:-1]).replace(tzinfo=timezone.utc)
-        else:
-            ts_fixed = re.sub(r'(\.\d{1,5})(\+|\-)', lambda m: f"{m.group(1).ljust(7, '0')}{m.group(2)}", ts)
-
-            dt = datetime.fromisoformat(ts_fixed)
-            if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=timezone.utc)
-            else:
-                dt = dt.astimezone(timezone.utc)
-        return dt
-
     def _iso_z(dt: datetime) -> str:
         return dt.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
 
@@ -125,7 +114,7 @@ def reformat_to_video_schema_uniform(
         raise ValueError("El JSON de entrada debe ser un dict con frames como claves.")
 
     W, H = int(size_xy[0]), int(size_xy[1])
-    t0 = _parse_start(start_at)
+    t0 = parse_start_at(start_at)
 
     def _sort_key(k: str):
         try:
@@ -168,9 +157,22 @@ def reformat_to_video_schema_uniform(
 
         key_frames.append(kf)
 
+    # Fase 4b (PR8b): `events` is a `list[SecurityEvent]` produced by
+    # `orchestrator.multi_models()`'s zones+events stage. It rides along
+    # `video` the same way `neighborhood` already does -- one more sibling
+    # node under `out["video"]`, not a second top-level top of `out` itself
+    # -- so `postgres_writer.json_to_postgre()` reads it via
+    # `data["video"].get("events", [])`, mirroring how it already reads
+    # `data["video"].get("neighborhood", [])`.
+    events_out = [
+        (e if isinstance(e, dict) else event_to_dict(e))
+        for e in (events or [])
+    ]
+
     out = {"video": {"key": video_key,
                      "start_at": _iso_z(t0),
                      "neighborhood" : src["neighborhood"],
+                     "events": events_out,
                      "key_frames": key_frames}}
 
     os.makedirs(os.path.dirname(dst_json_path) or ".", exist_ok=True)
