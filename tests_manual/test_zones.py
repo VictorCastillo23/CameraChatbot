@@ -157,6 +157,23 @@ def test_zone_is_armed_overnight_wrap():
     assert zone_is_armed(zone, datetime(2026, 1, 1, 12, 0)) is False  # midday, outside window
 
 
+def test_zone_is_armed_days_filter_with_overnight_wrap():
+    # {"days": [4], "from": "22:00", "to": "06:00"} arms Friday night
+    # (weekday 4) through Saturday morning. Gate-review regression: applying
+    # the `days` filter to `at` alone BEFORE branching into the overnight
+    # logic incorrectly rejected the post-midnight continuation, because
+    # Saturday's weekday (5) isn't in `days` even though it's the intended
+    # continuation of Friday night's window.
+    #
+    # 2026-01-02 is a Friday (weekday 4); 2026-01-03 is a Saturday (5);
+    # 2026-01-01 is a Thursday (3).
+    zone = _zone({"days": [4], "from": "22:00", "to": "06:00"})
+    assert zone_is_armed(zone, datetime(2026, 1, 2, 23, 0)) is True    # Friday night: armed
+    assert zone_is_armed(zone, datetime(2026, 1, 3, 1, 0)) is True     # Sat 01:00: armed (was the bug)
+    assert zone_is_armed(zone, datetime(2026, 1, 3, 10, 0)) is False   # Sat 10:00: not armed
+    assert zone_is_armed(zone, datetime(2026, 1, 1, 23, 0)) is False   # Thu 23:00: not armed
+
+
 # ---------------------------------------------------------------------------
 # classify_bbox_zone: None calibration degrades, first-match-wins ordering
 # ---------------------------------------------------------------------------
@@ -309,6 +326,7 @@ def main():
     check("zone_is_armed(): same-day window, inclusive bounds", test_zone_is_armed_same_day_window)
     check("zone_is_armed(): days-of-week filter", test_zone_is_armed_days_filter)
     check("zone_is_armed(): overnight wrap (22:00 -> 06:00)", test_zone_is_armed_overnight_wrap)
+    check("zone_is_armed(): days filter combined with overnight wrap", test_zone_is_armed_days_filter_with_overnight_wrap)
     check("classify_bbox_zone(): calib=None -> None", test_classify_bbox_zone_none_calibration_degrades_to_none)
     check("classify_bbox_zone(): no containing zone -> None", test_classify_bbox_zone_no_match_returns_none)
     check("classify_bbox_zone(): first containing zone in list order wins", test_classify_bbox_zone_first_containing_zone_wins)

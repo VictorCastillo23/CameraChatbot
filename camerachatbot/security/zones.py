@@ -143,18 +143,31 @@ def zone_is_armed(zone: Zone, at: datetime) -> bool:
     Correctly handles the overnight-wrap case (`"from": "22:00", "to":
     "06:00"` crosses midnight) — a naive `from <= at <= to` check would
     incorrectly report every such schedule as never armed.
+
+    The `days` filter is applied per side of the wrap, not against `at`
+    alone: for a wrapping window, a day in `days` arms BOTH the tail end of
+    that day (`from` to midnight) AND the head end of the FOLLOWING day
+    (midnight to `to`). Applying the `days` filter to `at` before branching
+    on the wrap (the previous, buggy behavior) incorrectly rejected the
+    post-midnight continuation of an overnight window, e.g.
+    `{"days": [4], "from": "22:00", "to": "06:00"}` (armed Friday night
+    through Saturday morning) would report Saturday 01:00 as unarmed,
+    because Saturday's weekday isn't in `days` — even though it's the
+    intended continuation of Friday night's window.
     """
     schedule = zone.schedule
     if not schedule:
         return True
 
     days = schedule.get("days")
-    if days is not None and at.weekday() not in days:
-        return False
 
     from_s = schedule.get("from")
     to_s = schedule.get("to")
     if not from_s or not to_s:
+        # No time window configured -- only the day-of-week filter (if any)
+        # applies.
+        if days is not None and at.weekday() not in days:
+            return False
         return True
 
     t_from = _parse_hhmm(from_s)
@@ -162,11 +175,24 @@ def zone_is_armed(zone: Zone, at: datetime) -> bool:
     t_at = at.time()
 
     if t_from <= t_to:
+        if days is not None and at.weekday() not in days:
+            return False
         return t_from <= t_at <= t_to
-    # Overnight wrap: e.g. 22:00 -> 06:00 crosses midnight, so "armed" is
-    # everything from `from` to midnight PLUS everything from midnight to
-    # `to`, i.e. the complement of the (t_to, t_from) daytime gap.
-    return t_at >= t_from or t_at <= t_to
+
+    # Overnight wrap: e.g. 22:00 -> 06:00 crosses midnight. Without a `days`
+    # filter, "armed" is everything from `from` to midnight PLUS everything
+    # from midnight to `to` (the complement of the (t_to, t_from) daytime
+    # gap). With a `days` filter, each side of the wrap is checked against
+    # the day it actually belongs to: the tail end (`t_at >= t_from`)
+    # belongs to `at`'s own weekday; the head end (`t_at <= t_to`) belongs
+    # to the PRECEDING day's overnight window, i.e. `at.weekday() - 1`.
+    if days is None:
+        return t_at >= t_from or t_at <= t_to
+    if t_at >= t_from:
+        return at.weekday() in days
+    if t_at <= t_to:
+        return (at.weekday() - 1) % 7 in days
+    return False
 
 
 def classify_bbox_zone(bbox, calib: Optional[CameraCalibration], zones: List[Zone]) -> Optional[Zone]:
