@@ -187,9 +187,13 @@ def _run_zones_events_stage(tracker, camera_id, start_at, fps):
         events = []
 
     events_path = _dump_security_events(tracker.output_folder, events)
+    n_intrusion = sum(1 for e in events if e.event_type == "intrusion")
+    n_loitering = sum(1 for e in events if e.event_type == "loitering")
+    n_unenrolled = sum(1 for e in events if e.event_type == "unenrolled_person")
     print(f"[STAGE 4b] camera_id={camera_id}, calib={'yes' if calib else 'no'}, zonas={len(zones)}, "
           f"auth={'yes' if registry is not None else 'no'}, tracks={len(timeline)}, "
-          f"eventos={len(events)} -> {events_path}")
+          f"eventos={len(events)} (intrusion={n_intrusion}, loitering={n_loitering}, "
+          f"unenrolled={n_unenrolled}) -> {events_path}")
 
     return events
 

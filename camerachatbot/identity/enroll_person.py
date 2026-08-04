@@ -40,9 +40,11 @@ models before relying on it.
 import argparse
 import glob
 import os
+import sys
 
 import cv2
 import numpy as np
+import psycopg2
 
 from camerachatbot import paths
 from camerachatbot.db.postgres_writer import get_conn, SCHEMA, ensure_schema_and_tables
@@ -100,21 +102,21 @@ def _embed_images(detector, embedder, image_paths):
     for path in image_paths:
         img = cv2.imread(path)
         if img is None:
-            skipped.append((path, "could not read image"))
+            skipped.append((path, "no se pudo leer la imagen"))
             continue
 
         det_results = detector(img, verbose=False)
         det_result = det_results[0] if det_results else None
         bbox = _largest_person_bbox(det_result)
         if bbox is None:
-            skipped.append((path, "no person detected"))
+            skipped.append((path, "no se detectó ninguna persona"))
             continue
 
         x1, y1, x2, y2 = bbox
         crop = img[y1:y2, x1:x2]
         emb = embedder.embed_one(crop)
         if emb is None or not OSNetOnnxEmbedder.is_valid_embedding(emb):
-            skipped.append((path, "embedding failed on the detected crop"))
+            skipped.append((path, "el embedding falló sobre el recorte detectado"))
             continue
 
         embeddings.append(emb)
@@ -135,9 +137,9 @@ def _centroid(embeddings):
     norm = float(np.linalg.norm(c))
     if norm < 1e-9:
         raise RuntimeError(
-            "Enrollment centroid has ~zero norm -- the collected embeddings "
-            "are degenerate (all-zero or perfectly canceling). Re-enroll "
-            "with different reference images."
+            "El centroide de enrolamiento tiene norma ~0 -- los embeddings "
+            "recolectados son degenerados (todos cero o se cancelan entre sí). "
+            "Vuelva a enrolar con imágenes de referencia distintas."
         )
     return (c / norm).astype("float32")
 
@@ -220,19 +222,21 @@ def enroll(name: str, images_dir: str, role=None, gallery: GlobalIdentityService
     """
     image_paths = _iter_image_paths(images_dir)
     if not image_paths:
-        raise FileNotFoundError(f"No images ({', '.join(_IMAGE_EXTS)}) found under: {images_dir}")
+        raise FileNotFoundError(
+            f"No se encontraron imágenes ({', '.join(_IMAGE_EXTS)}) en: {images_dir}"
+        )
 
     detector = load_detector()
     embedder = load_reid()
 
     embeddings, skipped = _embed_images(detector, embedder, image_paths)
     for path, reason in skipped:
-        print(f"[WARN] Skipping {path}: {reason}")
+        print(f"[WARN] Omitiendo {path}: {reason}")
 
     if not embeddings:
         raise RuntimeError(
-            f"No usable person crop/embedding found across {len(image_paths)} image(s) "
-            f"under {images_dir} -- cannot enroll '{name}'."
+            f"No se obtuvo ningún recorte/embedding de persona utilizable entre "
+            f"{len(image_paths)} imagen(es) en {images_dir} -- no se puede enrolar '{name}'."
         )
 
     centroid = _centroid(embeddings)
@@ -256,17 +260,36 @@ def enroll(name: str, images_dir: str, role=None, gallery: GlobalIdentityService
 
     if pid is None:
         raise RuntimeError(
-            f"Gallery match for '{name}' is ambiguous (gray zone, sim={sim:.3f}, "
-            f"t_accept={t_accept}, t_reject={t_reject}) -- refusing to guess. "
-            f"Re-enroll with clearer/more distinctive images."
+            f"La coincidencia de galería para '{name}' es ambigua (zona gris, sim={sim:.3f}, "
+            f"t_accept={t_accept}, t_reject={t_reject}) -- se rechaza adivinar. "
+            f"Vuelva a enrolar con imágenes más claras/distintivas."
         )
 
-    _upsert_authorized_identity(pid, display_name=name, role=role)
+    # `gallery.assign_or_create()` above already wrote the new/matched
+    # prototype to gallery.index/id_map.json/proto_store.npy (via
+    # GlobalIdentityService._save(), synchronous, no rollback primitive) --
+    # if the authorized_identity upsert below fails now, we're left in a
+    # split state: person_global_id=pid exists in the gallery but has no
+    # authorization row, so AuthorizationRegistry.is_authorized(pid) will be
+    # fail-closed False until this is retried. Surface that explicitly
+    # rather than letting a generic DB error obscure it -- this is
+    # deliberately NOT rolled back (no clean primitive for it, out of scope
+    # for this fix), the goal is operator visibility.
+    try:
+        _upsert_authorized_identity(pid, display_name=name, role=role)
+    except Exception as e:
+        raise RuntimeError(
+            f"person_global_id={pid} se agregó correctamente a la galería de identidades, "
+            f"pero falló la escritura del registro de autorización: {e}. Esta persona será "
+            f"tratada como NO AUTORIZADA hasta que se reintente (volver a enrolar con las "
+            f"mismas imágenes debería volver a coincidir con el mismo person_global_id={pid} "
+            f"vía la galería, y solo faltaría que la escritura de authorized_identity tenga éxito)."
+        ) from e
 
     print(
-        f"[OK] Enrolled '{name}' as person_global_id={pid} "
-        f"({'new identity' if created else 'matched existing identity'}, sim={sim:.3f}, "
-        f"images_used={len(embeddings)}/{len(image_paths)}, role={role!r})."
+        f"[OK] '{name}' enrolado como person_global_id={pid} "
+        f"({'identidad nueva' if created else 'coincidió con identidad existente'}, sim={sim:.3f}, "
+        f"imágenes_usadas={len(embeddings)}/{len(image_paths)}, role={role!r})."
     )
     return pid
 
@@ -275,14 +298,14 @@ def deactivate(person_global_id: int) -> int:
     updated = _deactivate_authorized_identity(person_global_id)
     if updated == 0:
         print(
-            f"[WARN] No authorized_identity row found for person_global_id={person_global_id} "
-            f"-- nothing deactivated."
+            f"[WARN] No se encontró fila authorized_identity para person_global_id={person_global_id} "
+            f"-- no se desactivó nada."
         )
     else:
         print(
-            f"[OK] Deactivated person_global_id={person_global_id} (is_active=FALSE). "
-            f"Gallery/FAISS entry left untouched -- this person remains recognizable and "
-            f"will now generate unenrolled_person events."
+            f"[OK] person_global_id={person_global_id} desactivado (is_active=FALSE). "
+            f"La entrada de galería/FAISS quedó intacta -- esta persona sigue siendo reconocible "
+            f"y ahora generará eventos unenrolled_person."
         )
     return updated
 
@@ -299,14 +322,31 @@ def main(argv=None):
     parser.add_argument("--role", type=str, default=None, help="Optional role label (e.g. 'staff').")
     args = parser.parse_args(argv)
 
-    if args.deactivate is not None:
-        deactivate(args.deactivate)
-        return
-
-    if not args.images:
+    if args.deactivate is None and not args.images:
         parser.error("--images is required when using --name.")
 
-    enroll(args.name, args.images, role=args.role)
+    # Expected, real failure modes get a clean CLI message + non-zero exit
+    # instead of a raw traceback: FileNotFoundError (--images has no
+    # matching files), RuntimeError (no image yielded a usable embedding,
+    # gray-zone match, or the fix-C split-state case above), and any
+    # psycopg2 connection/operational error from the authorized_identity
+    # upsert/deactivate path. Per-image failures (unreadable file, no
+    # person detected) are already handled gracefully via the `skipped`
+    # list inside `enroll()` -- this does not touch that path.
+    try:
+        if args.deactivate is not None:
+            deactivate(args.deactivate)
+        else:
+            enroll(args.name, args.images, role=args.role)
+    except FileNotFoundError as e:
+        print(f"[ERROR] {e}")
+        sys.exit(1)
+    except RuntimeError as e:
+        print(f"[ERROR] {e}")
+        sys.exit(1)
+    except psycopg2.Error as e:
+        print(f"[ERROR] Error de base de datos: {e}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
