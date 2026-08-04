@@ -8,9 +8,11 @@ from camerachatbot.security.events import (
     build_tracks_timeline,
     evaluate_intrusion,
     evaluate_loitering,
+    evaluate_unenrolled,
     event_to_dict,
 )
 from camerachatbot.geometry.homography import CameraCalibration
+from camerachatbot.identity.authorization import AuthorizationRegistry
 from camerachatbot.video_schema.timing import parse_start_at
 
 
@@ -102,22 +104,23 @@ def _dump_security_events(output_folder, events):
 
 
 def _run_zones_events_stage(tracker, camera_id, start_at, fps):
-    """Fase 4b (PR8b): classifies each person detection's world position/
-    zone and evaluates intrusion/loitering rules over the resulting tracks
-    timeline. Placed between `enroll_and_assign_global_ids()` and the
-    `detail_detectors` loop per design.md section 4's diagram.
+    """Fase 4b (PR8b) + Fase 5 (PR9): classifies each person detection's
+    world position/zone and evaluates intrusion/loitering/unenrolled-person
+    rules over the resulting tracks timeline. Placed between
+    `enroll_and_assign_global_ids()` and the `detail_detectors` loop per
+    design.md section 4's diagram.
 
     Must never raise -- for ANY reason -- out into `multi_models()`: a
     failure here (bad zone data reaching `zone_is_armed()`'s time parsing,
     `fps=0` reaching `frame_timestamp()`'s division, a bug in one of the
     evaluators, a disk write failure) must degrade this stage to
     `events = []` rather than crashing pose classification and Postgres
-    persistence for the whole batch. The calib/zones DB lookups below keep
-    their OWN finer-grained try/excepts (for better per-lookup logging, and
-    because a lookup failure alone is still recoverable -- run the stage
-    with `calib=None`/`zones=[]`); this outer try/except is an ADDITIONAL
-    safety net around everything downstream of those lookups, which the
-    finer-grained ones do not cover.
+    persistence for the whole batch. The calib/zones/registry DB lookups
+    below keep their OWN finer-grained try/excepts (for better per-lookup
+    logging, and because a lookup failure alone is still recoverable -- run
+    the stage with `calib=None`/`zones=[]`/`registry=None`); this outer
+    try/except is an ADDITIONAL safety net around everything downstream of
+    those lookups, which the finer-grained ones do not cover.
     """
     calib = None
     zones = []
@@ -141,6 +144,23 @@ def _run_zones_events_stage(tracker, camera_id, start_at, fps):
             print(f"[SECURITY-DEGRADED] No se pudieron cargar zonas para camera_id={camera_id}: {e}")
             zones = []
 
+    # Fase 5 (PR9): AuthorizationRegistry is camera-independent
+    # (`authorized_identity` has no `camera_id` column) -- loaded
+    # unconditionally, regardless of whether `camera_id` is set/calibrated,
+    # so `evaluate_unenrolled` is usable before any camera is calibrated
+    # (design.md section 4). A lookup failure degrades to `registry=None`,
+    # which SKIPS `evaluate_unenrolled` entirely below rather than falling
+    # back to an empty (fail-closed-for-everyone) registry -- an empty
+    # registry would flag every currently-tracked person as unenrolled,
+    # flooding false positives during what is really a DB outage, not an
+    # authorization gap.
+    registry = None
+    try:
+        registry = AuthorizationRegistry.load()
+    except Exception as e:
+        print(f"[SECURITY-DEGRADED] No se pudo cargar AuthorizationRegistry: {e}")
+        registry = None
+
     try:
         _write_zone_and_world_xy(tracker, calib, zones)
 
@@ -158,6 +178,8 @@ def _run_zones_events_stage(tracker, camera_id, start_at, fps):
         events = []
         events.extend(evaluate_intrusion(timeline, zones, SECURITY_RULES))
         events.extend(evaluate_loitering(timeline, zones, SECURITY_RULES))
+        if registry is not None:
+            events.extend(evaluate_unenrolled(timeline, registry, SECURITY_RULES))
     except Exception as e:
         print(f"[SECURITY-DEGRADED] Fase 4b (zonas+eventos) fallo inesperado para "
               f"camera_id={camera_id}, degradando a events=[]: {e}")
@@ -166,7 +188,8 @@ def _run_zones_events_stage(tracker, camera_id, start_at, fps):
 
     events_path = _dump_security_events(tracker.output_folder, events)
     print(f"[STAGE 4b] camera_id={camera_id}, calib={'yes' if calib else 'no'}, zonas={len(zones)}, "
-          f"tracks={len(timeline)}, eventos={len(events)} -> {events_path}")
+          f"auth={'yes' if registry is not None else 'no'}, tracks={len(timeline)}, "
+          f"eventos={len(events)} -> {events_path}")
 
     return events
 

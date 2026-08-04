@@ -1,0 +1,19 @@
+{
+  "description": "Hand-built TracksTimeline inputs for evaluate_unenrolled()'s debounce boundary (Fase 5, PR9), exercised directly (no build_tracks_timeline()/reid/calibration/registry-load involved). gap_tolerance matches SECURITY_RULES['intrusion_gap_frames']; debounce matches SECURITY_RULES['unenrolled_debounce_frames'] (5 today -- tests_manual/test_events.py cross-checks this value against SECURITY_RULES directly rather than assuming it, so this fixture only needs to stay internally consistent with itself).",
+  "gap_tolerance": 2,
+  "debounce": 5,
+  "below_debounce": {
+    "description": "Track 5, person_global_id=None (unenrolled) for debounce-1=4 consecutive observations -> below the debounce threshold -> zero events.",
+    "track_id": 5,
+    "person_global_id": null,
+    "frame_indices": [0, 1, 2, 3],
+    "expected_event_count": 0
+  },
+  "at_debounce": {
+    "description": "Track 6, person_global_id=None (unenrolled) for exactly debounce=5 consecutive observations -> zero-indexed boundary reached -> one event.",
+    "track_id": 6,
+    "person_global_id": null,
+    "frame_indices": [0, 1, 2, 3, 4],
+    "expected_event_count": 1
+  }
+}

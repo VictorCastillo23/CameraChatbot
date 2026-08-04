@@ -1,4 +1,5 @@
-"""Fase 4b (PR8a) — tracks-timeline construction + intrusion/loitering rules.
+"""Fase 4b (PR8a/PR8b) + Fase 5 (PR9) — tracks-timeline construction and
+intrusion/loitering/unenrolled-person rules.
 
 `build_tracks_timeline()` is the single most important testability decision
 in this phase: every event-generating rule is a PURE function over one
@@ -6,9 +7,10 @@ intermediate structure (`TracksTimeline`), built once. That lets every rule
 be tested with hand-built dicts and zero image I/O (see `tests_manual/`).
 
 This module is pure logic only — no database writes, no orchestrator
-wiring. Both land in PR8b. `evaluate_unenrolled` (Fase 5) and
-`evaluate_weapons` (Fase 6) are deliberately NOT implemented here; they will
-be added to this same file by later PRs.
+wiring (that lands in `pipeline.orchestrator._run_zones_events_stage()`).
+`evaluate_unenrolled` (Fase 5, PR9) is implemented here now; `evaluate_
+weapons` (Fase 6) is still deliberately NOT implemented — it will be added
+to this same file by a later PR.
 """
 
 from dataclasses import dataclass, field
@@ -16,6 +18,7 @@ from datetime import datetime
 from typing import Callable, Dict, List, Optional, Tuple, TypedDict
 
 from camerachatbot.geometry.homography import CameraCalibration
+from camerachatbot.identity.authorization import AuthorizationRegistry
 from camerachatbot.security.zones import Zone, bbox_world_and_zone, zone_is_armed
 from camerachatbot.video_schema.timing import frame_timestamp
 
@@ -271,5 +274,60 @@ def evaluate_loitering(
                             "observation_count": len(run),
                         },
                     ))
+
+    return events
+
+
+def evaluate_unenrolled(
+    timeline: TracksTimeline,
+    registry: AuthorizationRegistry,
+    cfg: dict,
+) -> List[SecurityEvent]:
+    """One `SecurityEvent(event_type="unenrolled_person")` per maximal run
+    (Fase 5) where the observation's `person_global_id` is either `None` or
+    not authorized per `registry.is_authorized(person_global_id)`.
+
+    A run is only reported once it reaches `>= cfg["unenrolled_debounce_
+    frames"]` OBSERVATIONS. This is deliberately a count of observations,
+    NOT wall-clock time -- a low-fps run must not arm faster than a
+    high-fps one just because more real time elapses between frames.
+
+    Uses the same `_runs()` gap-tolerance primitive
+    (`cfg["intrusion_gap_frames"]`) as `evaluate_intrusion`/`evaluate_
+    loitering`, so a single dropped detection does not fragment one
+    continuous unenrolled presence into multiple under-threshold runs.
+
+    `registry` is camera-independent (see `identity.authorization.
+    AuthorizationRegistry`) and fail-closed: `is_authorized(None)` and any
+    unknown/deauthorized `person_global_id` both return `False`, which is
+    exactly what makes an unenrolled/deauthorized person's presence
+    detectable here.
+    """
+    gap = cfg["intrusion_gap_frames"]
+    debounce = cfg["unenrolled_debounce_frames"]
+    events: List[SecurityEvent] = []
+
+    def _is_unenrolled(obs: TrackObservation) -> bool:
+        pid = obs.get("person_global_id")
+        return pid is None or not registry.is_authorized(pid)
+
+    for track_id, observations in timeline.items():
+        for run in _runs(observations, _is_unenrolled, gap):
+            if len(run) < debounce:
+                continue
+            first, last = run[0], run[-1]
+            events.append(SecurityEvent(
+                event_type="unenrolled_person",
+                zone_id=first["zone_id"],
+                person_global_id=first.get("person_global_id"),
+                track_id=track_id,
+                started_at=first["ts"],
+                ended_at=last["ts"],
+                first_frame_idx=first["frame_idx"],
+                confidence=None,
+                details={
+                    "observation_count": len(run),
+                },
+            ))
 
     return events

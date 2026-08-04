@@ -58,6 +58,7 @@ from camerachatbot.security.events import (  # noqa: E402
     build_tracks_timeline,
     evaluate_intrusion,
     evaluate_loitering,
+    evaluate_unenrolled,
 )
 from camerachatbot.security_config import SECURITY_RULES  # noqa: E402
 
@@ -374,6 +375,105 @@ def test_evaluate_loitering_falls_back_to_default_loiter_seconds():
     assert len(events) == 1, f"expected the default_loiter_seconds fallback to trigger one event, got {events}"
 
 
+# ---------------------------------------------------------------------------
+# evaluate_unenrolled() (Fase 5, PR9): registry flips + debounce boundary
+# ---------------------------------------------------------------------------
+
+class _FakeAuthRegistry:
+    """Duck-types just enough of `identity.authorization.
+    AuthorizationRegistry` for these tests: a plain set of authorized
+    person_global_ids, no real DB (same "no live Postgres connection"
+    invariant this file's own docstring documents). Fail-closed for `None`,
+    matching the real class's contract."""
+
+    def __init__(self, authorized_pids=()):
+        self._authorized = set(authorized_pids)
+
+    def is_authorized(self, person_global_id):
+        return person_global_id is not None and person_global_id in self._authorized
+
+
+def test_security_rules_has_unenrolled_debounce_frames_config_field():
+    assert "unenrolled_debounce_frames" in SECURITY_RULES, \
+        "SECURITY_RULES is missing unenrolled_debounce_frames"
+    assert isinstance(SECURITY_RULES["unenrolled_debounce_frames"], int)
+
+
+def test_evaluate_unenrolled_below_debounce_is_zero_events():
+    fixture = _load_fixture("timeline_unenrolled.json")
+    case = fixture["below_debounce"]
+    cfg = {"intrusion_gap_frames": fixture["gap_tolerance"],
+           "unenrolled_debounce_frames": fixture["debounce"]}
+
+    observations = _observations_from_frame_indices(case["track_id"], zone_id=None, frame_indices=case["frame_indices"])
+    for obs in observations:
+        obs["person_global_id"] = case["person_global_id"]
+    timeline = {case["track_id"]: observations}
+
+    events = evaluate_unenrolled(timeline, _FakeAuthRegistry(), cfg)
+    assert len(events) == case["expected_event_count"], \
+        f"expected {case['expected_event_count']} event(s) below debounce, got {len(events)}: {events}"
+
+
+def test_evaluate_unenrolled_at_debounce_is_one_event():
+    fixture = _load_fixture("timeline_unenrolled.json")
+    case = fixture["at_debounce"]
+    cfg = {"intrusion_gap_frames": fixture["gap_tolerance"],
+           "unenrolled_debounce_frames": fixture["debounce"]}
+
+    observations = _observations_from_frame_indices(case["track_id"], zone_id=None, frame_indices=case["frame_indices"])
+    for obs in observations:
+        obs["person_global_id"] = case["person_global_id"]
+    timeline = {case["track_id"]: observations}
+
+    events = evaluate_unenrolled(timeline, _FakeAuthRegistry(), cfg)
+    assert len(events) == case["expected_event_count"], \
+        f"expected {case['expected_event_count']} event(s) at debounce, got {len(events)}: {events}"
+
+    ev = events[0]
+    assert ev.event_type == "unenrolled_person"
+    assert ev.track_id == case["track_id"]
+    assert ev.person_global_id is None
+    assert ev.details["observation_count"] == len(case["frame_indices"])
+
+
+def test_evaluate_unenrolled_authorized_pid_produces_no_event():
+    fixture = _load_fixture("timeline_unenrolled.json")
+    case = fixture["at_debounce"]  # enough observations to clear debounce
+    cfg = {"intrusion_gap_frames": fixture["gap_tolerance"],
+           "unenrolled_debounce_frames": fixture["debounce"]}
+
+    observations = _observations_from_frame_indices(case["track_id"], zone_id=None, frame_indices=case["frame_indices"])
+    for obs in observations:
+        obs["person_global_id"] = 42  # a real pid this time, not None
+    timeline = {case["track_id"]: observations}
+
+    # pid 42 IS authorized -> must NOT produce an unenrolled_person event,
+    # even though the run clears the debounce threshold.
+    events = evaluate_unenrolled(timeline, _FakeAuthRegistry(authorized_pids=(42,)), cfg)
+    assert events == [], f"an authorized person must never produce an unenrolled_person event, got {events}"
+
+
+def test_evaluate_unenrolled_unauthorized_known_pid_produces_event():
+    fixture = _load_fixture("timeline_unenrolled.json")
+    case = fixture["at_debounce"]
+    cfg = {"intrusion_gap_frames": fixture["gap_tolerance"],
+           "unenrolled_debounce_frames": fixture["debounce"]}
+
+    observations = _observations_from_frame_indices(case["track_id"], zone_id=None, frame_indices=case["frame_indices"])
+    for obs in observations:
+        obs["person_global_id"] = 42  # a known pid, but NOT in the registry
+
+    timeline = {case["track_id"]: observations}
+
+    # Registry has no entry for pid 42 at all (not just deauthorized) -->
+    # still must be reported as unenrolled -- unknown is exactly as
+    # untrusted as "never enrolled".
+    events = evaluate_unenrolled(timeline, _FakeAuthRegistry(authorized_pids=()), cfg)
+    assert len(events) == 1
+    assert events[0].person_global_id == 42
+
+
 def main():
     check("timing.frame_timestamp(): basic t0 + idx/fps arithmetic", test_frame_timestamp_basic_arithmetic)
     check("timing.frame_timestamp(): matches formatter.py's prior inline formula", test_frame_timestamp_matches_formatter_style_derivation)
@@ -391,7 +491,13 @@ def main():
     check("evaluate_loitering(): dwell just at/above threshold -> one event", test_evaluate_loitering_above_threshold_is_one_event)
     check("evaluate_loitering(): falls back to default_loiter_seconds", test_evaluate_loitering_falls_back_to_default_loiter_seconds)
 
-    print("\n=== Fase 4b (PR8a) zones+events contract verification ===")
+    check("SECURITY_RULES has unenrolled_debounce_frames", test_security_rules_has_unenrolled_debounce_frames_config_field)
+    check("evaluate_unenrolled(): below debounce -> zero events", test_evaluate_unenrolled_below_debounce_is_zero_events)
+    check("evaluate_unenrolled(): at debounce -> one event", test_evaluate_unenrolled_at_debounce_is_one_event)
+    check("evaluate_unenrolled(): authorized pid -> no event", test_evaluate_unenrolled_authorized_pid_produces_no_event)
+    check("evaluate_unenrolled(): unauthorized known pid -> one event", test_evaluate_unenrolled_unauthorized_known_pid_produces_event)
+
+    print("\n=== Fase 4b (PR8a) + Fase 5 (PR9) zones+events contract verification ===")
     n_pass = sum(1 for _, ok, _ in results if ok)
     for name, ok, detail in results:
         status = "PASS" if ok else "FAIL"

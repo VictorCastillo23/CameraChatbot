@@ -32,6 +32,19 @@ What it verifies:
    `CameraCalibration.load()`/`load_zones()` exception (e.g. DB
    unreachable) degrades the same way instead of propagating and aborting
    the whole pipeline run.
+
+   Fase 5 (PR9): `AuthorizationRegistry.load()` (also a module-level name
+   `orchestrator.py` binds via `from ... import ...`) now runs
+   UNCONDITIONALLY inside this stage, regardless of `camera_id` -- every
+   test below therefore ALSO monkeypatches `orchestrator_mod.
+   AuthorizationRegistry` with a synthetic, DB-free fake (see
+   `_fake_auth_registry_cls()`), preserving this file's own "no live
+   Postgres connection" invariant. Also verifies an `AuthorizationRegistry.
+   load()` failure degrades to `registry=None` (skipping `evaluate_
+   unenrolled` for this run) rather than raising, and that a real
+   `unenrolled_person` event IS produced end-to-end when a tracked person's
+   `person_global_id` is not in the (fake) registry for long enough to
+   clear `SECURITY_RULES["unenrolled_debounce_frames"]`.
 3. `security.events.event_to_dict()` -- ISO-8601 `started_at`, `None`
    `ended_at` stays `None` (not `"None"` the string), all other fields pass
    through verbatim.
@@ -123,6 +136,33 @@ def _covering_zone(zone_id=9, zone_type="restricted"):
                 polygon=[(0, 0), (100, 0), (100, 100), (0, 100)], schedule=None, is_active=True)
 
 
+class _FakeAuthRegistry:
+    """Duck-types just enough of `identity.authorization.
+    AuthorizationRegistry` for these tests: a plain set of authorized
+    person_global_ids, no real DB."""
+
+    def __init__(self, authorized_pids=()):
+        self._authorized = set(authorized_pids)
+
+    def is_authorized(self, person_global_id):
+        return person_global_id is not None and person_global_id in self._authorized
+
+
+def _fake_auth_registry_cls(authorized_pids=()):
+    """A module-patchable class exposing the same `load()` classmethod
+    contract as the real `AuthorizationRegistry` -- avoids a live Postgres
+    connection attempt from `AuthorizationRegistry.load()` (Fase 5, PR9),
+    which now runs unconditionally inside `_run_zones_events_stage()`
+    regardless of `camera_id`."""
+
+    class _Cls:
+        @classmethod
+        def load(cls):
+            return _FakeAuthRegistry(authorized_pids)
+
+    return _Cls
+
+
 # ---------------------------------------------------------------------------
 # orchestrator._write_zone_and_world_xy()
 # ---------------------------------------------------------------------------
@@ -167,7 +207,13 @@ def test_run_zones_events_stage_no_camera_id_degrades_and_dumps_checkpoint():
         }
         reid = _FakeReID(["0"], results_json, output_folder=tmpdir)
 
-        events = _run_zones_events_stage(reid, camera_id=None, start_at="2026-01-01T00:00:00Z", fps=10)
+        # Only 1 observation -- well below SECURITY_RULES["unenrolled_
+        # debounce_frames"] (5), so an empty (authorizes-nothing) fake
+        # registry still contributes zero events here.
+        events = _with_patched_orchestrator(
+            {"AuthorizationRegistry": _fake_auth_registry_cls()},
+            lambda: _run_zones_events_stage(reid, camera_id=None, start_at="2026-01-01T00:00:00Z", fps=10),
+        )
 
         assert events == []
         person = results_json["0"][0]
@@ -201,8 +247,12 @@ def test_run_zones_events_stage_with_camera_id_builds_intrusion_event():
         }
         reid = _FakeReID([str(i) for i in range(3)], results_json, output_folder=tmpdir)
 
+        # 3 observations -- still below the debounce threshold (5), so an
+        # empty fake registry contributes zero unenrolled_person events;
+        # only the intrusion event is expected.
         events = _with_patched_orchestrator(
-            {"CameraCalibration": _FakeCalibCls, "load_zones": _fake_load_zones},
+            {"CameraCalibration": _FakeCalibCls, "load_zones": _fake_load_zones,
+             "AuthorizationRegistry": _fake_auth_registry_cls()},
             lambda: _run_zones_events_stage(reid, camera_id=5, start_at="2026-01-01T00:00:00Z", fps=10),
         )
 
@@ -242,7 +292,8 @@ def test_run_zones_events_stage_degrades_when_calibration_lookup_raises():
         reid = _FakeReID(["0"], results_json, output_folder=tmpdir)
 
         events = _with_patched_orchestrator(
-            {"CameraCalibration": _RaisingCalibCls, "load_zones": _raising_load_zones},
+            {"CameraCalibration": _RaisingCalibCls, "load_zones": _raising_load_zones,
+             "AuthorizationRegistry": _fake_auth_registry_cls()},
             lambda: _run_zones_events_stage(reid, camera_id=5, start_at="2026-01-01T00:00:00Z", fps=10),
         )
 
@@ -288,7 +339,8 @@ def test_run_zones_events_stage_degrades_on_malformed_zone_schedule():
         reid = _FakeReID(["0"], results_json, output_folder=tmpdir)
 
         events = _with_patched_orchestrator(
-            {"CameraCalibration": _FakeCalibCls, "load_zones": _fake_load_zones},
+            {"CameraCalibration": _FakeCalibCls, "load_zones": _fake_load_zones,
+             "AuthorizationRegistry": _fake_auth_registry_cls()},
             lambda: _run_zones_events_stage(reid, camera_id=5, start_at="2026-01-01T00:00:00Z", fps=10),
         )
 
@@ -317,7 +369,10 @@ def test_run_zones_events_stage_degrades_on_fps_zero():
         # No camera_id needed: build_tracks_timeline() computes
         # frame_timestamp() for every observation unconditionally, so
         # fps=0 crashes even with calib=None/zones=[].
-        events = _run_zones_events_stage(reid, camera_id=None, start_at="2026-01-01T00:00:00Z", fps=0)
+        events = _with_patched_orchestrator(
+            {"AuthorizationRegistry": _fake_auth_registry_cls()},
+            lambda: _run_zones_events_stage(reid, camera_id=None, start_at="2026-01-01T00:00:00Z", fps=0),
+        )
 
         assert events == [], "fps=0 must degrade to no events, not crash the batch"
 
@@ -325,6 +380,108 @@ def test_run_zones_events_stage_degrades_on_fps_zero():
         assert os.path.exists(ckpt_path), "the events checkpoint must still be dumped on degrade"
         with open(ckpt_path, "r", encoding="utf-8") as f:
             assert json.load(f) == []
+
+
+# ---------------------------------------------------------------------------
+# orchestrator._run_zones_events_stage(): Fase 5 (PR9) AuthorizationRegistry
+# wiring -- load-failure degrade + real evaluate_unenrolled wiring
+# ---------------------------------------------------------------------------
+
+def test_run_zones_events_stage_degrades_when_authorization_registry_load_raises():
+    """Fase 5 (PR9) gate-review-style regression coverage: an
+    `AuthorizationRegistry.load()` failure (e.g. DB unreachable) must
+    degrade to `registry=None` (skipping `evaluate_unenrolled` entirely for
+    this run) rather than raising out of `_run_zones_events_stage()` --
+    mirroring the `CameraCalibration`/`load_zones` degrade convention
+    already established (task requirement: "orchestrator wiring degrade
+    test ... mirroring the existing calibration/zone degrade tests")."""
+
+    class _RaisingAuthCls:
+        @classmethod
+        def load(cls):
+            raise RuntimeError("db unreachable")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        results_json = {
+            "0": [{"kind": "person", "bbox": [0, 0, 10, 20], "track_id": 1,
+                    "person_global_id": 7, "confidence": 0.9}],
+        }
+        reid = _FakeReID(["0"], results_json, output_folder=tmpdir)
+
+        events = _with_patched_orchestrator(
+            {"AuthorizationRegistry": _RaisingAuthCls},
+            lambda: _run_zones_events_stage(reid, camera_id=None, start_at="2026-01-01T00:00:00Z", fps=10),
+        )
+
+        assert events == [], "an AuthorizationRegistry load failure must degrade to no events, not raise"
+
+        ckpt_path = os.path.join(tmpdir, "security_events.json")
+        assert os.path.exists(ckpt_path), "the events checkpoint must still be dumped on degrade"
+        with open(ckpt_path, "r", encoding="utf-8") as f:
+            assert json.load(f) == []
+
+
+def test_run_zones_events_stage_wires_evaluate_unenrolled_end_to_end():
+    """Fase 5 (PR9): with a real (fake) `AuthorizationRegistry` and enough
+    consecutive unauthorized observations to clear `SECURITY_RULES[
+    "unenrolled_debounce_frames"]`, `_run_zones_events_stage()` must include
+    an `unenrolled_person` event in its returned list, proving `evaluate_
+    unenrolled()` is actually wired in (not just importable)."""
+    from camerachatbot.security_config import SECURITY_RULES
+    debounce = SECURITY_RULES["unenrolled_debounce_frames"]
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        frames = [str(i) for i in range(debounce)]
+        results_json = {
+            f: [{"kind": "person", "bbox": [0, 0, 10, 20], "track_id": 1,
+                 "person_global_id": 99, "confidence": 0.9}]
+            for f in frames
+        }
+        reid = _FakeReID(frames, results_json, output_folder=tmpdir)
+
+        # pid 99 is NOT in the fake registry -> unauthorized for
+        # `debounce` consecutive frames -> exactly one unenrolled_person
+        # event expected, with no camera_id/calibration/zones involved.
+        events = _with_patched_orchestrator(
+            {"AuthorizationRegistry": _fake_auth_registry_cls(authorized_pids=())},
+            lambda: _run_zones_events_stage(reid, camera_id=None, start_at="2026-01-01T00:00:00Z", fps=10),
+        )
+
+        unenrolled = [e for e in events if e.event_type == "unenrolled_person"]
+        assert len(unenrolled) == 1, f"expected one unenrolled_person event, got {events}"
+        assert unenrolled[0].person_global_id == 99
+        assert unenrolled[0].track_id == 1
+
+        ckpt_path = os.path.join(tmpdir, "security_events.json")
+        with open(ckpt_path, "r", encoding="utf-8") as f:
+            dumped = json.load(f)
+        assert len(dumped) == 1
+        assert dumped[0]["event_type"] == "unenrolled_person"
+
+
+def test_run_zones_events_stage_authorized_person_produces_no_unenrolled_event():
+    """Same setup as the wiring test above, but pid 99 IS in the fake
+    registry -- must produce zero `unenrolled_person` events even though
+    the run clears the debounce threshold."""
+    from camerachatbot.security_config import SECURITY_RULES
+    debounce = SECURITY_RULES["unenrolled_debounce_frames"]
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        frames = [str(i) for i in range(debounce)]
+        results_json = {
+            f: [{"kind": "person", "bbox": [0, 0, 10, 20], "track_id": 1,
+                 "person_global_id": 99, "confidence": 0.9}]
+            for f in frames
+        }
+        reid = _FakeReID(frames, results_json, output_folder=tmpdir)
+
+        events = _with_patched_orchestrator(
+            {"AuthorizationRegistry": _fake_auth_registry_cls(authorized_pids=(99,))},
+            lambda: _run_zones_events_stage(reid, camera_id=None, start_at="2026-01-01T00:00:00Z", fps=10),
+        )
+
+        unenrolled = [e for e in events if e.event_type == "unenrolled_person"]
+        assert unenrolled == [], f"an authorized person must not produce an unenrolled_person event, got {events}"
 
 
 # ---------------------------------------------------------------------------
@@ -456,6 +613,13 @@ def main():
     check("_run_zones_events_stage(): fps=0 degrades, does not crash the batch",
           test_run_zones_events_stage_degrades_on_fps_zero)
 
+    check("_run_zones_events_stage(): AuthorizationRegistry load failure degrades, does not raise",
+          test_run_zones_events_stage_degrades_when_authorization_registry_load_raises)
+    check("_run_zones_events_stage(): wires evaluate_unenrolled() end-to-end",
+          test_run_zones_events_stage_wires_evaluate_unenrolled_end_to_end)
+    check("_run_zones_events_stage(): authorized person produces no unenrolled_person event",
+          test_run_zones_events_stage_authorized_person_produces_no_unenrolled_event)
+
     check("event_to_dict(): ISO timestamps, None ended_at stays None",
           test_event_to_dict_serializes_timestamps_and_none_ended_at)
 
@@ -469,7 +633,7 @@ def main():
     check("prepare_event_rows(): tuple shape + Json-wrapped details",
           test_prepare_event_rows_shapes_tuple_for_execute_values)
 
-    print("\n=== Fase 4b (PR8b) orchestrator-wiring contract verification ===")
+    print("\n=== Fase 4b (PR8b) + Fase 5 (PR9) orchestrator-wiring contract verification ===")
     n_pass = sum(1 for _, ok, _ in results if ok)
     for name, ok, detail in results:
         status = "PASS" if ok else "FAIL"

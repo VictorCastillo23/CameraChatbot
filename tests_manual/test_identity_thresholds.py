@@ -42,6 +42,7 @@ import numpy as np  # noqa: E402
 from camerachatbot.security_config import IDENTITY_THRESHOLDS  # noqa: E402
 from camerachatbot.detectors.person_reid import YOLOPersonReID  # noqa: E402
 from camerachatbot.identity.global_identity_service import GlobalIdentityService  # noqa: E402
+import camerachatbot.pipeline.orchestrator as orchestrator_mod  # noqa: E402
 from camerachatbot.pipeline.orchestrator import multi_models  # noqa: E402
 
 RUNTIME_T_ACCEPT = IDENTITY_THRESHOLDS["runtime"]["t_accept"]
@@ -202,6 +203,13 @@ class _FakeTracker:
     stays unset (`None`) in both tests below, so this stage takes the fully
     degraded no-calibration/no-zones path (see orchestrator.py) and
     contributes zero events either way.
+
+    Fase 5 (PR9): `AuthorizationRegistry.load()` now runs UNCONDITIONALLY
+    inside `_run_zones_events_stage()` regardless of `camera_id` -- both
+    tests below patch `orchestrator_mod.AuthorizationRegistry` with a
+    synthetic, DB-free fake (see `_with_fake_auth_registry()`) so this file
+    keeps its own "no real gallery/detection pipeline, no live Postgres
+    connection" invariant.
     """
 
     def __init__(self, output_folder):
@@ -237,11 +245,39 @@ class _FakeTracker:
         return {}
 
 
+class _FakeAuthRegistry:
+    """Duck-types just enough of `identity.authorization.
+    AuthorizationRegistry` for these tests: authorizes nothing, no real DB."""
+
+    def is_authorized(self, person_global_id):
+        return False
+
+
+class _FakeAuthRegistryCls:
+    @classmethod
+    def load(cls):
+        return _FakeAuthRegistry()
+
+
+def _with_fake_auth_registry(fn):
+    """Patches `orchestrator_mod.AuthorizationRegistry` (Fase 5, PR9) for the
+    duration of `fn()`, avoiding a live Postgres connection attempt from the
+    real class's `load()` -- see `_FakeTracker`'s docstring above."""
+    original = orchestrator_mod.AuthorizationRegistry
+    orchestrator_mod.AuthorizationRegistry = _FakeAuthRegistryCls
+    try:
+        return fn()
+    finally:
+        orchestrator_mod.AuthorizationRegistry = original
+
+
 def test_multi_models_resolves_none_sentinels_from_identity_thresholds(tmpdir):
     tracker = _FakeTracker(tmpdir)
     # t_accept/t_reject/min_sim_add/max_protos_per_person all left at their
     # None default deliberately.
-    multi_models(tracker, detail_detectors=[], keyframes_path="unused", gallery=None)
+    _with_fake_auth_registry(
+        lambda: multi_models(tracker, detail_detectors=[], keyframes_path="unused", gallery=None)
+    )
 
     assert tracker.captured_kwargs is not None, "enroll_and_assign_global_ids was never called"
     assert tracker.captured_kwargs["t_accept"] == RUNTIME_T_ACCEPT
@@ -252,10 +288,10 @@ def test_multi_models_resolves_none_sentinels_from_identity_thresholds(tmpdir):
 
 def test_multi_models_explicit_override_wins_over_sentinel(tmpdir):
     tracker = _FakeTracker(tmpdir)
-    multi_models(
+    _with_fake_auth_registry(lambda: multi_models(
         tracker, detail_detectors=[], keyframes_path="unused", gallery=None,
         t_accept=0.99, t_reject=0.01, min_sim_add=0.5, max_protos_per_person=1,
-    )
+    ))
     assert tracker.captured_kwargs["t_accept"] == 0.99
     assert tracker.captured_kwargs["t_reject"] == 0.01
     assert tracker.captured_kwargs["min_sim_add"] == 0.5
