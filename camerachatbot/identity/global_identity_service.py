@@ -156,8 +156,8 @@ class GlobalIdentityService:
             })
         return hits
 
-    def assign_or_create(self, emb, modality="body",
-                         t_accept=0.60, t_reject=0.45, k=10, proto_meta=None,
+    def assign_or_create(self, emb, modality="body", *,
+                         t_accept, t_reject, k=10, proto_meta=None,
                          return_hits=False):
         emb = np.asarray(emb, dtype="float32")
         if emb.ndim != 1 or emb.shape[0] != self.dim:
@@ -187,8 +187,8 @@ class GlobalIdentityService:
         return sum(1 for m in self.id_map
                    if m["person_global_id"] == pid and m.get("meta", {}).get("is_active", True))
 
-    def maybe_add_support_prototype(self, pid: int, emb: np.ndarray, meta: dict | None = None,
-                                    min_sim_add: float = 0.68, max_protos_per_person: int = 5, k: int = 10):
+    def maybe_add_support_prototype(self, pid: int, emb: np.ndarray, meta: dict | None = None, *,
+                                    min_sim_add: float, max_protos_per_person: int, k: int = 10):
         emb = np.asarray(emb, dtype="float32")
         hits = self.search(emb, k=k)
         if not hits or hits[0]["person_global_id"] != pid:
