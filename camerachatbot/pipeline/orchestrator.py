@@ -1,6 +1,6 @@
 import os,time
 
-from camerachatbot.security_config import IDENTITY_THRESHOLDS
+from camerachatbot.security_config import IDENTITY_THRESHOLDS, COCO_ALLOWLIST
 
 def multi_models(
     yoloPersonReID, detail_detectors, keyframes_path, gallery, eps=0.5, min_samples=4,
@@ -26,7 +26,7 @@ def multi_models(
 
     tracker = yoloPersonReID
 
-    tmp_json = tracker.detect_and_embed()
+    tmp_json = tracker.detect_and_embed(allowlist=COCO_ALLOWLIST)
 
     final_pre_process = f"{time.time() - start_pre_process:.3f}"
     print(f"[STAGE PRE] Total pre-process: {final_pre_process}s")

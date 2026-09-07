@@ -6,6 +6,7 @@ from supabase import create_client, Client
 from dotenv import load_dotenv
 
 from camerachatbot import paths
+from camerachatbot.security_config import DETECTOR_FLAGS
 
 load_dotenv()
 
@@ -74,6 +75,10 @@ def load_reid(device):
     return reid, transform
 
 def load_face_attr_sessions():
+    if not (DETECTOR_FLAGS["emotion"] or DETECTOR_FLAGS["age"]):
+        print("[ONNX] DETECTOR_FLAGS['emotion'] y ['age'] son False — no se cargan sesiones ONNX de emoción/edad.")
+        return (None, None, None), (None, None, None)
+
     _assert_exists(EMO_ONNX_PATH, "modelo de emociones ONNX")
     _assert_exists(AGE_ONNX_PATH, "modelo de edad ONNX")
 

@@ -196,7 +196,11 @@ class _FakeTracker:
     def __init__(self):
         self.captured_kwargs = None
 
-    def detect_and_embed(self):
+    def detect_and_embed(self, **kwargs):
+        # PR2/Fase1 added a required `allowlist` kwarg to the real
+        # `detect_and_embed()`; accept and ignore it here so this fake keeps
+        # driving multi_models()'s threshold-resolution logic without
+        # depending on the (unrelated) allowlist-filtering contract.
         return {}
 
     def cluster_locally(self, eps=None, min_samples=None):

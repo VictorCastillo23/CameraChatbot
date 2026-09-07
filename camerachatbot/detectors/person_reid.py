@@ -75,7 +75,9 @@ class YOLOPersonReID:
                          iou=0.45,
                          batch_size=16,
                          exts=(".jpg", ".jpeg", ".png",),
-                         save_outputs=True
+                         save_outputs=True,
+                         *,
+                         allowlist
                          ) -> str:
 
         t = defaultdict(float)
@@ -151,7 +153,13 @@ class YOLOPersonReID:
                 if yres is None:
                     continue
 
-                # 4.1 depth_map por imagen
+                # 4.1 depth_map por imagen (per-image MiDaS map, gated by
+                # save_deph — set from security_config.DETECTOR_FLAGS["depth"]
+                # at the pipeline_service call site). When False (default),
+                # depth_map stays None and the per-ROI depth_stats() below is
+                # skipped for every detection, avoiding wasted MiDaS compute —
+                # the only consumer of "depth" is debugging/annotate.py's
+                # manual debug overlay, not the production output path.
                 depth_map = None
                 if self.save_deph:
                     try:
@@ -188,6 +196,12 @@ class YOLOPersonReID:
 
                         confidence = float(b.conf[0]) if hasattr(b, "conf") and b.conf is not None else None
                         class_name = names.get(cls_id, str(cls_id))
+
+                        # Discard (not just hide) detections outside the allowlist —
+                        # never written to frame_list, so they never reach downstream
+                        # stages (video schema, Postgres).
+                        if class_name not in allowlist:
+                            continue
 
                         # 4.2 depth_stats por ROI (si hay depth_map)
                         depth_info = None
