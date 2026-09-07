@@ -341,7 +341,8 @@ class YOLOPersonReID:
             return float(ev["best_sim"])
         return float(p.get("confidence", 0.0))
 
-    def _enforce_unique_global_per_frame_post(self, E_norm, gallery, t_accept=0.60, t_reject=0.45):
+    def _enforce_unique_global_per_frame_post(self, E_norm, gallery, *, t_accept, t_reject,
+                                               min_sim_add, max_protos_per_person):
 
         for frame, entries in self.results_json.items():
             # agrupa por pid global
@@ -424,7 +425,7 @@ class YOLOPersonReID:
                             # (opcional) aprendizaje incremental
                             gallery.maybe_add_support_prototype(
                                 cand_pid, e, meta={"type": "support_from_reassign"},
-                                min_sim_add=0.68, max_protos_per_person=5
+                                min_sim_add=min_sim_add, max_protos_per_person=max_protos_per_person
                             )
                             used_pids.add(cand_pid)
                             continue
@@ -471,7 +472,8 @@ class YOLOPersonReID:
                         ev["created"] = ev.get("created", False)
                         dup_p["person_global_evidence"] = ev
 
-    def enroll_and_assign_global_ids(self, gallery, labels, t_accept=0.80, t_reject=0.45):
+    def enroll_and_assign_global_ids(self, gallery, labels, *, t_accept, t_reject,
+                                      min_sim_add, max_protos_per_person):
         cluster_debug = {}
 
         if labels is None or len(labels) == 0:
@@ -524,7 +526,7 @@ class YOLOPersonReID:
                 gallery.maybe_add_support_prototype(
                     pid, centroid,
                     meta={"type": "support_from_centroid", "size": len(rids)},
-                    min_sim_add=0.68, max_protos_per_person=5
+                    min_sim_add=min_sim_add, max_protos_per_person=max_protos_per_person
                 )
 
             if gallery.count_active_prototypes(pid) >= 6:
@@ -543,7 +545,7 @@ class YOLOPersonReID:
                 evidence.update({"created": False})
                 gallery.maybe_add_support_prototype(
                     pid, e, meta={"type": "support_from_outlier"},
-                    min_sim_add=0.68, max_protos_per_person=5
+                    min_sim_add=min_sim_add, max_protos_per_person=max_protos_per_person
                 )
 
             elif (not hits) or top_sim <= t_reject:
@@ -572,7 +574,10 @@ class YOLOPersonReID:
         # ... al final de enroll_and_assign_global_ids, justo antes de volcar a disco:
 
         # E ya está normalizado más arriba:
-        self._enforce_unique_global_per_frame_post(E, gallery, t_accept=t_accept, t_reject=t_reject)
+        self._enforce_unique_global_per_frame_post(
+            E, gallery, t_accept=t_accept, t_reject=t_reject,
+            min_sim_add=min_sim_add, max_protos_per_person=max_protos_per_person
+        )
 
         out_json = os.path.join(self.output_folder, "tracking_results_1.json")
 
