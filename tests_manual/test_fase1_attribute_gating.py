@@ -29,11 +29,12 @@ What it verifies (PR2 / Fase 1 tasks 1.1-1.5):
     `object.metadata` `depth` node, even when the source JSON carries a
     `depth` dict on an entry.
 
-Also verifies a PR2 gate-review fix (not an originally numbered task):
-`YOLOPersonReID.detect_and_embed()` skips its per-image MiDaS depth map (and
-therefore the per-ROI depth stats) entirely when `DETECTOR_FLAGS["depth"]`
-is `False` (the default) — proven by passing depth model/transform stand-ins
-that raise `AssertionError` if ever invoked.
+Note: the PR2 gate-review depth-gating check that used to live here
+(`test_detect_and_embed_skips_depth_when_flag_disabled`) was removed in
+Fase 2 (PR3) — MiDaS depth support was deleted from the pipeline entirely
+(`bootstrap.py`, `person_reid.py`, `DETECTOR_FLAGS`), so there is no longer
+a gate to verify; see `tests_manual/test_fase2_geometry.py` for Fase 2's own
+verification.
 
 Uses fakes/synthetic fixtures throughout — never touches the repo's real
 `models/`, `gallery.index`/`id_map.json`/`proto_store.npy`, or a live
@@ -220,7 +221,6 @@ def test_detect_and_embed_discards_non_allowlisted_classes():
             frames_folder=frames_folder,
             output_folder=tmpdir,
             transform=None, reid_model=None, device=None,
-            depth_model=None, depth_transform=None, save_deph=False,
         )
         tmp_json_path = tracker.detect_and_embed(
             batch_size=16, save_outputs=False, allowlist=COCO_ALLOWLIST
@@ -243,61 +243,6 @@ def test_detect_and_embed_discards_non_allowlisted_classes():
         assert seen_classes == {"person", "knife"}, \
             f"expected only person/knife to survive filtering, got {seen_classes}"
         assert "bicycle" not in seen_classes
-
-
-# ---------------------------------------------------------------------------
-# Depth gating: DETECTOR_FLAGS["depth"] wires YOLOPersonReID.save_deph
-# ---------------------------------------------------------------------------
-
-class _ExplodingDepthModel:
-    """Stand-in for the MiDaS depth model. `__init__`-time `.eval()`/`.to()`
-    are called unconditionally by YOLOPersonReID regardless of save_deph, so
-    those must succeed; `__call__` (the actual forward pass, only reached
-    from `_compute_depth_map()`) raises to prove it's never invoked when
-    save_deph=False."""
-
-    def eval(self):
-        return self
-
-    def to(self, device):
-        return self
-
-    def __call__(self, *args, **kwargs):
-        raise AssertionError("depth model must not be called when save_deph=False")
-
-
-def _exploding_depth_transform(*args, **kwargs):
-    raise AssertionError("depth transform must not be called when save_deph=False")
-
-
-def test_detect_and_embed_skips_depth_when_flag_disabled():
-    assert DETECTOR_FLAGS["depth"] is False, \
-        "this check assumes today's default flags (depth=False)"
-
-    frames_folder = str(paths.KEYFRAMES_SAMPLE_DIR)
-    assert os.path.isdir(frames_folder), f"expected real fixture images at {frames_folder}"
-
-    with tempfile.TemporaryDirectory(prefix="fase1_depth_gate_test_") as tmpdir:
-        tracker = YOLOPersonReID(
-            model=_FakeYoloDetModel(),
-            frames_folder=frames_folder,
-            output_folder=tmpdir,
-            transform=None, reid_model=None, device=None,
-            depth_model=_ExplodingDepthModel(), depth_transform=_exploding_depth_transform,
-            save_deph=DETECTOR_FLAGS["depth"],
-        )
-        tmp_json_path = tracker.detect_and_embed(
-            batch_size=16, save_outputs=False, allowlist=COCO_ALLOWLIST
-        )
-
-        with open(tmp_json_path, "r", encoding="utf-8") as f:
-            results_json = json.load(f)
-
-        assert len(results_json) > 0, "expected at least one processed frame from keyFrames/"
-        for frame_id, entries in results_json.items():
-            for e in entries:
-                assert "depth" not in e, \
-                    f"depth key present on entry despite save_deph=False: {e}"
 
 
 # ---------------------------------------------------------------------------
@@ -370,8 +315,6 @@ def main():
           test_face_attributes_detector_silent_when_emotion_and_age_disabled)
     check("1.4 detect_and_embed() discards non-allowlisted COCO classes",
           test_detect_and_embed_discards_non_allowlisted_classes)
-    check("gate-review: detect_and_embed() skips MiDaS depth when DETECTOR_FLAGS['depth']=False",
-          test_detect_and_embed_skips_depth_when_flag_disabled)
     check("1.5 formatter output has no depth metadata node",
           test_formatter_omits_depth_node)
 

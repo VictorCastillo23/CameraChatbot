@@ -14,7 +14,6 @@ YOLO_DET_PATH  = (paths.MODELS_DIR / "yolov10m.pt").resolve()
 YOLO_POSECLS_PATH = (paths.MODELS_DIR / "trained_yolo11m.pt").resolve()
 EMO_ONNX_PATH  = (paths.MODELS_DIR / "emotion-ferplus-8.onnx").resolve()
 AGE_ONNX_PATH  = (paths.MODELS_DIR / "age_googlenet.onnx").resolve()
-MIDAS_WEIGHTS  = (paths.MODELS_DIR / "dpt_hybrid_384.pt").resolve()
 
 def get_device():
     return torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -98,17 +97,6 @@ def load_face_attr_sessions():
 
     return (emotion_sess, emo_in, emo_out), (age_sess, age_in, age_out)
 
-def load_midas(device):
-    _assert_exists(MIDAS_WEIGHTS, "pesos MiDaS DPT_Hybrid")
-    depth_model = torch.hub.load("intel-isl/MiDaS", "DPT_Hybrid", pretrained=False)
-    state_dict = torch.load(str(MIDAS_WEIGHTS), map_location="cpu")
-    depth_model.load_state_dict(state_dict)
-    depth_model.eval().to(device)
-
-    midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
-    depth_transform = midas_transforms.dpt_transform
-    return depth_model, depth_transform
-
 def build_app():
     app = Flask(__name__)
     app.config["JSON_SORT_KEYS"] = False
@@ -125,7 +113,6 @@ def init_runtime():
     yolo_det, yolo_posecls = load_yolo_models()
     reid_model, reid_transform = load_reid(device)
     (emotion_sess, emotion_input, emotion_output), (age_sess, age_input, age_output) = load_face_attr_sessions()
-    depth_model, depth_transform = load_midas(device)
 
     RUNTIME = {
         "app": app,
@@ -145,10 +132,6 @@ def init_runtime():
             "sess": age_sess,
             "input": age_input,
             "output": age_output
-        },
-        "depth": {
-            "model": depth_model,
-            "transform": depth_transform
         }
     }
     print("[INIT] Modelos y sesiones cargados correctamente.")
