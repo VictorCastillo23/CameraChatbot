@@ -22,7 +22,7 @@ What it verifies (Fase 2 / PR3 tasks):
    calibrated camera.
 4. `geometry.homography.CameraCalibration.load()` gracefully returns `None`
    when the `camera_calibration` table has no active row for the given
-   camera — exercised with a fake psycopg2-shaped connection/cursor
+   camera — exercised with a fake psycopg-shaped connection/cursor
    (monkeypatched `get_conn`), so no real Postgres connection is needed.
    Also verifies the happy path: a fake row makes `load()` return a
    correctly-shaped `CameraCalibration` via `from_row()`.
@@ -152,7 +152,7 @@ def test_bbox_to_world_uses_ground_point():
 
 # ---------------------------------------------------------------------------
 # homography: CameraCalibration.load() graceful None / happy path
-# (fake psycopg2-shaped connection — no real DB needed)
+# (fake psycopg-shaped connection — no real DB needed)
 # ---------------------------------------------------------------------------
 
 class _FakeCursor:

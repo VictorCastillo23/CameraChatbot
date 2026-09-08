@@ -26,7 +26,10 @@ faiss-cpu==1.14.3
 
 flask==3.1.3
 supabase==2.31.0
-psycopg2==2.9.12
+# psycopg2 -> psycopg v3 (PR11 migration): verified against PyPI on
+# 2026-09-07, latest is 3.3.5. psycopg2.extras.execute_values has no direct
+# v3 equivalent -- see db/postgres_writer.py's execute_values_compat().
+psycopg[binary]==3.3.5
 python-dotenv==1.2.2
 
 # deep-sort-realtime intentionally dropped in Fase 3c: it only ever supported

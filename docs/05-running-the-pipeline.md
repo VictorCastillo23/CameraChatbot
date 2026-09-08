@@ -10,7 +10,7 @@ Everything needed to get `run_local.py` working from a clean checkout, plus the 
 pip install -r requirements.txt
 ```
 
-This installs the **runtime** stack only: ONNX Runtime, numpy, opencv, faiss, scipy, Flask, Supabase client, psycopg2, python-dotenv. No `torch`, no `ultralytics`, no `torchreid`, no `scikit-learn`, no `mediapipe` — see [`requirements.txt` vs `requirements-export.txt`](#requirementstxt-vs-requirements-exporttxt) below for why, and [`08-legacy-and-dormant-code.md`](08-legacy-and-dormant-code.md) if you need `mediapipe` back for the dormant face/hand detectors.
+This installs the **runtime** stack only: ONNX Runtime, numpy, opencv, faiss, scipy, Flask, Supabase client, psycopg, python-dotenv. No `torch`, no `ultralytics`, no `torchreid`, no `scikit-learn`, no `mediapipe` — see [`requirements.txt` vs `requirements-export.txt`](#requirementstxt-vs-requirements-exporttxt) below for why, and [`08-legacy-and-dormant-code.md`](08-legacy-and-dormant-code.md) if you need `mediapipe` back for the dormant face/hand detectors.
 
 ### Model files — read this before assuming `.pt` files are enough
 
@@ -34,7 +34,7 @@ Two separate, non-overlapping environments:
 | | `requirements.txt` | `requirements-export.txt` |
 |---|---|---|
 | Purpose | Running the pipeline (`run_local.py`, `run_webhook.py`, `run_live_capture.py`) | Regenerating `.onnx` files from `.pt` weights, via `tools/export_to_onnx.py` |
-| Contains | `onnxruntime`, `numpy`, `opencv-python`, `faiss-cpu`, `scipy`, `flask`, `supabase`, `psycopg2`, `python-dotenv` | `torch`+`torchvision` (CUDA 11.8 build), `ultralytics`, `torchreid`, `onnx` |
+| Contains | `onnxruntime`, `numpy`, `opencv-python`, `faiss-cpu`, `scipy`, `flask`, `supabase`, `psycopg`, `python-dotenv` | `torch`+`torchvision` (CUDA 11.8 build), `ultralytics`, `torchreid`, `onnx` |
 | Install it for a normal pipeline run? | Yes, always | **No, never** — dev-only, offline export tooling |
 
 The CUDA-pinned torch line lives entirely in `requirements-export.txt`, not `requirements.txt`. You only need it if you're re-exporting the ONNX files yourself; installing it via the CUDA 11.8 index (`pip install torch==2.7.1+cu118 torchvision==0.22.1+cu118 --index-url https://download.pytorch.org/whl/cu118`, then `pip install -r requirements-export.txt`) is a one-time setup for that specific task, not something `run_local.py` needs.
@@ -48,7 +48,7 @@ All loaded via `python-dotenv`'s `load_dotenv()`, called independently in both f
 | `SUPABASE_URL` | `bootstrap.py` | For `run_webhook.py`/`run_live_capture.py` | — | Warns, continues with `supabase=None` |
 | `SUPABASE_KEY` | `bootstrap.py` | Same | — | Same |
 | `SUPABASE_BUCKET` | `bootstrap.py` | Same | — | Read alongside the above |
-| `POSTGRES_HOST` | `postgres_writer.py` | Yes, for any run that persists results | — | `psycopg2.connect()` fails hard, no fallback |
+| `POSTGRES_HOST` | `postgres_writer.py` | Yes, for any run that persists results | — | `psycopg.connect()` fails hard, no fallback |
 | `POSTGRES_PORT` | `postgres_writer.py` | No | `5432` | — |
 | `POSTGRES_DATABASE` | `postgres_writer.py` | Yes | — | Hard fail |
 | `POSTGRES_USER` | `postgres_writer.py` | Yes | — | Hard fail |
@@ -106,6 +106,6 @@ Needs: `SUPABASE_URL`/`SUPABASE_KEY`/`SUPABASE_BUCKET`. No Postgres vars — thi
 | Symptom | Cause | Fix |
 |---|---|---|
 | `FileNotFoundError` naming a `.onnx` file under `models/` | Missing exported model | Run `python tools/export_to_onnx.py --all` (see [`07`](07-testing-and-dev-tools.md)) after placing the source `.pt` weights |
-| `psycopg2.connect()` fails immediately | A required `POSTGRES_*` var is unset | Check all 5 required vars are in your `.env` |
+| `psycopg.connect()` fails immediately | A required `POSTGRES_*` var is unset | Check all 5 required vars are in your `.env` |
 | Pipeline runs but nothing uploads/downloads via Supabase | `SUPABASE_URL`/`KEY` unset | Expected for `run_local.py` (tolerated); required for `run_webhook.py`/`run_live_capture.py` |
 | `pip install -r requirements.txt` fails on a `torch==...+cu118` line | You're looking at `requirements-export.txt` (or an older/wrong file) | The runtime `requirements.txt` on this branch has no torch line at all — see the table above |
