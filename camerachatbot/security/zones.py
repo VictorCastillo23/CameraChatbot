@@ -195,6 +195,45 @@ def zone_is_armed(zone: Zone, at: datetime) -> bool:
     return False
 
 
+def bbox_world_and_zone(
+    bbox, calib: Optional[CameraCalibration], zones: List[Zone]
+) -> Tuple[Optional[Point], Optional[Zone]]:
+    """Single computation of a bbox's world ground point AND its classified
+    zone (PR8b), returning `(world_xy, zone)`.
+
+    Both `orchestrator._write_zone_and_world_xy()` and `security.events.
+    build_tracks_timeline()` need exactly this pair for the same bbox at the
+    same instant. Before this helper existed, each computed it independently
+    via its own `calib.bbox_to_world(bbox)` + `classify_bbox_zone(bbox, ...)`
+    calls -- two (really three, counting `classify_bbox_zone`'s own internal
+    `bbox_to_world` call) separate computations of the same formula that
+    could silently drift out of sync (a future change to either call site --
+    a different zone-priority tiebreak, a caching layer, a coordinate-system
+    tweak -- could desync a person entry's `zone_id`/`world_xy` from its
+    `TrackObservation`'s `zone_id`/`world_xy`, with nothing to catch it).
+    One implementation instead of two, same anti-drift principle as
+    `video_schema.timing.frame_timestamp`/`parse_start_at`.
+
+    `world_xy` is `None` when `calib is None`. `zone` is the FIRST active
+    zone (in list order == `id` order, from `load_zones()`) whose polygon
+    contains `world_xy`, or `None` if there's no calibration or no match.
+    Overlapping zones are a configuration mistake, documented rather than
+    resolved by priority logic.
+    """
+    if calib is None:
+        return None, None
+
+    world_xy = calib.bbox_to_world(bbox)
+
+    for zone in zones:
+        if not zone.is_active:
+            continue
+        if point_in_polygon(world_xy, zone.polygon):
+            return world_xy, zone
+
+    return world_xy, None
+
+
 def classify_bbox_zone(bbox, calib: Optional[CameraCalibration], zones: List[Zone]) -> Optional[Zone]:
     """`calib.bbox_to_world(bbox)` -> world point -> test against each
     zone's polygon via `point_in_polygon` -> the FIRST active, containing
@@ -203,16 +242,11 @@ def classify_bbox_zone(bbox, calib: Optional[CameraCalibration], zones: List[Zon
     Overlapping zones are a configuration mistake, documented rather than
     resolved by priority logic — list order (== `id` order, from
     `load_zones()`) is the only tie-break.
+
+    Thin wrapper over `bbox_world_and_zone()` (PR8b) for callers that only
+    need the zone, not the world point -- kept as a separate public function
+    since it predates PR8b (Fase 4b/PR8a) and `tests_manual/test_zones.py`
+    already tests it directly by this name/signature.
     """
-    if calib is None:
-        return None
-
-    world_pt = calib.bbox_to_world(bbox)
-
-    for zone in zones:
-        if not zone.is_active:
-            continue
-        if point_in_polygon(world_pt, zone.polygon):
-            return zone
-
-    return None
+    _, zone = bbox_world_and_zone(bbox, calib, zones)
+    return zone
