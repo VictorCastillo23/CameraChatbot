@@ -1,0 +1,40 @@
+# Dev-only dependencies for `tools/export_to_onnx.py`. Only for offline
+# export — never install this file in the runtime environment.
+#
+# Fase 3 (security-pipeline-overhaul) is replacing the torch/ultralytics/
+# torchreid runtime stack with ONNX Runtime wrappers
+# (camerachatbot/detectors/onnx_yolo.py, onnx_reid.py). This file exists so
+# the ONNX export step still has somewhere to pin the torch-side tooling
+# once Fase 3c removes torch/ultralytics/torchreid/scikit-learn from
+# requirements.txt — export then happens in a separate, throwaway
+# environment built from THIS file, not the runtime one.
+#
+# Pins mirror requirements.txt exactly as of the same date that file's pins
+# were verified (2026-08-01) — keep them in sync if requirements.txt's
+# torch/ultralytics/torchreid pins ever move.
+#
+# Install order matches requirements.txt's own instruction (CUDA 11.8 index
+# first, then the rest):
+#   pip install torch==2.7.1+cu118 torchvision==0.22.1+cu118 --index-url https://download.pytorch.org/whl/cu118
+#   pip install -r requirements-export.txt
+torch==2.7.1+cu118
+torchvision==0.22.1+cu118
+
+ultralytics==8.4.115
+torchreid==0.2.5
+
+# Required by `ultralytics`'s `model.export(format="onnx")` path and by
+# `tools/export_to_onnx.py::_ensure_names_metadata()` (reads/writes
+# `metadata_props` directly via `onnx.load`/`onnx.save`). The upper bound
+# below was widened after PR4a's gate review: this sandbox's venv actually
+# installed and ran `onnx==1.22.0` (needed to complete real ONNX-export
+# verification for `tests_manual/test_fase3a_onnx_detector_reid.py`), well
+# outside the previous `<1.18` cap — that cap was a documented-placeholder
+# guess, not a verified compatibility boundary. `onnxruntime`'s own pin
+# (`requirements.txt`'s `onnxruntime==1.23.2`) is likewise a stale
+# placeholder against what's actually installed and working in this sandbox
+# (`onnxruntime==1.28.0`); `requirements.txt` itself is out of scope for
+# this change (pre-existing, unrelated, uncommitted local modification —
+# see apply-progress notes), so only this file's `onnx` pin is corrected
+# here, with the confirmed-working version noted explicitly.
+onnx>=1.16,<2.0  # confirmed working at 1.22.0 in this sandbox
