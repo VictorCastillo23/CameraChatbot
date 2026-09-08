@@ -17,3 +17,7 @@ VIDEO_SCHEMA_OUTPUT_PATH = RES_DIR / "yolo_reid" / "video_schema.json"
 
 def res_output_dir_for(frames_folder: str) -> Path:
     return RES_DIR / os.path.basename(frames_folder)
+
+
+def debug_boxes_dir_for(frames_folder: str) -> Path:
+    return res_output_dir_for(frames_folder) / "yolo_reid" / "box_review"
