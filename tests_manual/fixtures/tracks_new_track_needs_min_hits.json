@@ -1,0 +1,19 @@
+{
+  "description": "Contrast case for tracks_occlusion.json: a track that has NEVER been confirmed/reported before misses a single frame during its own startup window. Unlike a previously-confirmed track recovering from occlusion (see tracks_occlusion.json), this track must re-earn min_hits consecutive successful updates from scratch before it is reported for the first time -- proving the Lost-track-reactivation shortcut applies only to tracks that already established identity once, not to genuinely new tracks. 3 leading empty frames push the tracker's global frame_count past min_hits (3) BEFORE this track spawns, so the SORT startup exception (frame_count <= min_hits) does not apply to it either -- only its own hits count can confirm it.",
+  "spawn_frame": 3,
+  "miss_frame": 5,
+  "expected_first_report_frame": 8,
+  "frames": [
+    { "dets": [], "scores": [] },
+    { "dets": [], "scores": [] },
+    { "dets": [], "scores": [] },
+    { "dets": [[10, 10, 110, 110]], "scores": [0.9] },
+    { "dets": [[15, 10, 115, 110]], "scores": [0.9] },
+    { "dets": [], "scores": [] },
+    { "dets": [[25, 10, 125, 110]], "scores": [0.9] },
+    { "dets": [[30, 10, 130, 110]], "scores": [0.9] },
+    { "dets": [[35, 10, 135, 110]], "scores": [0.9] },
+    { "dets": [[40, 10, 140, 110]], "scores": [0.9] },
+    { "dets": [[45, 10, 145, 110]], "scores": [0.9] }
+  ]
+}

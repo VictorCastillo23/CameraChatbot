@@ -59,6 +59,11 @@ class YOLOPersonReID:
         for ext in exts:
             files.extend(glob.glob(os.path.join(self.frames_folder, f"*{ext}")))
         files = sorted(set(files), key=_natural_key)
+        # Fase 4a: the tracker (security/tracker.py::assign_track_ids) needs
+        # true temporal order but `results_json` is a plain dict — reuse this
+        # exact sort (not a second implementation) so the tracker sees
+        # precisely the order this detector processed.
+        self.frame_order = [os.path.splitext(os.path.basename(fp))[0] for fp in files]
 
         _acc("scan_files", now() - t_scan0)
 
