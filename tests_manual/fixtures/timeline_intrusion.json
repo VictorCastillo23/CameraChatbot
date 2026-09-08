@@ -1,0 +1,27 @@
+{
+  "description": "Hand-built TracksTimeline inputs for evaluate_intrusion()'s gap-tolerance behavior, exercised directly (no build_tracks_timeline()/reid/calibration involved). intrusion_gap_frames=2 matches SECURITY_RULES's default -- tests_manual/test_events.py builds each track's observation list from frame_indices, all inside the single restricted+always-armed zone below.",
+  "gap_tolerance": 2,
+  "zones": [
+    {
+      "id": 1,
+      "camera_id": 1,
+      "name": "Vault",
+      "zone_type": "restricted",
+      "polygon": [],
+      "schedule": null,
+      "is_active": true
+    }
+  ],
+  "one_frame_gap": {
+    "description": "Track 1 observed at frames 10-14, then again at frame 16 (frame 15 missing -- a 1-frame gap). diff(14, 16)=2 <= gap_tolerance(2)+1=3, so this stays ONE continuous run.",
+    "track_id": 1,
+    "frame_indices": [10, 11, 12, 13, 14, 16],
+    "expected_event_count": 1
+  },
+  "exceeding_gap": {
+    "description": "Track 2 observed at frames 10-14, then again at frame 18 (frames 15,16,17 missing -- a 3-frame gap). diff(14, 18)=4 > gap_tolerance(2)+1=3, so this splits into TWO separate runs/events.",
+    "track_id": 2,
+    "frame_indices": [10, 11, 12, 13, 14, 18],
+    "expected_event_count": 2
+  }
+}

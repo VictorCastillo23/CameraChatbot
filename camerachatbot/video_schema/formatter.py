@@ -1,8 +1,9 @@
 import json, os,time,re
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from typing import Tuple, Any
 
 from camerachatbot import paths
+from camerachatbot.video_schema.timing import frame_timestamp
 
 def reformat_to_video_schema_uniform(
     src_json_path: str,
@@ -149,7 +150,7 @@ def reformat_to_video_schema_uniform(
                 print(f"[WARN] frame {frame_id}: entrada ignorada ({ex})")
         try:
             fnum = int(frame_id)
-            dt = t0 + timedelta(seconds=(fnum / float(fps)))
+            dt = frame_timestamp(t0, fnum, fps)
             ts = _iso_z(dt)
         except Exception:
             ts = _iso_z(t0)
