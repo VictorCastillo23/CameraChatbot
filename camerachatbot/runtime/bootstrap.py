@@ -1,6 +1,5 @@
-import os,json, cv2,torch,onnxruntime as ort,torchreid
+import os, json, cv2, onnxruntime as ort
 from pathlib import Path
-from ultralytics import YOLO
 from flask import Flask
 from supabase import create_client, Client
 from dotenv import load_dotenv
@@ -8,15 +7,20 @@ from dotenv import load_dotenv
 from camerachatbot import paths
 from camerachatbot.security_config import DETECTOR_FLAGS
 
+# Fase 3b switch line — this import IS the rollback mechanism (design doc
+# §3 "bootstrap.py rewiring"). Both sibling modules expose the identical
+# zero-arg `load_detector()` / `load_posecls()` / `load_reid()` contract.
+# ROLLBACK: comment the line below, uncomment the one after it, restore
+# requirements.txt pins (torch/ultralytics/torchreid) — no other file needs
+# to change; person_reid.py/pose_action_classifier.py duck-type on the
+# loaded model's shape (see those modules for the exact check).
+from camerachatbot.runtime.loaders_onnx import load_detector, load_posecls, load_reid
+# from camerachatbot.runtime.loaders_torch import load_detector, load_posecls, load_reid
+
 load_dotenv()
 
-YOLO_DET_PATH  = (paths.MODELS_DIR / "yolov10m.pt").resolve()
-YOLO_POSECLS_PATH = (paths.MODELS_DIR / "trained_yolo11m.pt").resolve()
 EMO_ONNX_PATH  = (paths.MODELS_DIR / "emotion-ferplus-8.onnx").resolve()
 AGE_ONNX_PATH  = (paths.MODELS_DIR / "age_googlenet.onnx").resolve()
-
-def get_device():
-    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def _assert_exists(path: Path, what: str):
     if not path.exists():
@@ -45,33 +49,16 @@ def build_supabase():
         return None,None
 
 def load_yolo_models():
-    _assert_exists(YOLO_DET_PATH, "YOLO detección")
-    _assert_exists(YOLO_POSECLS_PATH, "YOLO-CLS pose sentado/de pie")
+    """Load the person/object detector + sit/stand pose classifier.
 
-    yolo_det = YOLO(str(YOLO_DET_PATH))
-    yolo_posecls = YOLO(str(YOLO_POSECLS_PATH))
-
-    try:
-        yolo_det.fuse()
-    except Exception:
-        pass
-    try:
-        yolo_posecls.fuse()
-    except Exception:
-        pass
-
+    Delegates to whichever loader module is currently imported above
+    (`loaders_onnx` today, `loaders_torch` on rollback) — this function no
+    longer contains any model-loading logic of its own, it is purely the
+    two-value-tuple adapter `init_runtime()` expects.
+    """
+    yolo_det = load_detector()
+    yolo_posecls = load_posecls()
     return yolo_det, yolo_posecls
-
-def load_reid(device):
-    reid = torchreid.models.build_model(
-        name="osnet_x1_0",
-        num_classes=1000,
-        pretrained=True
-    )
-    reid.eval().to(device)
-
-    _, transform = torchreid.data.transforms.build_transforms(height=256, width=128)
-    return reid, transform
 
 def load_face_attr_sessions():
     if not (DETECTOR_FLAGS["emotion"] or DETECTOR_FLAGS["age"]):
@@ -103,22 +90,33 @@ def build_app():
     return app
 
 def init_runtime():
-    device = get_device()
-    print(f"[DEVICE] Usando: {device}")
-
     supabase,BUCKET_NAME = build_supabase()
 
     app = build_app()
 
     yolo_det, yolo_posecls = load_yolo_models()
-    reid_model, reid_transform = load_reid(device)
+
+    # `load_reid()`'s return shape differs by loader: `loaders_onnx`
+    # (today's default) returns a single self-contained `OSNetOnnxEmbedder`
+    # that owns its own preprocessing; `loaders_torch` (rollback) returns
+    # the legacy `(reid_model, transform)` tuple, since a bare torch
+    # `nn.Module` needs an external torchreid transform. Absorbing that
+    # asymmetry here — instead of letting `RUNTIME`'s shape vary by which
+    # loader is active — is what keeps every downstream caller
+    # (`pipeline_service.py`, `person_reid.py`) working unmodified whichever
+    # loader is imported above.
+    reid_loaded = load_reid()
+    if isinstance(reid_loaded, tuple):
+        reid_model, reid_transform = reid_loaded
+    else:
+        reid_model, reid_transform = reid_loaded, None
+
     (emotion_sess, emotion_input, emotion_output), (age_sess, age_input, age_output) = load_face_attr_sessions()
 
     RUNTIME = {
         "app": app,
         "supabase": supabase,
         "BUCKET_NAME":BUCKET_NAME,
-        "device": device,
         "yolo_det": yolo_det,
         "yolo_posecls": yolo_posecls,
         "reid_model": reid_model,

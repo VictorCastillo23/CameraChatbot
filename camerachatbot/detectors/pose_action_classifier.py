@@ -1,4 +1,6 @@
-import os, cv2, json,torch
+import os, cv2, json
+
+from camerachatbot.detectors.onnx_pose_classifier import PoseClsOnnxClassifier
 
 class PoseActionClassifier():
     def __init__(self, yolo, frames_folder=None, conf_threshold=0.60, class_map=None,
@@ -12,11 +14,18 @@ class PoseActionClassifier():
         self.res = res  # opcional; si no, llama set_res() luego
         self._frames_map = None
 
-        self.model.to(self.device)
-        try:
-            self.model.fuse()
-        except:
-            pass
+        # Fase 3b: `yolo` is a `PoseClsOnnxClassifier` when `bootstrap.py`
+        # loads `loaders_onnx` (today's default) — it owns its own ONNX
+        # Runtime session and has neither `.to()` nor `.fuse()`. It is an
+        # ultralytics `YOLO` object only on `loaders_torch` rollback.
+        # Branching on `isinstance` keeps bootstrap.py's "flip one import
+        # line" rollback promise true without also having to edit this file.
+        if not isinstance(self.model, PoseClsOnnxClassifier):
+            self.model.to(self.device)
+            try:
+                self.model.fuse()
+            except:
+                pass
 
         self.class_map = (class_map or {
             "sit": "sentado", "sitting": "sentado", "sentado": "sentado",
@@ -97,35 +106,41 @@ class PoseActionClassifier():
             print(f"[PoseCls] (sin crops) JSON guardado en {out_file}")
             return out_file
 
-        # Inferencia en batch con YOLO-CLS
-        use_half = torch.cuda.is_available()
+        # Inferencia en batch. Camino ONNX (`loaders_onnx`, hoy por
+        # defecto): `PoseClsOnnxClassifier.predict()` ya devuelve
+        # `(pred_idx, conf)` por crop — batching/precisión/softmax son su
+        # propia responsabilidad (ver onnx_pose_classifier.py). Camino
+        # legacy torch (`loaders_torch` rollback): reproduce exactamente el
+        # parsing de `.probs` de antes de Fase 3b.
         imgsz = getattr(self, "imgsz", 224)
         batch = getattr(self, "batch", 16)
         names = getattr(self, "names", None)
         conf_thr = float(getattr(self, "confs", 0.60))
 
-        with torch.inference_mode():
-            results = self.model(
-                crops,
-                imgsz=imgsz,
-                batch=batch,
-                half=use_half,
-                verbose=False
-            )
+        if isinstance(self.model, PoseClsOnnxClassifier):
+            preds = self.model.predict(crops)
+        else:
+            import torch
 
-        # Asegura lista
-        if not isinstance(results, (list, tuple)):
-            results = list(results)
+            use_half = torch.cuda.is_available()
+            with torch.inference_mode():
+                results = self.model(
+                    crops,
+                    imgsz=imgsz,
+                    batch=batch,
+                    half=use_half,
+                    verbose=False
+                )
 
-        # Escribe resultados de vuelta
-        for (frame_id, i), r in zip(backrefs, results):
-            p = data[frame_id][i]
-            p.setdefault("attributes", {})
+            if not isinstance(results, (list, tuple)):
+                results = list(results)
 
-            probs_obj = getattr(r, "probs", None)
-            if probs_obj is None:
-                pred_idx, conf = 0, 0.0
-            else:
+            preds = []
+            for r in results:
+                probs_obj = getattr(r, "probs", None)
+                if probs_obj is None:
+                    preds.append((0, 0.0))
+                    continue
                 # extrae vector de scores de forma robusta
                 try:
                     scores = probs_obj.data.detach().cpu().numpy()
@@ -135,12 +150,18 @@ class PoseActionClassifier():
                     except Exception:
                         scores = None
                 if scores is None:
-                    pred_idx, conf = 0, 0.0
-                else:
-                    if scores.ndim > 1:
-                        scores = scores[0]
-                    pred_idx = int(np.argmax(scores))
-                    conf = float(scores[pred_idx])
+                    preds.append((0, 0.0))
+                    continue
+                if scores.ndim > 1:
+                    scores = scores[0]
+                pred_idx = int(np.argmax(scores))
+                conf = float(scores[pred_idx])
+                preds.append((pred_idx, conf))
+
+        # Escribe resultados de vuelta
+        for (frame_id, i), (pred_idx, conf) in zip(backrefs, preds):
+            p = data[frame_id][i]
+            p.setdefault("attributes", {})
 
             # mapea etiqueta cruda → etiqueta final
             if isinstance(names, dict):

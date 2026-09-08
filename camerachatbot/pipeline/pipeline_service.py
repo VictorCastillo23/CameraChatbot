@@ -6,10 +6,12 @@ from camerachatbot import paths
 from camerachatbot.security_config import DETECTOR_FLAGS
 from camerachatbot.pipeline import orchestrator
 from camerachatbot.detectors.pose_action_classifier import PoseActionClassifier
-from camerachatbot.detectors.face_detector import FaceDetector
 from camerachatbot.detectors.face_attributes_detector import FaceAttributesDetector
-from camerachatbot.detectors.hand_detector import HandDetector
 from camerachatbot.detectors.person_reid import YOLOPersonReID
+# FaceDetector/HandDetector (mediapipe) moved to legacy/ in Fase 3b — both
+# are gated off by default (DETECTOR_FLAGS["face_attention"]/["hands"] are
+# False), so they are imported lazily below, only when their flag is on,
+# instead of unconditionally at module load time.
 from camerachatbot.video_schema.formatter import reformat_to_video_schema_uniform
 from camerachatbot.db.postgres_writer import json_to_postgre
 from camerachatbot.debugging import annotate
@@ -46,9 +48,11 @@ def build_detail_detectors(runtime, frames_folder):
         ))
 
     if DETECTOR_FLAGS["face_attention"]:
+        from legacy.face_detector import FaceDetector
         detectors.append(FaceDetector(frames_folder=frames_folder))
 
     if DETECTOR_FLAGS["hands"]:
+        from legacy.hand_detector import HandDetector
         detectors.append(HandDetector(frames_folder=frames_folder))
 
     if DETECTOR_FLAGS["emotion"] or DETECTOR_FLAGS["age"]:
@@ -79,7 +83,7 @@ def run_pipeline_and_persist(*, runtime, gallery, frames_folder, n_keyframes, si
         detail_detectors=detail_detectors, keyframes_path=frames_folder,
         gallery=gallery, yoloPersonReID=YOLOPersonReID(
             runtime["yolo_det"], frames_folder, yolo_output,
-            runtime["reid_transform"], runtime["reid_model"], runtime["device"],
+            transform=runtime["reid_transform"], reid_model=runtime["reid_model"], device=None,
         )
     )
     print(f'final_json = {final_json}')
