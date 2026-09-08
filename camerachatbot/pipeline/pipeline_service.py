@@ -3,10 +3,11 @@ import time
 import json
 
 from camerachatbot import paths
-from camerachatbot.security_config import DETECTOR_FLAGS
+from camerachatbot.security_config import DETECTOR_FLAGS, WEAPONS_DETECTOR
 from camerachatbot.pipeline import orchestrator
 from camerachatbot.detectors.pose_action_classifier import PoseActionClassifier
 from camerachatbot.detectors.face_attributes_detector import FaceAttributesDetector
+from camerachatbot.detectors.secondary_detector import AllowlistedDetector
 from camerachatbot.detectors.person_reid import YOLOPersonReID
 # FaceDetector/HandDetector (mediapipe) moved to legacy/ in Fase 3b — both
 # are gated off by default (DETECTOR_FLAGS["face_attention"]/["hands"] are
@@ -36,6 +37,11 @@ def build_detail_detectors(runtime, frames_folder):
     and a single loader in `bootstrap.load_face_attr_sessions()`, so that detector
     is included when either flag is True (matching the bootstrap gating decision),
     not only when both are True.
+
+    The Fase 6 `AllowlistedDetector` (weapons/secondary-object detection) uses a
+    third gating axis: `WEAPONS_DETECTOR["model_path"] is not None`, not a boolean
+    flag in `DETECTOR_FLAGS` -- there is no flag for it by design, since it is
+    meaningless to enable without a model path to load.
     """
     detectors = []
 
@@ -65,6 +71,13 @@ def build_detail_detectors(runtime, frames_folder):
             age_sess=runtime["age"]["sess"],
             emotion_sess=runtime["emotion"]["sess"],
             face_attention_enabled=DETECTOR_FLAGS["face_attention"],
+        ))
+
+    if WEAPONS_DETECTOR["model_path"] is not None:
+        detectors.append(AllowlistedDetector(
+            model_path=WEAPONS_DETECTOR["model_path"],
+            class_names=WEAPONS_DETECTOR["class_names"],
+            conf=WEAPONS_DETECTOR["conf"],
         ))
 
     return detectors
