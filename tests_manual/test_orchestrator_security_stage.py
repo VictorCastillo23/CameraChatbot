@@ -56,8 +56,9 @@ What it verifies:
    `keyframe_ids[event["first_frame_idx"]]`, returns `None` instead of
    raising `IndexError` on an out-of-range/missing index.
 6. `db.postgres_writer.prepare_event_rows()` -- shapes each event dict into
-   the exact positional tuple `insert_events_in_batches()`'s `execute_values`
-   template expects, including wrapping `details` in `psycopg2.extras.Json`.
+   the exact positional tuple `insert_events_in_batches()`'s
+   `execute_values_compat` template expects, including wrapping `details`
+   in `psycopg.types.json.Jsonb`.
 
 Uses only synthetic in-memory data throughout -- no real camera frames, no
 ONNX models, no live Postgres connection, and never touches the repo's real
@@ -72,7 +73,7 @@ from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from psycopg2.extras import Json  # noqa: E402
+from psycopg.types.json import Jsonb  # noqa: E402
 
 import camerachatbot.pipeline.orchestrator as orchestrator_mod  # noqa: E402
 from camerachatbot.pipeline.orchestrator import (  # noqa: E402
@@ -593,7 +594,7 @@ def test_prepare_event_rows_shapes_tuple_for_execute_values():
     assert row[7] == "2026-01-01T00:00:00", "started_at"
     assert row[8] == "2026-01-01T00:00:05", "ended_at"
     assert row[9] is None, "confidence"
-    assert isinstance(row[10], Json), "details must be wrapped in psycopg2.extras.Json"
+    assert isinstance(row[10], Jsonb), "details must be wrapped in psycopg.types.json.Jsonb"
 
 
 def main():
@@ -630,7 +631,7 @@ def main():
 
     check("_event_keyframe_id(): bounds-checked, None on out-of-range/missing",
           test_event_keyframe_id_bounds_checked)
-    check("prepare_event_rows(): tuple shape + Json-wrapped details",
+    check("prepare_event_rows(): tuple shape + Jsonb-wrapped details",
           test_prepare_event_rows_shapes_tuple_for_execute_values)
 
     print("\n=== Fase 4b (PR8b) + Fase 5 (PR9) orchestrator-wiring contract verification ===")

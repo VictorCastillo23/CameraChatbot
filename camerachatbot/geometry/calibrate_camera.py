@@ -26,7 +26,7 @@ import argparse
 
 import cv2
 import numpy as np
-from psycopg2.extras import Json
+from psycopg.types.json import Jsonb
 
 from camerachatbot.db.postgres_writer import get_conn, SCHEMA, ensure_schema_and_tables
 
@@ -118,7 +118,7 @@ def _upsert_calibration(camera_id: int, H: np.ndarray, units: str,
                     VALUES (%s, %s, %s, %s, %s, TRUE, NOW())
                     RETURNING id
                     """,
-                    (camera_id, homography_flat, units, Json(reference_points), reprojection_error),
+                    (camera_id, homography_flat, units, Jsonb(reference_points), reprojection_error),
                 )
                 new_id = cur.fetchone()[0]
         return new_id

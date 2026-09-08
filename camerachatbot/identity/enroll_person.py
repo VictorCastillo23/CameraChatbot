@@ -44,7 +44,7 @@ import sys
 
 import cv2
 import numpy as np
-import psycopg2
+import psycopg
 
 from camerachatbot import paths
 from camerachatbot.db.postgres_writer import get_conn, SCHEMA, ensure_schema_and_tables
@@ -329,7 +329,7 @@ def main(argv=None):
     # instead of a raw traceback: FileNotFoundError (--images has no
     # matching files), RuntimeError (no image yielded a usable embedding,
     # gray-zone match, or the fix-C split-state case above), and any
-    # psycopg2 connection/operational error from the authorized_identity
+    # psycopg connection/operational error from the authorized_identity
     # upsert/deactivate path. Per-image failures (unreadable file, no
     # person detected) are already handled gracefully via the `skipped`
     # list inside `enroll()` -- this does not touch that path.
@@ -344,7 +344,7 @@ def main(argv=None):
     except RuntimeError as e:
         print(f"[ERROR] {e}")
         sys.exit(1)
-    except psycopg2.Error as e:
+    except psycopg.Error as e:
         print(f"[ERROR] Error de base de datos: {e}")
         sys.exit(1)
 

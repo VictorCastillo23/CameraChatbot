@@ -27,7 +27,7 @@ What it verifies:
    retried) -- not a bare/opaque DB error.
 3. (Fix B, resilience) `main()`'s top-level exception handling: expected
    failure modes (`FileNotFoundError` from `--images` matching nothing,
-   `RuntimeError` from a failed/gray-zone enroll, `psycopg2.Error` from a
+   `RuntimeError` from a failed/gray-zone enroll, `psycopg.Error` from a
    DB failure) are caught, print a clean `[ERROR] ...` message (not a raw
    traceback), and exit non-zero via `SystemExit`, rather than propagating
    uncaught.
@@ -45,7 +45,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import cv2  # noqa: E402
 import numpy as np  # noqa: E402
-import psycopg2  # noqa: E402
+import psycopg  # noqa: E402
 
 import camerachatbot.identity.enroll_person as enroll_person_mod  # noqa: E402
 from camerachatbot.identity.enroll_person import enroll  # noqa: E402
@@ -182,7 +182,7 @@ def test_enroll_surfaces_split_state_when_upsert_fails_after_gallery_write():
         original_upsert = enroll_person_mod._upsert_authorized_identity
 
         def _failing_upsert(*a, **kw):
-            raise psycopg2.OperationalError("simulated connection failure")
+            raise psycopg.OperationalError("simulated connection failure")
 
         enroll_person_mod._upsert_authorized_identity = _failing_upsert
         try:
@@ -235,11 +235,11 @@ def test_main_reports_clean_error_on_runtime_error_from_enroll():
         enroll_person_mod.enroll = original_enroll
 
 
-def test_main_reports_clean_error_on_psycopg2_error_from_deactivate():
+def test_main_reports_clean_error_on_psycopg_error_from_deactivate():
     original_deactivate = enroll_person_mod.deactivate
 
     def _fake_deactivate(person_global_id):
-        raise psycopg2.OperationalError("simulated connection failure")
+        raise psycopg.OperationalError("simulated connection failure")
 
     enroll_person_mod.deactivate = _fake_deactivate
     try:
@@ -257,8 +257,8 @@ def main():
           test_main_reports_clean_error_on_missing_images_dir)
     check("main(): clean exit on RuntimeError from enroll()",
           test_main_reports_clean_error_on_runtime_error_from_enroll)
-    check("main(): clean exit on psycopg2.Error from deactivate()",
-          test_main_reports_clean_error_on_psycopg2_error_from_deactivate)
+    check("main(): clean exit on psycopg.Error from deactivate()",
+          test_main_reports_clean_error_on_psycopg_error_from_deactivate)
 
     print("\n=== Fase 5 (PR9) gate-review fix: enroll_person.py verification ===")
     n_pass = sum(1 for _, ok, _ in results if ok)

@@ -5,9 +5,9 @@ from math import ceil
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Tuple, Any, Dict
 
-import psycopg2
-from psycopg2.extras import execute_values, Json
-from psycopg2 import errors
+import psycopg
+from psycopg import errors
+from psycopg.types.json import Jsonb
 from dotenv import load_dotenv
 
 from camerachatbot import paths
@@ -31,7 +31,7 @@ INITIAL_BACKOFF = 0.1                                # segundos
 # --------------------- utilidades ---------------------
 
 def get_conn():
-    return psycopg2.connect(**DB_CONFIG)
+    return psycopg.connect(**DB_CONFIG)
 
 def chunks(lst, n):
     """Yield successive n-sized chunks from lst."""
@@ -221,13 +221,56 @@ def _fetchall(cur, q, params=None):
     cur.execute(q, params or ())
     return cur.fetchall()
 
+def execute_values_compat(cur, base_sql: str, rows: List[Tuple], template: str,
+                           page_size: int = 1000, returning: bool = False):
+    """Reemplazo de `psycopg2.extras.execute_values` para psycopg v3 (no tiene
+    equivalente directo -- ver PR11/docs de migración).
+
+    Preserva la propiedad observable que `execute_values` garantizaba: UN
+    solo `cur.execute(...)` por página, con un único INSERT multi-fila
+    (`VALUES (...),(...),...`) -- NUNCA `cursor.executemany`, que ejecutaría
+    una sentencia separada por fila (N round-trips en vez de uno).
+
+    Diferencia deliberada con la implementación interna de psycopg2:
+    `execute_values` renderiza cada fila vía `cursor.mogrify(template, args)`,
+    incrustando los valores como literales SQL. psycopg v3 no tiene
+    `mogrify()` en su `Cursor` por defecto (removido en favor de binding de
+    parámetros del lado del servidor). Esta función arma el SQL repitiendo
+    `template` (con sus placeholders `%s`) una vez por fila, separados por
+    coma, y pasa la tupla de parámetros aplanada a `cur.execute(sql,
+    params)` -- parametrizado igual que antes, sin necesidad de escapar
+    literales a mano.
+
+    `base_sql` debe contener exactamente un placeholder `%s` (el que
+    reemplaza `execute_values` por la lista de filas) -- válido para todos
+    los call sites de este módulo (`"... VALUES %s"`, opcionalmente seguido
+    de `"RETURNING id"` cuando `returning=True`).
+
+    Si `returning=True`, hace `cur.fetchall()` después de cada página y
+    concatena `r[0]` de cada fila devuelta (equivalente a lo que
+    `execute_values_returning` hacía manualmente sobre el resultado de
+    `execute_values`).
+    """
+    if not rows:
+        return [] if returning else None
+
+    ids = [] if returning else None
+    for page in chunks(rows, page_size):
+        values_sql = ",".join([template] * len(page))
+        sql = base_sql.replace("%s", values_sql, 1)
+        flat_params = tuple(v for row in page for v in row)
+        cur.execute(sql, flat_params)
+        if returning:
+            ids.extend(r[0] for r in cur.fetchall())
+    return ids
+
 def execute_values_returning(cur, base_sql: str, rows: List[Tuple], template: str, page_size=1000):
-    """Inserta rows por execute_values y devuelve lista de ids"""
+    """Inserta rows en batch (un solo INSERT multi-fila por página) y devuelve
+    la lista de ids generados."""
     if not rows:
         return []
     sql = base_sql + " RETURNING id"
-    execute_values(cur, sql, rows, template=template, page_size=page_size)
-    return [r[0] for r in cur.fetchall()]
+    return execute_values_compat(cur, sql, rows, template=template, page_size=page_size, returning=True)
 
 # --------------------- inserciones principales (ordén garantizado) ---------------------
 
@@ -291,7 +334,7 @@ def get_or_create_object_classes(cur, class_names: List[str]) -> Dict[str, int]:
     template = "(%s, NOW())"
     # hacer en batches por si son muchos
     for chunk_rows in chunks(rows, BATCH_SIZE):
-        execute_values(cur, base, chunk_rows, template=template, page_size=1000)
+        execute_values_compat(cur, base, chunk_rows, template=template, page_size=1000)
     # ahora seleccionar
     existing = _fetchall(cur, "SELECT id,name FROM object_class WHERE name = ANY(%s)", (class_names,))
     by_name = {name: oid for oid, name in existing}
@@ -365,7 +408,7 @@ def prepare_event_rows(video_id, camera_id, events, keyframe_ids):
             ev.get("started_at"),
             ev.get("ended_at"),
             ev.get("confidence"),
-            Json(ev.get("details") or {}),
+            Jsonb(ev.get("details") or {}),
         ))
     return rows
 
@@ -481,7 +524,7 @@ def worker_insert_meta_and_nb(start_idx: int, end_idx: int,
                             (key_frame_id, related_object_id, intersection, x_alignment, y_alignment, relation, markdown, parent_object_id)
                             VALUES %s"""
                         template = "(%s,%s,%s,%s,%s,%s,%s,%s)"
-                        execute_values(cur, base, rows, template=template, page_size=1000)
+                        execute_values_compat(cur, base, rows, template=template, page_size=1000)
 
                 # video-level neighborhood — lo manejamos solo en el worker 0 (para evitar duplicados)
                 # NOTE: video_neighborhood puede repetirse; para simplicidad solo lo inserta el worker que tenga start_idx == 0
@@ -505,7 +548,7 @@ def worker_insert_meta_and_nb(start_idx: int, end_idx: int,
                             (key_frame_id, related_object_id, intersection, x_alignment, y_alignment, relation, markdown, parent_object_id)
                             VALUES %s"""
                         template = "(%s,%s,%s,%s,%s,%s,%s,%s)"
-                        execute_values(cur, base, rows, template=template, page_size=1000)
+                        execute_values_compat(cur, base, rows, template=template, page_size=1000)
         conn.close()
     finally:
         try:

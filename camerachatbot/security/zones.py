@@ -46,7 +46,7 @@ class Zone:
 
         Expects `row` ordered `(id, camera_id, name, zone_type, polygon,
         schedule, is_active)`, matching the SELECT in `load_zones()`.
-        `polygon`/`schedule` are JSONB, already deserialized by psycopg2 into
+        `polygon`/`schedule` are JSONB, already deserialized by psycopg into
         a Python list/dict.
         """
         zone_id, camera_id, name, zone_type, polygon, schedule, is_active = row

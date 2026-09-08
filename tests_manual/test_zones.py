@@ -26,7 +26,7 @@ What it verifies (Fase 4b / PR8a task 4b.2):
    design decision).
 4. `security.zones.Zone.from_row()` + `load_zones()` -- row -> dataclass
    shape, and the "no active zones for this camera" graceful-`[]` degrade
-   (fake psycopg2-shaped connection/cursor, no real Postgres needed --
+   (fake psycopg-shaped connection/cursor, no real Postgres needed --
    same pattern as `test_fase2_geometry.py`'s `CameraCalibration.load()`
    coverage).
 
@@ -240,7 +240,7 @@ def test_classify_bbox_zone_skips_inactive_zone():
 
 
 # ---------------------------------------------------------------------------
-# Zone.from_row() / load_zones(): fake psycopg2-shaped connection/cursor
+# Zone.from_row() / load_zones(): fake psycopg-shaped connection/cursor
 # (same pattern as test_fase2_geometry.py's CameraCalibration.load() tests)
 # ---------------------------------------------------------------------------
 

@@ -16,7 +16,7 @@ What it verifies (Fase 5 / PR9 task "AuthorizationRegistry"):
 2. `AuthorizationRegistry.get()` -- returns the stored row dict for a known
    pid, `None` for unknown/`None`.
 3. `AuthorizationRegistry.load()` -- row -> snapshot shape (fake
-   psycopg2-shaped connection/cursor, no real Postgres needed -- same
+   psycopg-shaped connection/cursor, no real Postgres needed -- same
    pattern as `test_zones.py`'s `load_zones()` coverage), including the
    "no active rows" -> empty-registry-that-authorizes-nothing degrade.
 
@@ -94,7 +94,7 @@ def test_get_returns_none_for_unknown_or_none_pid():
 
 
 # ---------------------------------------------------------------------------
-# load(): fake psycopg2-shaped connection/cursor
+# load(): fake psycopg-shaped connection/cursor
 # (same pattern as test_zones.py's load_zones() tests)
 # ---------------------------------------------------------------------------
 
