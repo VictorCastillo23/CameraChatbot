@@ -83,7 +83,7 @@ def run_pipeline_and_persist(*, runtime, gallery, frames_folder, n_keyframes, si
         detail_detectors=detail_detectors, keyframes_path=frames_folder,
         gallery=gallery, yoloPersonReID=YOLOPersonReID(
             runtime["yolo_det"], frames_folder, yolo_output,
-            transform=runtime["reid_transform"], reid_model=runtime["reid_model"], device=None,
+            reid_model=runtime["reid_model"],
         )
     )
     print(f'final_json = {final_json}')

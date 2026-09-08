@@ -1,35 +1,21 @@
-import os, glob, cv2, json,numpy as np,torch,re,time
-from ultralytics import YOLO
+import os, glob, cv2, json, numpy as np, re, time
 from collections import defaultdict
-from PIL import Image
 from time import perf_counter as now
 
 from camerachatbot.geometry.bbox_utils import center, iou, clamp_bbox
 from camerachatbot.identity.cosine_clustering import cluster_cosine
-from camerachatbot.detectors.onnx_reid import OSNetOnnxEmbedder
+
 class YOLOPersonReID:
-    def __init__(self,model: YOLO,frames_folder=None,output_folder=None,transform=None,
-                 reid_model=None,device=None):
+    def __init__(self, model, frames_folder=None, output_folder=None, reid_model=None):
         self.model = model
         self.frames_folder=frames_folder
         self.output_folder = output_folder
         os.makedirs(self.output_folder, exist_ok=True)
 
-        self.reid_transform = transform
-        self.device = device
-
-        # Fase 3b: `reid_model` is an `OSNetOnnxEmbedder` when
-        # `bootstrap.py` loads `loaders_onnx` (today's default) — it owns
-        # its own ONNX Runtime session/preprocessing and has no `.eval()`/
-        # `.to()` lifecycle. It is a bare torch `nn.Module` only on
-        # `loaders_torch` rollback. Branching on `isinstance` here (instead
-        # of hardcoding one shape) is what keeps bootstrap.py's "flip one
-        # import line" rollback promise true without also having to edit
-        # this file back.
-        if reid_model is not None and not isinstance(reid_model, OSNetOnnxEmbedder):
-            resolved_device = device if device is not None else torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            self.device = resolved_device
-            reid_model = reid_model.eval().to(resolved_device)
+        # Fase 3c: `reid_model` is always an `OSNetOnnxEmbedder` — the only
+        # loader module left is `loaders_onnx` (see `camerachatbot/runtime/
+        # bootstrap.py`), so no shape-branching is needed here anymore. It
+        # owns its own ONNX Runtime session/preprocessing.
         self.reid_model = reid_model
 
         self.person_class_id = 0
@@ -42,22 +28,9 @@ class YOLOPersonReID:
             return None
         if crop is None or crop.size == 0:
             return None
-
-        # ONNX path (`loaders_onnx.load_reid()`): the embedder owns its own
-        # BGR->RGB/resize/normalize preprocessing — see onnx_reid.py.
-        if isinstance(self.reid_model, OSNetOnnxEmbedder):
-            return self.reid_model.embed_one(crop)
-
-        # Legacy torch path (`loaders_torch.load_reid()` rollback): needs
-        # the external torchreid transform + explicit device placement.
-        if self.reid_transform is None:
-            return None
-        img = Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB))
-        ten = self.reid_transform(img).unsqueeze(0).to(self.device)
-        with torch.no_grad():
-            feat = self.reid_model(ten).detach().cpu().numpy()[0]
-        feat = feat / (np.linalg.norm(feat) + 1e-12)
-        return feat.astype("float32")
+        # The embedder owns its own BGR->RGB/resize/normalize preprocessing
+        # — see onnx_reid.py.
+        return self.reid_model.embed_one(crop)
 
     def detect_and_embed(self,
                          conf=0.25,

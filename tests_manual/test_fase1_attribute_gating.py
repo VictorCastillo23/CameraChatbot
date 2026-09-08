@@ -220,7 +220,7 @@ def test_detect_and_embed_discards_non_allowlisted_classes():
             model=_FakeYoloDetModel(),
             frames_folder=frames_folder,
             output_folder=tmpdir,
-            transform=None, reid_model=None, device=None,
+            reid_model=None,
         )
         tmp_json_path = tracker.detect_and_embed(
             batch_size=16, save_outputs=False, allowlist=COCO_ALLOWLIST

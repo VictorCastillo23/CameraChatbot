@@ -7,15 +7,13 @@ from dotenv import load_dotenv
 from camerachatbot import paths
 from camerachatbot.security_config import DETECTOR_FLAGS
 
-# Fase 3b switch line — this import IS the rollback mechanism (design doc
-# §3 "bootstrap.py rewiring"). Both sibling modules expose the identical
-# zero-arg `load_detector()` / `load_posecls()` / `load_reid()` contract.
-# ROLLBACK: comment the line below, uncomment the one after it, restore
-# requirements.txt pins (torch/ultralytics/torchreid) — no other file needs
-# to change; person_reid.py/pose_action_classifier.py duck-type on the
-# loaded model's shape (see those modules for the exact check).
+# Fase 3c: the torch/ultralytics/torchreid runtime path (`loaders_torch.py`,
+# the isinstance-based duck typing this used to need in person_reid.py/
+# pose_action_classifier.py, and the matching requirements.txt pins) was
+# removed entirely — `loaders_onnx` is now the only loader module. There is
+# no more one-line rollback; reverting to the torch path would mean
+# reverting to a pre-Fase-3c git commit, not flipping an import line.
 from camerachatbot.runtime.loaders_onnx import load_detector, load_posecls, load_reid
-# from camerachatbot.runtime.loaders_torch import load_detector, load_posecls, load_reid
 
 load_dotenv()
 
@@ -51,10 +49,9 @@ def build_supabase():
 def load_yolo_models():
     """Load the person/object detector + sit/stand pose classifier.
 
-    Delegates to whichever loader module is currently imported above
-    (`loaders_onnx` today, `loaders_torch` on rollback) — this function no
-    longer contains any model-loading logic of its own, it is purely the
-    two-value-tuple adapter `init_runtime()` expects.
+    Delegates to `loaders_onnx` (the only loader module since Fase 3c) —
+    this function no longer contains any model-loading logic of its own, it
+    is purely the two-value-tuple adapter `init_runtime()` expects.
     """
     yolo_det = load_detector()
     yolo_posecls = load_posecls()
@@ -96,20 +93,10 @@ def init_runtime():
 
     yolo_det, yolo_posecls = load_yolo_models()
 
-    # `load_reid()`'s return shape differs by loader: `loaders_onnx`
-    # (today's default) returns a single self-contained `OSNetOnnxEmbedder`
-    # that owns its own preprocessing; `loaders_torch` (rollback) returns
-    # the legacy `(reid_model, transform)` tuple, since a bare torch
-    # `nn.Module` needs an external torchreid transform. Absorbing that
-    # asymmetry here — instead of letting `RUNTIME`'s shape vary by which
-    # loader is active — is what keeps every downstream caller
-    # (`pipeline_service.py`, `person_reid.py`) working unmodified whichever
-    # loader is imported above.
-    reid_loaded = load_reid()
-    if isinstance(reid_loaded, tuple):
-        reid_model, reid_transform = reid_loaded
-    else:
-        reid_model, reid_transform = reid_loaded, None
+    # `loaders_onnx.load_reid()` returns a single self-contained
+    # `OSNetOnnxEmbedder` that owns its own preprocessing — since Fase 3c
+    # there is no other loader module and no other shape to absorb here.
+    reid_model = load_reid()
 
     (emotion_sess, emotion_input, emotion_output), (age_sess, age_input, age_output) = load_face_attr_sessions()
 
@@ -120,7 +107,6 @@ def init_runtime():
         "yolo_det": yolo_det,
         "yolo_posecls": yolo_posecls,
         "reid_model": reid_model,
-        "reid_transform": reid_transform,
         "emotion": {
             "sess": emotion_sess,
             "input": emotion_input,
