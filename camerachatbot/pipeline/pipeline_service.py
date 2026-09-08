@@ -3,12 +3,15 @@ import time
 import json
 
 from camerachatbot import paths
+from camerachatbot.security_config import DETECTOR_FLAGS
 from camerachatbot.pipeline import orchestrator
 from camerachatbot.detectors.pose_action_classifier import PoseActionClassifier
-from camerachatbot.detectors.face_detector import FaceDetector
 from camerachatbot.detectors.face_attributes_detector import FaceAttributesDetector
-from camerachatbot.detectors.hand_detector import HandDetector
 from camerachatbot.detectors.person_reid import YOLOPersonReID
+# FaceDetector/HandDetector (mediapipe) moved to legacy/ in Fase 3b — both
+# are gated off by default (DETECTOR_FLAGS["face_attention"]/["hands"] are
+# False), so they are imported lazily below, only when their flag is on,
+# instead of unconditionally at module load time.
 from camerachatbot.video_schema.formatter import reformat_to_video_schema_uniform
 from camerachatbot.db.postgres_writer import json_to_postgre
 from camerachatbot.debugging import annotate
@@ -27,51 +30,71 @@ def _safe_div(n, d):
 
 
 def build_detail_detectors(runtime, frames_folder):
-    emotion_sess = runtime["emotion"]["sess"]
-    emotion_input = runtime["emotion"]["input"]
-    emotion_output = runtime["emotion"]["output"]
+    """Build the detail-detector pipeline, gated by `security_config.DETECTOR_FLAGS`.
 
-    age_sess = runtime["age"]["sess"]
-    age_input = runtime["age"]["input"]
-    age_output = runtime["age"]["output"]
+    Emotion and age share a single ONNX-backed detector (`FaceAttributesDetector`)
+    and a single loader in `bootstrap.load_face_attr_sessions()`, so that detector
+    is included when either flag is True (matching the bootstrap gating decision),
+    not only when both are True.
+    """
+    detectors = []
 
-    return [
-        PoseActionClassifier(
+    if DETECTOR_FLAGS["pose"]:
+        detectors.append(PoseActionClassifier(
             yolo=runtime["yolo_posecls"],
             frames_folder=frames_folder,
             class_map={"sentado": "sentado", "parado": "de pie", "standing": "de pie", "sitting": "sentado"},
             conf_threshold=0.60
-        ),
-        FaceDetector(frames_folder=frames_folder),
-        HandDetector(frames_folder=frames_folder),
-        FaceAttributesDetector(
-            emotion_input=emotion_input,
-            emotion_output=emotion_output,
-            age_input=age_input,
-            age_output=age_output,
+        ))
+
+    if DETECTOR_FLAGS["face_attention"]:
+        from legacy.face_detector import FaceDetector
+        detectors.append(FaceDetector(frames_folder=frames_folder))
+
+    if DETECTOR_FLAGS["hands"]:
+        from legacy.hand_detector import HandDetector
+        detectors.append(HandDetector(frames_folder=frames_folder))
+
+    if DETECTOR_FLAGS["emotion"] or DETECTOR_FLAGS["age"]:
+        detectors.append(FaceAttributesDetector(
+            emotion_input=runtime["emotion"]["input"],
+            emotion_output=runtime["emotion"]["output"],
+            age_input=runtime["age"]["input"],
+            age_output=runtime["age"]["output"],
             frames_folder=frames_folder,
-            age_sess=age_sess,
-            emotion_sess=emotion_sess,
-        ),
-    ]
+            age_sess=runtime["age"]["sess"],
+            emotion_sess=runtime["emotion"]["sess"],
+            face_attention_enabled=DETECTOR_FLAGS["face_attention"],
+        ))
+
+    return detectors
 
 
 def run_pipeline_and_persist(*, runtime, gallery, frames_folder, n_keyframes, size_xy, start_at,
                               video_key, fps=30, final_inference=0.0,
-                              draw_debug=False, debug_images_dir=None):
+                              draw_debug=False, debug_images_dir=None, camera_id=None):
     detail_detectors = build_detail_detectors(runtime, frames_folder)
 
     output_path = str(paths.res_output_dir_for(frames_folder))
     os.makedirs(output_path, exist_ok=True)
     yolo_output = os.path.join(output_path, "yolo_reid")
 
-    final_json, final_pre_process, final_post_process = orchestrator.multi_models(
+    # Fase 4b (PR8b): `camera_id` is optional and defaults to `None` --
+    # no entry point (`run_local.py`/`run_webhook.py`) currently resolves a
+    # real numeric camera id before calling this function (camera identity
+    # is otherwise only resolved by NAME, lazily, inside
+    # `postgres_writer.get_or_create_project_camera_video()` at persistence
+    # time). Passing `None` here is the documented degrade path: tracking
+    # and identity assignment still run, `world_xy`/`zone_id` stay `None`,
+    # intrusion/loitering yield no events. See apply-progress for the
+    # camera-identity plumbing gap this leaves for a future PR.
+    final_json, events, final_pre_process, final_post_process = orchestrator.multi_models(
         detail_detectors=detail_detectors, keyframes_path=frames_folder,
         gallery=gallery, yoloPersonReID=YOLOPersonReID(
             runtime["yolo_det"], frames_folder, yolo_output,
-            runtime["reid_transform"], runtime["reid_model"], runtime["device"],
-            depth_model=runtime["depth"]["model"], depth_transform=runtime["depth"]["transform"]
-        )
+            reid_model=runtime["reid_model"],
+        ),
+        camera_id=camera_id, start_at=start_at, fps=fps,
     )
     print(f'final_json = {final_json}')
     print(f'final_pre_process : {final_pre_process}')
@@ -93,6 +116,7 @@ def run_pipeline_and_persist(*, runtime, gallery, frames_folder, n_keyframes, si
         per_frame_inference=pf_inf,
         per_frame_preprocess=pf_pre,
         per_frame_postprocess=pf_post,
+        events=events,
     )
     t1 = time.time()
     print(f"[STAGE POST] reformat_to_video_schema_uniform: {t1 - t0:.3f}s")

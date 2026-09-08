@@ -1,8 +1,10 @@
-import json, os,time,re
-from datetime import datetime, timedelta, timezone
-from typing import Tuple, Any
+import json, os, time
+from datetime import datetime, timezone
+from typing import Any, List, Optional, Tuple
 
 from camerachatbot import paths
+from camerachatbot.video_schema.timing import frame_timestamp, parse_start_at
+from camerachatbot.security.events import event_to_dict
 
 def reformat_to_video_schema_uniform(
     src_json_path: str,
@@ -15,20 +17,8 @@ def reformat_to_video_schema_uniform(
     per_frame_inference: float,
     per_frame_preprocess: float,
     per_frame_postprocess: float,
+    events: Optional[List] = None,
 ) -> str:
-    def _parse_start(ts: str) -> datetime:
-        if ts.endswith("Z"):
-            dt = datetime.fromisoformat(ts[:-1]).replace(tzinfo=timezone.utc)
-        else:
-            ts_fixed = re.sub(r'(\.\d{1,5})(\+|\-)', lambda m: f"{m.group(1).ljust(7, '0')}{m.group(2)}", ts)
-
-            dt = datetime.fromisoformat(ts_fixed)
-            if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=timezone.utc)
-            else:
-                dt = dt.astimezone(timezone.utc)
-        return dt
-
     def _iso_z(dt: datetime) -> str:
         return dt.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
 
@@ -90,14 +80,6 @@ def reformat_to_video_schema_uniform(
             ))
         return _md_object("hands", "hands", children)
 
-    def _build_depth_metadata(depth: dict) -> dict:
-        children = []
-        if isinstance(depth, dict):
-            if "mean" in depth:   children.append(_md_scalar("mean",   "mean",   "float", depth.get("mean")))
-            if "median" in depth: children.append(_md_scalar("median", "median", "float", depth.get("median")))
-            if "min" in depth:    children.append(_md_scalar("min",    "min",    "float", depth.get("min")))
-        return _md_object("depth", "depth", children)
-
     def _entry_to_object(e: dict) -> dict:
         cls = e.get("class_name", "object")
         conf = e.get("confidence")
@@ -124,7 +106,6 @@ def reformat_to_video_schema_uniform(
             if "pose_conf" in attrs: obj["metadata"].append(_md_scalar("pose_conf","pose_conf","float",attrs.get("pose_conf")))
             obj["metadata"].append(_build_hands_metadata(attrs.get("hands")))
             obj["metadata"].append(_build_face_metadata(attrs.get("face")))
-        obj["metadata"].append(_build_depth_metadata(e.get("depth")))
         return obj
 
     with open(src_json_path, "r", encoding="utf-8") as f:
@@ -133,7 +114,7 @@ def reformat_to_video_schema_uniform(
         raise ValueError("El JSON de entrada debe ser un dict con frames como claves.")
 
     W, H = int(size_xy[0]), int(size_xy[1])
-    t0 = _parse_start(start_at)
+    t0 = parse_start_at(start_at)
 
     def _sort_key(k: str):
         try:
@@ -158,7 +139,7 @@ def reformat_to_video_schema_uniform(
                 print(f"[WARN] frame {frame_id}: entrada ignorada ({ex})")
         try:
             fnum = int(frame_id)
-            dt = t0 + timedelta(seconds=(fnum / float(fps)))
+            dt = frame_timestamp(t0, fnum, fps)
             ts = _iso_z(dt)
         except Exception:
             ts = _iso_z(t0)
@@ -176,9 +157,19 @@ def reformat_to_video_schema_uniform(
 
         key_frames.append(kf)
 
+    # Fase 4b (PR8b): `events` is a `list[SecurityEvent]` produced by
+    # `orchestrator.multi_models()`'s zones+events stage. It rides along
+    # `video` the same way `neighborhood` already does -- one more sibling
+    # node under `out["video"]`, not a second top-level top of `out` itself
+    # -- so `postgres_writer.json_to_postgre()` reads it via
+    # `data["video"].get("events", [])`, mirroring how it already reads
+    # `data["video"].get("neighborhood", [])`.
+    events_out = [event_to_dict(e) for e in (events or [])]
+
     out = {"video": {"key": video_key,
                      "start_at": _iso_z(t0),
                      "neighborhood" : src["neighborhood"],
+                     "events": events_out,
                      "key_frames": key_frames}}
 
     os.makedirs(os.path.dirname(dst_json_path) or ".", exist_ok=True)

@@ -1,0 +1,28 @@
+{
+  "description": "Hand-built TracksTimeline inputs for evaluate_loitering()'s per-zone dwell-threshold boundary, exercised directly (no build_tracks_timeline()/reid/calibration involved). fps=1.0 so frame_idx doubles as elapsed seconds; gap_tolerance is set generously (1000) so each case's two observations always form a single continuous run -- the only thing under test is the started_at/ended_at dwell-time comparison against the zone's loiter_seconds.",
+  "fps": 1.0,
+  "gap_tolerance": 1000,
+  "zones": [
+    {
+      "id": 2,
+      "camera_id": 1,
+      "name": "Lobby",
+      "zone_type": "monitored",
+      "polygon": [],
+      "schedule": {"loiter_seconds": 30},
+      "is_active": true
+    }
+  ],
+  "below_threshold": {
+    "description": "Track 3 observed at frame 0 then frame 29 -- dwell = 29s, just BELOW the zone's 30s loiter_seconds -> zero events.",
+    "track_id": 3,
+    "frame_indices": [0, 29],
+    "expected_event_count": 0
+  },
+  "above_threshold": {
+    "description": "Track 4 observed at frame 0 then frame 30 -- dwell = 30s, AT/above the zone's 30s loiter_seconds -> one event.",
+    "track_id": 4,
+    "frame_indices": [0, 30],
+    "expected_event_count": 1
+  }
+}

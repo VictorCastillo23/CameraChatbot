@@ -34,6 +34,10 @@ COCO_ALLOWLIST = frozenset({
 })
 
 # Which detail detectors run in `pipeline_service.build_detail_detectors()`.
+# There used to be a "depth" flag here gating YOLOPersonReID's per-image
+# depth-estimation map + per-ROI depth stats; Fase 2 removed the depth model
+# from the pipeline entirely (bootstrap.py, person_reid.py), so that axis no
+# longer exists — there is nothing left for a flag to gate.
 DETECTOR_FLAGS = MappingProxyType({
     "pose": True,
     "face_attention": False,

@@ -1,22 +1,22 @@
-import os, cv2, json,torch
+import os, cv2, json
+
+from camerachatbot.detectors.onnx_pose_classifier import PoseClsOnnxClassifier
 
 class PoseActionClassifier():
     def __init__(self, yolo, frames_folder=None, conf_threshold=0.60, class_map=None,
-                 imgsz=224, device=None, batch=16, res=None):
+                 imgsz=224, batch=16, res=None):
         self.model = yolo
         self.frames_folder = frames_folder
         self.confs = conf_threshold
         self.imgsz = imgsz
-        self.device = device
         self.batch = batch
         self.res = res  # opcional; si no, llama set_res() luego
         self._frames_map = None
 
-        self.model.to(self.device)
-        try:
-            self.model.fuse()
-        except:
-            pass
+        # Fase 3c: `yolo` is always a `PoseClsOnnxClassifier` — the only
+        # loader module left is `loaders_onnx` (see `camerachatbot/runtime/
+        # bootstrap.py`), so it always owns its own ONNX Runtime session and
+        # needs neither `.to()` nor `.fuse()`.
 
         self.class_map = (class_map or {
             "sit": "sentado", "sitting": "sentado", "sentado": "sentado",
@@ -29,7 +29,6 @@ class PoseActionClassifier():
         return self.class_map.get(key, raw_label)
 
     def run_on_json(self, json_file: str, topk_per_frame: int = 6, min_area_ratio: float = 0.04) -> str:
-        import numpy as np
         with open(json_file, "r", encoding="utf-8") as f:
             data = json.load(f)
 
@@ -97,50 +96,19 @@ class PoseActionClassifier():
             print(f"[PoseCls] (sin crops) JSON guardado en {out_file}")
             return out_file
 
-        # Inferencia en batch con YOLO-CLS
-        use_half = torch.cuda.is_available()
-        imgsz = getattr(self, "imgsz", 224)
-        batch = getattr(self, "batch", 16)
+        # Inferencia en batch. `PoseClsOnnxClassifier.predict()` ya devuelve
+        # `(pred_idx, conf)` por crop — batching/precisión/softmax son su
+        # propia responsabilidad (ver onnx_pose_classifier.py). Fase 3c
+        # removed the legacy torch/ultralytics `.probs`-parsing path this
+        # replaced — see git history (pre-Fase-3c) if it's ever needed again.
         names = getattr(self, "names", None)
         conf_thr = float(getattr(self, "confs", 0.60))
-
-        with torch.inference_mode():
-            results = self.model(
-                crops,
-                imgsz=imgsz,
-                batch=batch,
-                half=use_half,
-                verbose=False
-            )
-
-        # Asegura lista
-        if not isinstance(results, (list, tuple)):
-            results = list(results)
+        preds = self.model.predict(crops)
 
         # Escribe resultados de vuelta
-        for (frame_id, i), r in zip(backrefs, results):
+        for (frame_id, i), (pred_idx, conf) in zip(backrefs, preds):
             p = data[frame_id][i]
             p.setdefault("attributes", {})
-
-            probs_obj = getattr(r, "probs", None)
-            if probs_obj is None:
-                pred_idx, conf = 0, 0.0
-            else:
-                # extrae vector de scores de forma robusta
-                try:
-                    scores = probs_obj.data.detach().cpu().numpy()
-                except Exception:
-                    try:
-                        scores = np.asarray(probs_obj)
-                    except Exception:
-                        scores = None
-                if scores is None:
-                    pred_idx, conf = 0, 0.0
-                else:
-                    if scores.ndim > 1:
-                        scores = scores[0]
-                    pred_idx = int(np.argmax(scores))
-                    conf = float(scores[pred_idx])
 
             # mapea etiqueta cruda → etiqueta final
             if isinstance(names, dict):

@@ -1,0 +1,236 @@
+{
+  "description": "One box moving steadily, disappears for 5 frames (occlusion, no detections at all), then reappears near its Kalman-predicted position at LOW confidence (0.3, below high_thresh) before returning to high confidence. Validates max_age tolerance (track survives the 5-frame gap) and the stage-2 low-confidence match (the reappearing box is recovered by the SAME track, never spawning a second track id, even though re-confirmation/reporting takes a few more consecutive hits per SORT semantics).",
+  "gap_start_frame": 10,
+  "gap_len": 5,
+  "reappear_frame": 15,
+  "frames": [
+    {
+      "dets": [
+        [
+          10,
+          10,
+          110,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          15,
+          10,
+          115,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          20,
+          10,
+          120,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          25,
+          10,
+          125,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          30,
+          10,
+          130,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          35,
+          10,
+          135,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          40,
+          10,
+          140,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          45,
+          10,
+          145,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          50,
+          10,
+          150,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          55,
+          10,
+          155,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [],
+      "scores": []
+    },
+    {
+      "dets": [],
+      "scores": []
+    },
+    {
+      "dets": [],
+      "scores": []
+    },
+    {
+      "dets": [],
+      "scores": []
+    },
+    {
+      "dets": [],
+      "scores": []
+    },
+    {
+      "dets": [
+        [
+          85,
+          10,
+          185,
+          110
+        ]
+      ],
+      "scores": [
+        0.3
+      ]
+    },
+    {
+      "dets": [
+        [
+          90,
+          10,
+          190,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          95,
+          10,
+          195,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          100,
+          10,
+          200,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          105,
+          10,
+          205,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          110,
+          10,
+          210,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    }
+  ]
+}

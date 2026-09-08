@@ -1,22 +1,24 @@
-import os,json, cv2,torch,onnxruntime as ort,torchreid
+import os, json, cv2, onnxruntime as ort
 from pathlib import Path
-from ultralytics import YOLO
 from flask import Flask
 from supabase import create_client, Client
 from dotenv import load_dotenv
 
 from camerachatbot import paths
+from camerachatbot.security_config import DETECTOR_FLAGS
+
+# Fase 3c: the torch/ultralytics/torchreid runtime path (`loaders_torch.py`,
+# the isinstance-based duck typing this used to need in person_reid.py/
+# pose_action_classifier.py, and the matching requirements.txt pins) was
+# removed entirely — `loaders_onnx` is now the only loader module. There is
+# no more one-line rollback; reverting to the torch path would mean
+# reverting to a pre-Fase-3c git commit, not flipping an import line.
+from camerachatbot.runtime.loaders_onnx import load_detector, load_posecls, load_reid
 
 load_dotenv()
 
-YOLO_DET_PATH  = (paths.MODELS_DIR / "yolov10m.pt").resolve()
-YOLO_POSECLS_PATH = (paths.MODELS_DIR / "trained_yolo11m.pt").resolve()
 EMO_ONNX_PATH  = (paths.MODELS_DIR / "emotion-ferplus-8.onnx").resolve()
 AGE_ONNX_PATH  = (paths.MODELS_DIR / "age_googlenet.onnx").resolve()
-MIDAS_WEIGHTS  = (paths.MODELS_DIR / "dpt_hybrid_384.pt").resolve()
-
-def get_device():
-    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def _assert_exists(path: Path, what: str):
     if not path.exists():
@@ -45,35 +47,21 @@ def build_supabase():
         return None,None
 
 def load_yolo_models():
-    _assert_exists(YOLO_DET_PATH, "YOLO detección")
-    _assert_exists(YOLO_POSECLS_PATH, "YOLO-CLS pose sentado/de pie")
+    """Load the person/object detector + sit/stand pose classifier.
 
-    yolo_det = YOLO(str(YOLO_DET_PATH))
-    yolo_posecls = YOLO(str(YOLO_POSECLS_PATH))
-
-    try:
-        yolo_det.fuse()
-    except Exception:
-        pass
-    try:
-        yolo_posecls.fuse()
-    except Exception:
-        pass
-
+    Delegates to `loaders_onnx` (the only loader module since Fase 3c) —
+    this function no longer contains any model-loading logic of its own, it
+    is purely the two-value-tuple adapter `init_runtime()` expects.
+    """
+    yolo_det = load_detector()
+    yolo_posecls = load_posecls()
     return yolo_det, yolo_posecls
 
-def load_reid(device):
-    reid = torchreid.models.build_model(
-        name="osnet_x1_0",
-        num_classes=1000,
-        pretrained=True
-    )
-    reid.eval().to(device)
-
-    _, transform = torchreid.data.transforms.build_transforms(height=256, width=128)
-    return reid, transform
-
 def load_face_attr_sessions():
+    if not (DETECTOR_FLAGS["emotion"] or DETECTOR_FLAGS["age"]):
+        print("[ONNX] DETECTOR_FLAGS['emotion'] y ['age'] son False — no se cargan sesiones ONNX de emoción/edad.")
+        return (None, None, None), (None, None, None)
+
     _assert_exists(EMO_ONNX_PATH, "modelo de emociones ONNX")
     _assert_exists(AGE_ONNX_PATH, "modelo de edad ONNX")
 
@@ -93,44 +81,32 @@ def load_face_attr_sessions():
 
     return (emotion_sess, emo_in, emo_out), (age_sess, age_in, age_out)
 
-def load_midas(device):
-    _assert_exists(MIDAS_WEIGHTS, "pesos MiDaS DPT_Hybrid")
-    depth_model = torch.hub.load("intel-isl/MiDaS", "DPT_Hybrid", pretrained=False)
-    state_dict = torch.load(str(MIDAS_WEIGHTS), map_location="cpu")
-    depth_model.load_state_dict(state_dict)
-    depth_model.eval().to(device)
-
-    midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
-    depth_transform = midas_transforms.dpt_transform
-    return depth_model, depth_transform
-
 def build_app():
     app = Flask(__name__)
     app.config["JSON_SORT_KEYS"] = False
     return app
 
 def init_runtime():
-    device = get_device()
-    print(f"[DEVICE] Usando: {device}")
-
     supabase,BUCKET_NAME = build_supabase()
 
     app = build_app()
 
     yolo_det, yolo_posecls = load_yolo_models()
-    reid_model, reid_transform = load_reid(device)
+
+    # `loaders_onnx.load_reid()` returns a single self-contained
+    # `OSNetOnnxEmbedder` that owns its own preprocessing — since Fase 3c
+    # there is no other loader module and no other shape to absorb here.
+    reid_model = load_reid()
+
     (emotion_sess, emotion_input, emotion_output), (age_sess, age_input, age_output) = load_face_attr_sessions()
-    depth_model, depth_transform = load_midas(device)
 
     RUNTIME = {
         "app": app,
         "supabase": supabase,
         "BUCKET_NAME":BUCKET_NAME,
-        "device": device,
         "yolo_det": yolo_det,
         "yolo_posecls": yolo_posecls,
         "reid_model": reid_model,
-        "reid_transform": reid_transform,
         "emotion": {
             "sess": emotion_sess,
             "input": emotion_input,
@@ -140,10 +116,6 @@ def init_runtime():
             "sess": age_sess,
             "input": age_input,
             "output": age_output
-        },
-        "depth": {
-            "model": depth_model,
-            "transform": depth_transform
         }
     }
     print("[INIT] Modelos y sesiones cargados correctamente.")

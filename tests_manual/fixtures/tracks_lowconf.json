@@ -1,0 +1,202 @@
+{
+  "description": "One steadily-moving box, present every frame (no gap), whose confidence dips to 0.2 (low_thresh <= score < high_thresh) for frames 5-9 before returning to 0.9. Expect the SAME track id reported continuously across the whole sequence, including the low-confidence frames -- proof that stage-2 matching alone (no occlusion gap involved) is sufficient to keep a track alive.",
+  "lowconf_start_frame": 5,
+  "lowconf_end_frame": 9,
+  "frames": [
+    {
+      "dets": [
+        [
+          10,
+          10,
+          110,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          15,
+          10,
+          115,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          20,
+          10,
+          120,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          25,
+          10,
+          125,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          30,
+          10,
+          130,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          35,
+          10,
+          135,
+          110
+        ]
+      ],
+      "scores": [
+        0.2
+      ]
+    },
+    {
+      "dets": [
+        [
+          40,
+          10,
+          140,
+          110
+        ]
+      ],
+      "scores": [
+        0.2
+      ]
+    },
+    {
+      "dets": [
+        [
+          45,
+          10,
+          145,
+          110
+        ]
+      ],
+      "scores": [
+        0.2
+      ]
+    },
+    {
+      "dets": [
+        [
+          50,
+          10,
+          150,
+          110
+        ]
+      ],
+      "scores": [
+        0.2
+      ]
+    },
+    {
+      "dets": [
+        [
+          55,
+          10,
+          155,
+          110
+        ]
+      ],
+      "scores": [
+        0.2
+      ]
+    },
+    {
+      "dets": [
+        [
+          60,
+          10,
+          160,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          65,
+          10,
+          165,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          70,
+          10,
+          170,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          75,
+          10,
+          175,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    },
+    {
+      "dets": [
+        [
+          80,
+          10,
+          180,
+          110
+        ]
+      ],
+      "scores": [
+        0.9
+      ]
+    }
+  ]
+}
