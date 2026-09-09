@@ -5,11 +5,14 @@ import numpy as np
 from camerachatbot import paths
 
 # ---------- utilidades de dibujo ----------
-def _ensure_int_bbox(b):
+# Nombres sin guion bajo: API reutilizable por otros modulos de debugging
+# (ej. box_review.py). Los alias con guion bajo se mantienen para no tocar
+# el resto de este archivo.
+def ensure_int_bbox(b):
     x1, y1, x2, y2 = map(int, b)
     return x1, y1, x2, y2
 
-def _put_multiline(img, origin, lines, color=(255,255,255), bg=(0,0,0),
+def put_multiline(img, origin, lines, color=(255,255,255), bg=(0,0,0),
                    scale=0.5, thickness=1, pad=2, line_h=None):
     x, y = origin
     font = cv2.FONT_HERSHEY_SIMPLEX
@@ -21,11 +24,11 @@ def _put_multiline(img, origin, lines, color=(255,255,255), bg=(0,0,0),
         cv2.putText(img, line, (x + pad, y - pad), font, scale, color, thickness, cv2.LINE_AA)
         y += line_h
 
-def _fmt_float(x, n=3):
+def fmt_float(x, n=3):
     try: return f"{float(x):.{n}f}"
     except: return str(x)
 
-def _find_image_for_frame(images_dir, frame_id, exts=(".jpg",".png",".jpeg",".bmp",".webp")):
+def find_image_for_frame(images_dir, frame_id, exts=(".jpg",".png",".jpeg",".bmp",".webp")):
     for ext in exts:
         p = os.path.join(images_dir, f"{frame_id}{ext}")
         if os.path.exists(p):
@@ -35,6 +38,11 @@ def _find_image_for_frame(images_dir, frame_id, exts=(".jpg",".png",".jpeg",".bm
         if g:
             return g[0]
     return None
+
+_ensure_int_bbox = ensure_int_bbox
+_put_multiline = put_multiline
+_fmt_float = fmt_float
+_find_image_for_frame = find_image_for_frame
 
 def _build_person_lines(entry):
     lines = []

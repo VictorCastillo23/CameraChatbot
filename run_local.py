@@ -5,6 +5,14 @@ from camerachatbot import paths
 from camerachatbot.runtime.bootstrap import init_runtime
 from camerachatbot.identity.global_identity_service import GlobalIdentityService
 from camerachatbot.pipeline.pipeline_service import run_pipeline_and_persist
+from camerachatbot.debugging.box_review import save_annotated_and_crops, review_interactive
+
+# Helper de debugging opcional: guarda todas las boxes dibujadas + recortes
+# individuales por keyframe y abre un visor interactivo al final de la
+# corrida (SPACE = siguiente box, N = saltar al siguiente keyframe,
+# ESC/Q = salir). Ver camerachatbot/debugging/box_review.py. Apagado por
+# defecto -- no afecta corridas normales.
+SAVE_BOX_REVIEW = True
 
 
 def main():
@@ -29,7 +37,7 @@ def main():
     BUCKET_NAME = 'prueba'
     video_key = BUCKET_NAME + folder_path
 
-    run_pipeline_and_persist(
+    final_json = run_pipeline_and_persist(
         runtime=runtime,
         gallery=gallery,
         frames_folder=frames_folder,
@@ -40,6 +48,11 @@ def main():
         final_inference=final_inference,
         draw_debug=False,
     )
+
+    if SAVE_BOX_REVIEW:
+        output_dir = str(paths.debug_boxes_dir_for(frames_folder))
+        manifest = save_annotated_and_crops(final_json, frames_folder, output_dir)
+        review_interactive(manifest)
 
 
 if __name__ == "__main__":

@@ -11,17 +11,22 @@
 # module docstrings) if you turn those flags on.
 #
 # numpy was capped at 1.26.4 only because mediapipe hard-required numpy<2.
-# With mediapipe gone, numpy/opencv-python could in principle move back to
-# their latest 2.x releases — left as a follow-up, not bumped here, since
-# faiss-cpu/scipy/onnxruntime all need to be re-verified to resolve together
-# against numpy 2.x before that's a safe change to make casually.
-numpy==1.26.4
-opencv-python==4.11.0.86
+# With mediapipe gone, this follow-up bump is now done: numpy/opencv-python/
+# scipy/matplotlib/onnxruntime moved to their latest verified releases so
+# Python 3.14 (no 3.10-3.12-era wheels for the old pins) has prebuilt wheels
+# instead of falling back to a from-source build (scipy in particular needs
+# a Fortran compiler to build from source on Windows, which most dev
+# machines don't have). Re-verified together against numpy 2.x on 2026-09-08:
+# full `tests_manual/` suite (14 files) + `compileall` both clean. faiss-cpu
+# and pillow needed no bump — their existing pins already resolve against
+# numpy 2.x with a wheel.
+numpy==2.5.1
+opencv-python==5.0.0.93
 pillow==12.3.0
-scipy==1.15.3
-matplotlib==3.10.7
+scipy==1.18.0
+matplotlib==3.11.1
 
-onnxruntime==1.23.2
+onnxruntime==1.28.0
 faiss-cpu==1.14.3
 
 flask==3.1.3

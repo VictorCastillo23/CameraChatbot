@@ -2,11 +2,9 @@
 
 CameraChatbot ingests camera keyframes, runs person detection/re-identification/pose over them, and is in the middle of a security-oriented overhaul adding continuous tracking and zone/event detection. This folder is the map of what exists today, what's active by default, and what's still on the way.
 
-## Scope and branch caveat
+## Scope caveat
 
-This folder documents the codebase as it exists on `security-pipeline-overhaul/pr8b-fase4b-orchestrator-wiring` — the tip of a long, still-unmerged chain of PRs (Fase 0 through Fase 4b of the `security-pipeline-overhaul` program). It was written on `docs/project-overview`, a separate branch based on `main`.
-
-That means: as of this writing, this folder describes modules, files, and database tables that **do not yet exist on `main`**. It will be fully accurate against `main` once that PR chain merges. Until then, treat this as documentation of the project's current, most-advanced state — check which branch you're actually on before assuming a described file exists in your checkout.
+The `security-pipeline-overhaul` program (Fase 0 through Fase 6, plus the psycopg2->psycopg v3 migration) is complete and merged to `main` as of PR11 (#18). This folder was originally written against an unmerged PR chain and is otherwise still accurate, but individual module docs may drift as new work lands — check the module reference pages below if something looks off.
 
 Wherever a capability exists as real, tested code but the live pipeline doesn't call it yet, or it's shipped but switched off by default, that's called out explicitly — see [`01-overview-and-capabilities.md`](01-overview-and-capabilities.md) for the full breakdown. Don't assume "documented" means "running."
 
